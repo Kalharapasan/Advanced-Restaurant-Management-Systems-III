@@ -1,5 +1,4 @@
-mysql-connector-python>=8.0.29
-tkinter  
+mysql-connector-python 
 tkcalendar>=1.6.1
 Pillow>=9.0.0
 matplotlib>=3.5.0
