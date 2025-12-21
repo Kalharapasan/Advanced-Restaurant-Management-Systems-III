@@ -225,3 +225,6 @@ class DatabaseManager:
         cursor.execute("SELECT COUNT(*) FROM restaurant_tables")
         if cursor.fetchone()[0] == 0:
             self.insert_default_tables(cursor)
+    
+    def insert_default_menu_items(self, cursor):
+        
