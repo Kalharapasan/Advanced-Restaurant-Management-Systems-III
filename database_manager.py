@@ -361,4 +361,36 @@ class DatabaseManager:
         if self.connection and self.connection.is_connected():
             self.connection.close()
     
+    def get_all_customers(self, search_term=None):
+        if not self.is_connected():
+            return []
+        
+        try:
+            cursor = self.connection.cursor()
+            
+            if search_term:
+                query = """
+                SELECT id, customer_id, name, phone, email, total_orders, total_spent, 
+                       loyalty_points, loyalty_tier, last_visit, is_active
+                FROM customers 
+                WHERE (name LIKE %s OR phone LIKE %s OR email LIKE %s OR customer_id LIKE %s)
+                ORDER BY name
+                """
+                cursor.execute(query, (f"%{search_term}%", f"%{search_term}%", 
+                                     f"%{search_term}%", f"%{search_term}%"))
+            else:
+                query = """
+                SELECT id, customer_id, name, phone, email, total_orders, total_spent, 
+                       loyalty_points, loyalty_tier, last_visit, is_active
+                FROM customers 
+                ORDER BY name
+                """
+                cursor.execute(query)
+            
+            return cursor.fetchall()
+            
+        except Error as e:
+            print(f"Error fetching customers: {e}")
+            return []
+    
     
