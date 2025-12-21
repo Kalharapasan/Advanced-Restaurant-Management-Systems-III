@@ -344,3 +344,6 @@ class DatabaseManager:
         """
         cursor.executemany(insert_query, tables)
         
+    
+    def hash_password(self, password):
+        return hashlib.sha256(password.encode()).hexdigest()
