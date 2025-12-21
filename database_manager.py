@@ -429,3 +429,39 @@ class DatabaseManager:
             print(f"Error adding customer: {e}")
             return False
     
+    
+    
+    def update_customer(self, customer_id, customer_data):
+        if not self.is_connected():
+            return False
+        
+        try:
+            cursor = self.connection.cursor()
+            
+            update_query = """
+            UPDATE customers 
+            SET name = %s, phone = %s, email = %s, address = %s, date_of_birth = %s,
+                gender = %s, preferred_payment = %s, dietary_preferences = %s, notes = %s
+            WHERE id = %s
+            """
+            
+            cursor.execute(update_query, (
+                customer_data.get('name'),
+                customer_data.get('phone'),
+                customer_data.get('email'),
+                customer_data.get('address'),
+                customer_data.get('date_of_birth'),
+                customer_data.get('gender'),
+                customer_data.get('preferred_payment'),
+                json.dumps(customer_data.get('dietary_preferences', {})),
+                customer_data.get('notes'),
+                customer_id
+            ))
+            
+            self.connection.commit()
+            return True
+            
+        except Error as e:
+            print(f"Error updating customer: {e}")
+            return False
+    
