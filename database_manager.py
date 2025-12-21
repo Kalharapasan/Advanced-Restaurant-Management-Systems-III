@@ -93,3 +93,31 @@ class DatabaseManager:
         )
         """
         cursor.execute(create_menu_table)
+        
+        create_customers_table = """
+        CREATE TABLE IF NOT EXISTS customers (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            customer_id VARCHAR(20) UNIQUE,
+            name VARCHAR(100) NOT NULL,
+            phone VARCHAR(20) UNIQUE,
+            email VARCHAR(100),
+            address TEXT,
+            date_of_birth DATE,
+            gender ENUM('Male', 'Female', 'Other'),
+            total_orders INT DEFAULT 0,
+            total_spent DECIMAL(10,2) DEFAULT 0.00,
+            loyalty_points INT DEFAULT 0,
+            loyalty_tier ENUM('Bronze', 'Silver', 'Gold', 'Platinum') DEFAULT 'Bronze',
+            preferred_payment ENUM('Cash', 'Card', 'Digital'),
+            dietary_preferences JSON,
+            last_visit DATE,
+            notes TEXT,
+            is_active BOOLEAN DEFAULT TRUE,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            INDEX idx_phone (phone),
+            INDEX idx_email (email),
+            INDEX idx_loyalty_tier (loyalty_tier)
+        )
+        """
+        cursor.execute(create_customers_table)
