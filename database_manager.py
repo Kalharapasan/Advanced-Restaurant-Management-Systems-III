@@ -607,3 +607,6 @@ class DatabaseManager:
         except Error as e:
             print(f"Error deleting menu item: {e}")
             return False
+    
+    def get_menu_categories(self):
+        return ['drinks', 'cakes', 'appetizers', 'main_course', 'desserts', 'specials']
