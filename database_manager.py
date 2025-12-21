@@ -141,3 +141,29 @@ class DatabaseManager:
         )
         """
         cursor.execute(create_users_table)
+        
+        create_inventory_table = """
+        CREATE TABLE IF NOT EXISTS inventory (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            item_name VARCHAR(100) NOT NULL,
+            sku VARCHAR(50) UNIQUE,
+            category VARCHAR(50),
+            current_stock INT DEFAULT 0,
+            min_stock_level INT DEFAULT 10,
+            max_stock_level INT DEFAULT 100,
+            unit VARCHAR(20) DEFAULT 'pieces',
+            unit_price DECIMAL(8,2),
+            supplier VARCHAR(100),
+            supplier_contact VARCHAR(100),
+            last_restocked DATE,
+            expiry_date DATE,
+            location VARCHAR(50),
+            is_active BOOLEAN DEFAULT TRUE,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            INDEX idx_sku (sku),
+            INDEX idx_category (category),
+            INDEX idx_stock_level (current_stock)
+        )
+        """
+        cursor.execute(create_inventory_table)
