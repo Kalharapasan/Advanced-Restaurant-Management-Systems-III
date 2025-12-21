@@ -214,3 +214,6 @@ class DatabaseManager:
         cursor.execute(create_feedback_table)
     
     def insert_default_data(self, cursor):
+        cursor.execute("SELECT COUNT(*) FROM menu_items")
+        if cursor.fetchone()[0] == 0:
+            self.insert_default_menu_items(cursor)
