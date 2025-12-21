@@ -31,3 +31,6 @@ class DatabaseManager:
         self.create_tables(cursor)
         self.insert_default_data(cursor)
         self.connection.commit()
+    
+    def create_tables(self, cursor):
+        
