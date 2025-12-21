@@ -360,3 +360,5 @@ class DatabaseManager:
     def close_connection(self):
         if self.connection and self.connection.is_connected():
             self.connection.close()
+    
+    
