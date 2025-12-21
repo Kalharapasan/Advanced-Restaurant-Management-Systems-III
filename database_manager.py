@@ -12,7 +12,9 @@ DB_CONFIG = {
 }
 
 class DatabaseManager:
-    
+    def __init__(self):
+        self.connection = None
+        self.connect_to_database()
     
     def connect_to_database(self):
         try:
