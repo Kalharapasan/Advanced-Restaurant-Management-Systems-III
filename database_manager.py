@@ -198,3 +198,17 @@ class DatabaseManager:
         )
         """
         cursor.execute(create_reservations_table)
+        
+        create_feedback_table = """
+        CREATE TABLE IF NOT EXISTS feedback (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            customer_id INT,
+            order_id INT,
+            rating INT CHECK (rating BETWEEN 1 AND 5),
+            comments TEXT,
+            feedback_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (customer_id) REFERENCES customers(id),
+            FOREIGN KEY (order_id) REFERENCES orders(id)
+        )
+        """
+        cursor.execute(create_feedback_table)
