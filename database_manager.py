@@ -393,4 +393,7 @@ class DatabaseManager:
             print(f"Error fetching customers: {e}")
             return []
     
+    def add_customer(self, customer_data):
+        if not self.is_connected():
+            return False
     
