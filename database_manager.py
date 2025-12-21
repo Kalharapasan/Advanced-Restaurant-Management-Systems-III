@@ -483,3 +483,6 @@ class DatabaseManager:
         except Error as e:
             print(f"Error fetching customer orders: {e}")
             return []
+    
+    
+    
