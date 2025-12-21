@@ -29,3 +29,5 @@ class DatabaseManager:
         cursor.execute("CREATE DATABASE IF NOT EXISTS restaurant_db")
         cursor.execute("USE restaurant_db")
         self.create_tables(cursor)
+        self.insert_default_data(cursor)
+        self.connection.commit()
