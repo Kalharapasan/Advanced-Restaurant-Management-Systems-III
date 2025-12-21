@@ -249,6 +249,23 @@ class DatabaseManager:
              '{"calories": 10, "protein": 0, "carbs": 2, "fat": 0}',
              None, 2, True, True, True, 'None'),
             
+            ('Chocolate Fudge Cake', 'cakes', 4.95, 1.50, 'Rich chocolate cake with fudge frosting',
+             'Chocolate, Flour, Sugar, Eggs, Butter, Cream', 'Gluten, Eggs, Milk',
+             '{"calories": 450, "protein": 6, "carbs": 55, "fat": 24}',
+             None, 15, True, False, False, 'None'),
+            ('Cheesecake', 'cakes', 4.75, 1.20, 'Classic New York style cheesecake',
+             'Cream cheese, Sugar, Eggs, Graham crackers', 'Gluten, Eggs, Milk',
+             '{"calories": 410, "protein": 8, "carbs": 35, "fat": 28}',
+             None, 10, True, False, False, 'None'),
+            ('Carrot Cake', 'cakes', 4.25, 1.10, 'Moist carrot cake with cream cheese frosting',
+             'Carrots, Flour, Sugar, Eggs, Walnuts, Cream cheese', 'Gluten, Eggs, Milk, Nuts',
+             '{"calories": 380, "protein": 5, "carbs": 45, "fat": 20}',
+             None, 12, True, False, False, 'None'),
+            ('Tiramisu', 'cakes', 5.25, 1.60, 'Italian coffee-flavored dessert',
+             'Ladyfingers, Mascarpone, Espresso, Cocoa', 'Gluten, Eggs, Milk',
+             '{"calories": 400, "protein": 7, "carbs": 30, "fat": 28}',
+             None, 20, True, False, False, 'None'),
+            
             
             
          ]
