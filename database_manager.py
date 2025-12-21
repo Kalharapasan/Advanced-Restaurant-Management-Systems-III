@@ -212,3 +212,5 @@ class DatabaseManager:
         )
         """
         cursor.execute(create_feedback_table)
+    
+    def insert_default_data(self, cursor):
