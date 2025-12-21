@@ -301,4 +301,26 @@ class DatabaseManager:
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         """
         cursor.executemany(insert_query, menu_items)
+    
+    def insert_default_users(self, cursor):
+        users = [
+            ('admin', self.hash_password('admin123'), 'Admin', 'System Administrator', 
+             'admin@restaurant.com', '+1234567890', '2024-01-01', 
+             '{"all": true}'),
+            ('manager', self.hash_password('manager123'), 'Manager', 'Restaurant Manager',
+             'manager@restaurant.com', '+1234567891', '2024-01-01',
+             '{"orders": true, "menu": true, "customers": true, "reports": true}'),
+            ('cashier', self.hash_password('cashier123'), 'Cashier', 'Front Desk Cashier',
+             'cashier@restaurant.com', '+1234567892', '2024-01-01',
+             '{"orders": true, "customers": true}'),
+            ('waiter', self.hash_password('waiter123'), 'Waiter', 'Service Staff',
+             'waiter@restaurant.com', '+1234567893', '2024-01-01',
+             '{"orders": true, "tables": true}')
+        ]
+        
+        insert_query = """
+        INSERT INTO users (username, password_hash, role, full_name, email, phone, hire_date, permissions) 
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+        """
+        cursor.executemany(insert_query, users)
         
