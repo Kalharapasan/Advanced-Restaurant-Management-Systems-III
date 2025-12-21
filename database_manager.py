@@ -279,7 +279,18 @@ class DatabaseManager:
              '{"calories": 320, "protein": 16, "carbs": 20, "fat": 20}',
              None, 10, True, False, False, 'None'),
             
-            
+            ('Grilled Salmon', 'main_course', 16.95, 8.50, 'Fresh Atlantic salmon with herbs',
+             'Salmon fillet, Herbs, Lemon, Olive oil', 'Fish',
+             '{"calories": 420, "protein": 35, "carbs": 2, "fat": 28}',
+             None, 18, False, False, True, 'None'),
+            ('Chicken Alfredo', 'main_course', 14.95, 6.80, 'Pasta with grilled chicken and creamy Alfredo sauce',
+             'Pasta, Chicken breast, Cream, Parmesan cheese', 'Gluten, Milk',
+             '{"calories": 680, "protein": 40, "carbs": 55, "fat": 32}',
+             None, 16, False, False, False, 'None'),
+            ('Vegetable Stir Fry', 'main_course', 12.95, 4.20, 'Fresh vegetables in Asian sauce',
+             'Mixed vegetables, Soy sauce, Ginger, Garlic', 'Soy',
+             '{"calories": 280, "protein": 8, "carbs": 45, "fat": 8}',
+             None, 12, True, True, False, 'Mild'),
             
          ]
         
