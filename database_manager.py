@@ -593,3 +593,17 @@ class DatabaseManager:
         except Error as e:
             print(f"Error updating menu item: {e}")
             return False
+    
+    def delete_menu_item(self, item_id):
+        if not self.is_connected():
+            return False
+        
+        try:
+            cursor = self.connection.cursor()
+            cursor.execute("UPDATE menu_items SET is_active = FALSE WHERE id = %s", (item_id,))
+            self.connection.commit()
+            return True
+            
+        except Error as e:
+            print(f"Error deleting menu item: {e}")
+            return False
