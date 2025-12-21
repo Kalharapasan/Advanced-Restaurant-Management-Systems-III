@@ -554,3 +554,42 @@ class DatabaseManager:
         except Error as e:
             print(f"Error adding menu item: {e}")
             return False
+    
+    def update_menu_item(self, item_id, item_data):
+        if not self.is_connected():
+            return False
+        
+        try:
+            cursor = self.connection.cursor()
+            
+            update_query = """
+            UPDATE menu_items 
+            SET name = %s, category = %s, price = %s, cost_price = %s, description = %s,
+                ingredients = %s, allergens = %s, preparation_time = %s, is_vegetarian = %s,
+                is_vegan = %s, is_gluten_free = %s, spice_level = %s, is_available = %s
+            WHERE id = %s
+            """
+            
+            cursor.execute(update_query, (
+                item_data.get('name'),
+                item_data.get('category'),
+                item_data.get('price'),
+                item_data.get('cost_price', 0.00),
+                item_data.get('description'),
+                item_data.get('ingredients'),
+                item_data.get('allergens'),
+                item_data.get('preparation_time', 10),
+                item_data.get('is_vegetarian', False),
+                item_data.get('is_vegan', False),
+                item_data.get('is_gluten_free', False),
+                item_data.get('spice_level', 'None'),
+                item_data.get('is_available', True),
+                item_id
+            ))
+            
+            self.connection.commit()
+            return True
+            
+        except Error as e:
+            print(f"Error updating menu item: {e}")
+            return False
