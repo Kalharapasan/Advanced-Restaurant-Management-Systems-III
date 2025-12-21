@@ -65,3 +65,31 @@ class DatabaseManager:
         )
         """
         cursor.execute(create_orders_table)
+        
+        create_menu_table = """
+        CREATE TABLE IF NOT EXISTS menu_items (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(100) NOT NULL,
+            category ENUM('drinks', 'cakes', 'appetizers', 'main_course', 'desserts', 'specials') NOT NULL,
+            price DECIMAL(8,2) NOT NULL,
+            cost_price DECIMAL(8,2) DEFAULT 0.00,
+            description TEXT,
+            ingredients TEXT,
+            allergens VARCHAR(255),
+            nutritional_info JSON,
+            image_path VARCHAR(255),
+            preparation_time INT DEFAULT 10,
+            is_vegetarian BOOLEAN DEFAULT FALSE,
+            is_vegan BOOLEAN DEFAULT FALSE,
+            is_gluten_free BOOLEAN DEFAULT FALSE,
+            spice_level ENUM('None', 'Mild', 'Medium', 'Hot', 'Very Hot') DEFAULT 'None',
+            is_available BOOLEAN DEFAULT TRUE,
+            is_active BOOLEAN DEFAULT TRUE,
+            popularity_score INT DEFAULT 0,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            INDEX idx_category (category),
+            INDEX idx_available (is_available, is_active)
+        )
+        """
+        cursor.execute(create_menu_table)
