@@ -350,3 +350,6 @@ class DatabaseManager:
     
     def verify_password(self, password, password_hash):
         return hashlib.sha256(password.encode()).hexdigest() == password_hash
+    
+    def get_connection(self):
+        return self.connection
