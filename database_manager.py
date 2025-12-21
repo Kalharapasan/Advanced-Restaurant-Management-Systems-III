@@ -429,8 +429,6 @@ class DatabaseManager:
             print(f"Error adding customer: {e}")
             return False
     
-    
-    
     def update_customer(self, customer_id, customer_data):
         if not self.is_connected():
             return False
@@ -465,3 +463,23 @@ class DatabaseManager:
             print(f"Error updating customer: {e}")
             return False
     
+    
+    def get_customer_orders(self, customer_id):
+        if not self.is_connected():
+            return []
+        
+        try:
+            cursor = self.connection.cursor()
+            query = """
+            SELECT receipt_ref, order_date, order_time, items, total_cost, status
+            FROM orders 
+            WHERE customer_phone = (SELECT phone FROM customers WHERE id = %s)
+            ORDER BY created_at DESC
+            LIMIT 50
+            """
+            cursor.execute(query, (customer_id,))
+            return cursor.fetchall()
+            
+        except Error as e:
+            print(f"Error fetching customer orders: {e}")
+            return []
