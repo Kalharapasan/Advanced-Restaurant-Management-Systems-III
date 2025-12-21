@@ -181,3 +181,20 @@ class DatabaseManager:
         )
         """
         cursor.execute(create_tables_table)
+        
+        create_reservations_table = """
+        CREATE TABLE IF NOT EXISTS reservations (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            customer_id INT,
+            table_id INT,
+            reservation_date DATE NOT NULL,
+            reservation_time TIME NOT NULL,
+            party_size INT NOT NULL,
+            status ENUM('Confirmed', 'Seated', 'Completed', 'Cancelled', 'No-show') DEFAULT 'Confirmed',
+            special_requests TEXT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (customer_id) REFERENCES customers(id),
+            FOREIGN KEY (table_id) REFERENCES restaurant_tables(id)
+        )
+        """
+        cursor.execute(create_reservations_table)
