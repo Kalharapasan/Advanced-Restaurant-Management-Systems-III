@@ -26,3 +26,5 @@ class DatabaseManager:
     
     def setup_database(self):
         cursor = self.connection.cursor()
+        cursor.execute("CREATE DATABASE IF NOT EXISTS restaurant_db")
+        cursor.execute("USE restaurant_db")
