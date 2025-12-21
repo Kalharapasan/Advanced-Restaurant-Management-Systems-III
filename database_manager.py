@@ -28,3 +28,4 @@ class DatabaseManager:
         cursor = self.connection.cursor()
         cursor.execute("CREATE DATABASE IF NOT EXISTS restaurant_db")
         cursor.execute("USE restaurant_db")
+        self.create_tables(cursor)
