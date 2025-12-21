@@ -294,3 +294,11 @@ class DatabaseManager:
             
          ]
         
+        insert_query = """
+        INSERT INTO menu_items (name, category, price, cost_price, description, ingredients, allergens,
+                              nutritional_info, image_path, preparation_time, is_vegetarian, is_vegan, 
+                              is_gluten_free, spice_level) 
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+        """
+        cursor.executemany(insert_query, menu_items)
+        
