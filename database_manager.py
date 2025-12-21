@@ -23,3 +23,6 @@ class DatabaseManager:
         except Error as e:
             print(f"Error connecting to MySQL: {e}")
             self.connection = None
+    
+    def setup_database(self):
+        cursor = self.connection.cursor()
