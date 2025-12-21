@@ -121,3 +121,23 @@ class DatabaseManager:
         )
         """
         cursor.execute(create_customers_table)
+        
+        create_users_table = """
+        CREATE TABLE IF NOT EXISTS users (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            username VARCHAR(50) UNIQUE NOT NULL,
+            password_hash VARCHAR(255) NOT NULL,
+            role ENUM('Admin', 'Manager', 'Cashier', 'Waiter', 'Chef') DEFAULT 'Cashier',
+            full_name VARCHAR(100),
+            email VARCHAR(100),
+            phone VARCHAR(20),
+            hire_date DATE,
+            is_active BOOLEAN DEFAULT TRUE,
+            last_login TIMESTAMP NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            permissions JSON,
+            INDEX idx_username (username),
+            INDEX idx_role (role)
+        )
+        """
+        cursor.execute(create_users_table)
