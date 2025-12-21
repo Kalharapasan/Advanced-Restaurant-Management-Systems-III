@@ -485,4 +485,35 @@ class DatabaseManager:
             return []
     
     
-    
+    def get_all_menu_items(self, category=None, search_term=None):
+        if not self.is_connected():
+            return []
+        
+        try:
+            cursor = self.connection.cursor()
+            
+            base_query = """
+            SELECT id, name, category, price, cost_price, description, ingredients, allergens,
+                   preparation_time, is_vegetarian, is_vegan, is_gluten_free, spice_level,
+                   is_available, is_active, popularity_score
+            FROM menu_items 
+            WHERE 1=1
+            """
+            params = []
+            
+            if category and category != 'all':
+                base_query += " AND category = %s"
+                params.append(category)
+            
+            if search_term:
+                base_query += " AND (name LIKE %s OR description LIKE %s OR ingredients LIKE %s)"
+                params.extend([f"%{search_term}%", f"%{search_term}%", f"%{search_term}%"])
+            
+            base_query += " ORDER BY category, name"
+            
+            cursor.execute(base_query, params)
+            return cursor.fetchall()
+            
+        except Error as e:
+            print(f"Error fetching menu items: {e}")
+            return []
