@@ -227,4 +227,29 @@ class DatabaseManager:
             self.insert_default_tables(cursor)
     
     def insert_default_menu_items(self, cursor):
+        menu_items = [
+            ('Latte', 'drinks', 2.20, 0.80, 'Creamy espresso with steamed milk and foam', 
+             'Espresso, Steamed milk, Milk foam', 'Milk', 
+             '{"calories": 120, "protein": 8, "carbs": 12, "fat": 4}',
+             None, 5, True, False, False, 'None'),
+            ('Cappuccino', 'drinks', 2.45, 0.85, 'Classic Italian coffee with equal parts espresso, steamed milk, and foam',
+             'Espresso, Steamed milk, Milk foam', 'Milk',
+             '{"calories": 80, "protein": 4, "carbs": 6, "fat": 3}',
+             None, 5, True, False, False, 'None'),
+            ('Americano', 'drinks', 1.95, 0.60, 'Espresso shots topped with hot water',
+             'Espresso, Hot water', None,
+             '{"calories": 5, "protein": 0, "carbs": 1, "fat": 0}',
+             None, 3, True, True, True, 'None'),
+            ('Green Tea', 'drinks', 1.75, 0.40, 'Organic green tea with antioxidants',
+             'Green tea leaves, Hot water', None,
+             '{"calories": 0, "protein": 0, "carbs": 0, "fat": 0}',
+             None, 3, True, True, True, 'None'),
+            ('Iced Coffee', 'drinks', 2.15, 0.75, 'Cold brew coffee served over ice',
+             'Cold brew coffee, Ice', None,
+             '{"calories": 10, "protein": 0, "carbs": 2, "fat": 0}',
+             None, 2, True, True, True, 'None'),
+            
+            
+            
+         ]
         
