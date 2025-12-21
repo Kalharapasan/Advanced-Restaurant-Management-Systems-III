@@ -353,3 +353,6 @@ class DatabaseManager:
     
     def get_connection(self):
         return self.connection
+    
+    def is_connected(self):
+        return self.connection and self.connection.is_connected()
