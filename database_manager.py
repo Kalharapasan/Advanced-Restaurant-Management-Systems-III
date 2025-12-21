@@ -396,4 +396,36 @@ class DatabaseManager:
     def add_customer(self, customer_data):
         if not self.is_connected():
             return False
+        
+        try:
+            cursor = self.connection.cursor()
+            cursor.execute("SELECT MAX(id) FROM customers")
+            max_id = cursor.fetchone()[0] or 0
+            customer_id = f"CUST{max_id + 1:06d}"
+            
+            insert_query = """
+            INSERT INTO customers (customer_id, name, phone, email, address, date_of_birth, 
+                                 gender, preferred_payment, dietary_preferences, notes)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """
+            
+            cursor.execute(insert_query, (
+                customer_id,
+                customer_data.get('name'),
+                customer_data.get('phone'),
+                customer_data.get('email'),
+                customer_data.get('address'),
+                customer_data.get('date_of_birth'),
+                customer_data.get('gender'),
+                customer_data.get('preferred_payment'),
+                json.dumps(customer_data.get('dietary_preferences', {})),
+                customer_data.get('notes')
+            ))
+            
+            self.connection.commit()
+            return True
+            
+        except Error as e:
+            print(f"Error adding customer: {e}")
+            return False
     
