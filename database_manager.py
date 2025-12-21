@@ -266,6 +266,19 @@ class DatabaseManager:
              '{"calories": 400, "protein": 7, "carbs": 30, "fat": 28}',
              None, 20, True, False, False, 'None'),
             
+            ('Bruschetta', 'appetizers', 6.95, 2.00, 'Toasted bread with tomato, basil, and garlic',
+             'Bread, Tomatoes, Basil, Garlic, Olive oil', 'Gluten',
+             '{"calories": 220, "protein": 6, "carbs": 35, "fat": 8}',
+             None, 8, True, True, False, 'None'),
+            ('Buffalo Wings', 'appetizers', 8.95, 3.20, 'Spicy chicken wings with blue cheese dip',
+             'Chicken wings, Buffalo sauce, Blue cheese', 'Milk',
+             '{"calories": 350, "protein": 25, "carbs": 5, "fat": 26}',
+             None, 15, False, False, True, 'Hot'),
+            ('Mozzarella Sticks', 'appetizers', 7.45, 2.50, 'Breaded mozzarella with marinara sauce',
+             'Mozzarella, Breadcrumbs, Marinara sauce', 'Gluten, Milk',
+             '{"calories": 320, "protein": 16, "carbs": 20, "fat": 20}',
+             None, 10, True, False, False, 'None'),
+            
             
             
          ]
