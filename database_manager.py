@@ -517,3 +517,40 @@ class DatabaseManager:
         except Error as e:
             print(f"Error fetching menu items: {e}")
             return []
+    
+    def add_menu_item(self, item_data):
+        if not self.is_connected():
+            return False
+        
+        try:
+            cursor = self.connection.cursor()
+            
+            insert_query = """
+            INSERT INTO menu_items (name, category, price, cost_price, description, ingredients,
+                                  allergens, preparation_time, is_vegetarian, is_vegan, 
+                                  is_gluten_free, spice_level, is_available)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """
+            
+            cursor.execute(insert_query, (
+                item_data.get('name'),
+                item_data.get('category'),
+                item_data.get('price'),
+                item_data.get('cost_price', 0.00),
+                item_data.get('description'),
+                item_data.get('ingredients'),
+                item_data.get('allergens'),
+                item_data.get('preparation_time', 10),
+                item_data.get('is_vegetarian', False),
+                item_data.get('is_vegan', False),
+                item_data.get('is_gluten_free', False),
+                item_data.get('spice_level', 'None'),
+                item_data.get('is_available', True)
+            ))
+            
+            self.connection.commit()
+            return True
+            
+        except Error as e:
+            print(f"Error adding menu item: {e}")
+            return False
