@@ -323,4 +323,24 @@ class DatabaseManager:
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
         """
         cursor.executemany(insert_query, users)
+    
+    def insert_default_tables(self, cursor):
+        tables = [
+            (1, 2, 'Window', 'Regular'),
+            (2, 2, 'Window', 'Regular'),
+            (3, 4, 'Center', 'Regular'),
+            (4, 4, 'Center', 'Regular'),
+            (5, 6, 'Corner', 'VIP'),
+            (6, 8, 'Corner', 'VIP'),
+            (7, 2, 'Patio', 'Outdoor'),
+            (8, 4, 'Patio', 'Outdoor'),
+            (9, 3, 'Bar Area', 'Bar'),
+            (10, 3, 'Bar Area', 'Bar'),
+        ]
+        
+        insert_query = """
+        INSERT INTO restaurant_tables (table_number, capacity, location, table_type) 
+        VALUES (%s, %s, %s, %s)
+        """
+        cursor.executemany(insert_query, tables)
         
