@@ -167,3 +167,17 @@ class DatabaseManager:
         )
         """
         cursor.execute(create_inventory_table)
+        
+        create_tables_table = """
+        CREATE TABLE IF NOT EXISTS restaurant_tables (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            table_number INT UNIQUE NOT NULL,
+            capacity INT NOT NULL,
+            location VARCHAR(50),
+            table_type ENUM('Regular', 'VIP', 'Outdoor', 'Bar') DEFAULT 'Regular',
+            is_available BOOLEAN DEFAULT TRUE,
+            is_active BOOLEAN DEFAULT TRUE,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+        """
+        cursor.execute(create_tables_table)
