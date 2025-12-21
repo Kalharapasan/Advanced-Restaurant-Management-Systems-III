@@ -221,3 +221,7 @@ class DatabaseManager:
         cursor.execute("SELECT COUNT(*) FROM users")
         if cursor.fetchone()[0] == 0:
             self.insert_default_users(cursor)
+        
+        cursor.execute("SELECT COUNT(*) FROM restaurant_tables")
+        if cursor.fetchone()[0] == 0:
+            self.insert_default_tables(cursor)
