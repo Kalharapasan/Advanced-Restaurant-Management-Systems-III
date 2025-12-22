@@ -285,5 +285,21 @@ class MenuManager:
         
         self.dietary_labels = tk.Text(labels_frame, height=3, wrap=tk.WORD)
         self.dietary_labels.pack(fill=tk.X, padx=5, pady=5)
+        
+        calc_frame = ttk.LabelFrame(self.nutrition_frame, text="Nutrition Calculator")
+        calc_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=5)
+        
+        calc_text = """Nutrition Calculator:
+        
+Enter ingredient quantities to automatically calculate nutritional values:
+• Use standard measurements (grams, ml, etc.)
+• Database contains common ingredients
+• Results are estimates for menu planning"""
+        
+        calc_label = ttk.Label(calc_frame, text=calc_text, justify=tk.LEFT)
+        calc_label.pack(padx=10, pady=10)
+        
+        ttk.Button(calc_frame, text="Calculate Nutrition", 
+                  command=self.calculate_nutrition).pack(pady=5)
             
            
