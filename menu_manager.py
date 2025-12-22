@@ -91,6 +91,16 @@ class MenuManager:
         self.stats_label = ttk.Label(stats_frame, text="Loading statistics...")
         self.stats_label.pack(pady=10)
         
+        import_export_frame = ttk.Frame(left_frame)
+        import_export_frame.pack(fill=tk.X, padx=5, pady=5)
+        
+        ttk.Button(import_export_frame, text="📥 Import CSV", 
+                  command=self.import_menu_csv).pack(side=tk.LEFT, padx=2)
+        ttk.Button(import_export_frame, text="📤 Export CSV", 
+                  command=self.export_menu_csv).pack(side=tk.LEFT, padx=2)
+        ttk.Button(import_export_frame, text="🖨️ Print Menu", 
+                  command=self.print_menu).pack(side=tk.LEFT, padx=2)
+        
         
         
         
