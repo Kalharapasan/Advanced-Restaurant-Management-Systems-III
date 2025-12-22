@@ -461,9 +461,7 @@ Enter ingredient quantities to automatically calculate nutritional values:
     if item[14]: 
         self.availability_vars['is_active'].set(True)
     
+    self.update_pricing_analysis()
     
-        
-        
-    
-    
-    
+    if item[8]: 
+        self.load_nutrition_info(item[8])
