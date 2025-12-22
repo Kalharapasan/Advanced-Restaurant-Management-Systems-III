@@ -449,6 +449,15 @@ Enter ingredient quantities to automatically calculate nutritional values:
                     widget.set(value)
                 elif hasattr(widget, 'insert'):
                     widget.insert(0, value)
+    if item[10]: 
+        self.dietary_vars['is_vegetarian'].set(True)
+    if item[11]: 
+        self.dietary_vars['is_vegan'].set(True)
+    if item[12]:  
+        self.dietary_vars['is_gluten_free'].set(True)    
+    
+    
+        
         
     
     
