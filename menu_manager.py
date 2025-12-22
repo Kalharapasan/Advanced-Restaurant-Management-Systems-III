@@ -6,7 +6,11 @@ from PIL import Image, ImageTk
 import os
 
 class MenuManager:
-    
+    def __init__(self, parent_frame, db_manager):
+        self.parent_frame = parent_frame
+        self.db_manager = db_manager
+        self.selected_item = None
+        self.image_path = None
     
     def setup_menu_interface(self):
         self.parent_frame.grid_rowconfigure(0, weight=1)
