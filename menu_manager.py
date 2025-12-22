@@ -220,6 +220,9 @@ class MenuManager:
                   command=self.refresh_menu_item_details).pack(side=tk.LEFT, padx=5)
         ttk.Button(button_frame, text="📋 Copy to New", 
                   command=self.copy_to_new_item).pack(side=tk.LEFT, padx=5)
+        
+        canvas.pack(side="left", fill="both", expand=True)
+        scrollbar.pack(side="right", fill="y")
             
             
            
