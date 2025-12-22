@@ -55,4 +55,7 @@ class MenuManager:
         ttk.Button(action_frame, text="📋 Duplicate", 
                   command=self.duplicate_selected_item).pack(side=tk.LEFT, padx=2)
         
+        list_frame = ttk.Frame(left_frame)
+        list_frame.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
+        
         
