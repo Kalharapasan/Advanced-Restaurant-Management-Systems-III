@@ -633,4 +633,7 @@ Enter ingredient quantities to automatically calculate nutritional values:
         if mode == "edit" and self.selected_item:
             self.populate_dialog_fields(dialog_fields)
     
+    def setup_basic_dialog_tab(self, parent, fields):
+        
+    
     
