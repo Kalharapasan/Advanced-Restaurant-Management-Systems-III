@@ -280,6 +280,10 @@ class MenuManager:
             self.nutrition_fields[key] = ttk.Entry(nutrition_frame, width=12)
             self.nutrition_fields[key].grid(row=row, column=col+1, sticky=tk.W, padx=5, pady=2)
   
+        labels_frame = ttk.LabelFrame(self.nutrition_frame, text="Dietary Labels")
+        labels_frame.pack(fill=tk.X, padx=10, pady=5)
         
+        self.dietary_labels = tk.Text(labels_frame, height=3, wrap=tk.WORD)
+        self.dietary_labels.pack(fill=tk.X, padx=5, pady=5)
             
            
