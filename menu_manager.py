@@ -15,3 +15,6 @@ class MenuManager:
         self.paned_window.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
         self.setup_menu_list_panel()
         self.setup_menu_details_panel()
+    
+    def setup_menu_list_panel(self):
+        
