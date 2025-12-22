@@ -483,3 +483,13 @@ Enter ingredient quantities to automatically calculate nutritional values:
         self.pricing_fields['cost_price'].config(text=f"£{cost:.2f}")
         self.pricing_fields['gross_profit'].config(text=f"£{profit:.2f}")
         self.pricing_fields['margin_percent'].config(text=f"{margin:.1f}%")
+        
+        if margin < 20:
+            color = 'red'
+        elif margin < 40:
+            color = 'orange'
+        else:
+            color = 'green'
+        
+        self.pricing_fields['gross_profit'].config(foreground=color)
+        self.pricing_fields['margin_percent'].config(foreground=color)
