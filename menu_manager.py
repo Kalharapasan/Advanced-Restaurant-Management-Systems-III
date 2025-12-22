@@ -85,6 +85,12 @@ class MenuManager:
         self.menu_tree.bind('<<TreeviewSelect>>', self.on_menu_item_select)
         self.menu_tree.bind('<Double-1>', self.edit_selected_item)
         
+        stats_frame = ttk.LabelFrame(left_frame, text="📊 Menu Statistics")
+        stats_frame.pack(fill=tk.X, padx=5, pady=5)
+        
+        self.stats_label = ttk.Label(stats_frame, text="Loading statistics...")
+        self.stats_label.pack(pady=10)
+        
         
         
         
