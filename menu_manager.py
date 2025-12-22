@@ -421,6 +421,11 @@ Enter ingredient quantities to automatically calculate nutritional values:
             elif hasattr(field_widget, 'set'):
                 field_widget.set("")
         
+        for var in self.dietary_vars.values():
+            var.set(False)
+        for var in self.availability_vars.values():
+            var.set(False)
+        
     
     
     
