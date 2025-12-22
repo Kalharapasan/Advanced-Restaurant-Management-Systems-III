@@ -199,6 +199,17 @@ class MenuManager:
             var = tk.BooleanVar()
             self.availability_vars[option] = var
             ttk.Checkbutton(avail_frame, text=label, variable=var).grid(row=0, column=i, padx=20, pady=5)
+        
+        image_frame = ttk.LabelFrame(scrollable_frame, text="Item Image")
+        image_frame.pack(fill=tk.X, padx=10, pady=5)
+        
+        self.image_label = ttk.Label(image_frame, text="No image selected")
+        self.image_label.grid(row=0, column=0, columnspan=2, padx=5, pady=5)
+        
+        ttk.Button(image_frame, text="Select Image", 
+                  command=self.select_image).grid(row=1, column=0, padx=5, pady=2)
+        ttk.Button(image_frame, text="Remove Image", 
+                  command=self.remove_image).grid(row=1, column=1, padx=5, pady=2)
             
             
            
