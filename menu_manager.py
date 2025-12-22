@@ -235,5 +235,6 @@ class MenuManager:
         ttk.Label(overview_frame, text="Cost Price:").grid(row=0, column=2, sticky=tk.W, padx=5, pady=2)
         self.pricing_fields['cost_price'] = ttk.Label(overview_frame, text="£0.00")
         self.pricing_fields['cost_price'].grid(row=0, column=3, sticky=tk.W, padx=5, pady=2)
+        
             
            
