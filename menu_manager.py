@@ -210,6 +210,16 @@ class MenuManager:
                   command=self.select_image).grid(row=1, column=0, padx=5, pady=2)
         ttk.Button(image_frame, text="Remove Image", 
                   command=self.remove_image).grid(row=1, column=1, padx=5, pady=2)
+        
+        button_frame = ttk.Frame(scrollable_frame)
+        button_frame.pack(fill=tk.X, padx=10, pady=10)
+        
+        ttk.Button(button_frame, text="💾 Save Changes", 
+                  command=self.save_menu_item_changes).pack(side=tk.LEFT, padx=5)
+        ttk.Button(button_frame, text="🔄 Refresh", 
+                  command=self.refresh_menu_item_details).pack(side=tk.LEFT, padx=5)
+        ttk.Button(button_frame, text="📋 Copy to New", 
+                  command=self.copy_to_new_item).pack(side=tk.LEFT, padx=5)
             
             
            
