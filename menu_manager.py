@@ -108,4 +108,6 @@ class MenuManager:
         self.details_notebook.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
         self.details_frame = ttk.Frame(self.details_notebook)
         self.details_notebook.add(self.details_frame, text="📝 Item Details")
+        self.pricing_frame = ttk.Frame(self.details_notebook)
+        self.details_notebook.add(self.pricing_frame, text="💰 Pricing")
            
