@@ -66,6 +66,14 @@ class MenuManager:
         for col in columns:
             self.menu_tree.heading(col, text=col, anchor=tk.CENTER)
             self.menu_tree.column(col, width=column_widths[col], anchor=tk.CENTER)
+            
+        v_scrollbar = ttk.Scrollbar(list_frame, orient=tk.VERTICAL, 
+                                   command=self.menu_tree.yview)
+        h_scrollbar = ttk.Scrollbar(list_frame, orient=tk.HORIZONTAL, 
+                                   command=self.menu_tree.xview)
+        
+        self.menu_tree.configure(yscrollcommand=v_scrollbar.set, 
+                                xscrollcommand=h_scrollbar.set)
         
         
         
