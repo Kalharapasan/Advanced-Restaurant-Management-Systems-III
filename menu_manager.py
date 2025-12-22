@@ -116,4 +116,7 @@ class MenuManager:
         self.setup_details_tab()
         self.setup_pricing_tab()
         self.setup_nutrition_tab()
+    
+    def setup_details_tab(self):
+        """Setup item details tab"""
            
