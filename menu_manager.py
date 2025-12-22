@@ -498,3 +498,12 @@ Enter ingredient quantities to automatically calculate nutritional values:
     def update_pricing_suggestions(self, price, cost, margin):
         self.suggestions_text.delete("1.0", tk.END)
         suggestions = "PRICING ANALYSIS & SUGGESTIONS:\n\n"
+        if margin < 20:
+            suggestions += "⚠️  LOW MARGIN WARNING!\n"
+            suggestions += f"Current margin of {margin:.1f}% is below recommended 20% minimum.\n\n"
+        elif margin < 40:
+            suggestions += "⚡ MODERATE MARGIN\n"
+            suggestions += f"Current margin of {margin:.1f}% is acceptable but could be improved.\n\n"
+        else:
+            suggestions += "✅ HEALTHY MARGIN\n"
+            suggestions += f"Current margin of {margin:.1f}% is excellent!\n\n"
