@@ -651,5 +651,8 @@ Enter ingredient quantities to automatically calculate nutritional values:
         ttk.Label(parent, text="Description:").grid(row=3, column=0, sticky=tk.NW, padx=5, pady=5)
         fields['description'] = tk.Text(parent, width=50, height=4)
         fields['description'].grid(row=3, column=1, columnspan=3, padx=5, pady=5)
+        ttk.Label(parent, text="Ingredients:").grid(row=4, column=0, sticky=tk.NW, padx=5, pady=5)
+        fields['ingredients'] = tk.Text(parent, width=50, height=3)
+        fields['ingredients'].grid(row=4, column=1, columnspan=3, padx=5, pady=5)
     
     
