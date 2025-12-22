@@ -623,5 +623,12 @@ Enter ingredient quantities to automatically calculate nutritional values:
         dialog_fields = {}
         self.setup_basic_dialog_tab(basic_tab, dialog_fields)
         self.setup_advanced_dialog_tab(advanced_tab, dialog_fields)
+        button_frame = ttk.Frame(dialog)
+        button_frame.pack(fill=tk.X, padx=10, pady=5)
+        
+        ttk.Button(button_frame, text="Save", 
+                  command=lambda: self.save_menu_item_dialog(dialog, dialog_fields, mode)).pack(side=tk.RIGHT, padx=5)
+        ttk.Button(button_frame, text="Cancel", 
+                  command=dialog.destroy).pack(side=tk.RIGHT, padx=5)
     
     
