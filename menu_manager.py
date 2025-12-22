@@ -474,3 +474,12 @@ Enter ingredient quantities to automatically calculate nutritional values:
             self.update_pricing_display(price, cost)
         except ValueError:
             pass
+    
+    def update_pricing_display(self, price, cost):
+        profit = price - cost
+        margin = (profit / price * 100) if price > 0 else 0
+        
+        self.pricing_fields['selling_price'].config(text=f"£{price:.2f}")
+        self.pricing_fields['cost_price'].config(text=f"£{cost:.2f}")
+        self.pricing_fields['gross_profit'].config(text=f"£{profit:.2f}")
+        self.pricing_fields['margin_percent'].config(text=f"{margin:.1f}%")
