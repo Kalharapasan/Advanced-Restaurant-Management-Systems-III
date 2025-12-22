@@ -363,3 +363,24 @@ Enter ingredient quantities to automatically calculate nutritional values:
             category = None
         for item in self.menu_tree.get_children():
             self.menu_tree.delete(item)
+        
+        menu_items = self.db_manager.get_all_menu_items(category, search_term)
+        
+        for item in menu_items:
+            (id, name, category, price, cost_price, description, ingredients, allergens,
+             prep_time, is_vegetarian, is_vegan, is_gluten_free, spice_level,
+             is_available, is_active, popularity_score) = item
+            
+            price_val = float(price or 0)
+            cost_val = float(cost_price or 0)
+            margin = ((price_val - cost_val) / price_val * 100) if price_val > 0 else 0
+            
+            self.menu_tree.insert('', 'end', values=(
+                name,
+                category.title(),
+                f"£{price_val:.2f}",
+                f"£{cost_val:.2f}",
+                f"{margin:.1f}%",
+                "Yes" if is_available else "No",
+                "Yes" if is_vegetarian else "No"
+            ), tags=(id,))
