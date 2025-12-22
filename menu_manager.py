@@ -533,3 +533,11 @@ Enter ingredient quantities to automatically calculate nutritional values:
         suggestions += "• Track customer price sensitivity\n"
         
         self.suggestions_text.insert("1.0", suggestions)
+    
+    def update_pricing_analysis(self):
+        try:
+            price = float(self.menu_fields['price'].get() or 0)
+            cost = float(self.menu_fields['cost_price'].get() or 0)
+            self.update_pricing_display(price, cost)
+        except ValueError:
+            pass
