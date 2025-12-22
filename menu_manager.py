@@ -494,3 +494,7 @@ Enter ingredient quantities to automatically calculate nutritional values:
         self.pricing_fields['gross_profit'].config(foreground=color)
         self.pricing_fields['margin_percent'].config(foreground=color)
         self.update_pricing_suggestions(price, cost, margin)
+    
+    def update_pricing_suggestions(self, price, cost, margin):
+        self.suggestions_text.delete("1.0", tk.END)
+        suggestions = "PRICING ANALYSIS & SUGGESTIONS:\n\n"
