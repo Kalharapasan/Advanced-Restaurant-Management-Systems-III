@@ -151,4 +151,13 @@ class MenuManager:
         self.menu_fields['cost_price'] = ttk.Entry(basic_frame, width=12)
         self.menu_fields['cost_price'].grid(row=2, column=3, sticky=tk.W, padx=5, pady=2)
         self.menu_fields['cost_price'].bind('<KeyRelease>', self.calculate_margin)
+        
+        ttk.Label(basic_frame, text="Prep Time (min):").grid(row=3, column=0, sticky=tk.W, padx=5, pady=2)
+        self.menu_fields['preparation_time'] = ttk.Entry(basic_frame, width=12)
+        self.menu_fields['preparation_time'].grid(row=3, column=1, sticky=tk.W, padx=5, pady=2)
+        
+        ttk.Label(basic_frame, text="Spice Level:").grid(row=3, column=2, sticky=tk.W, padx=5, pady=2)
+        self.menu_fields['spice_level'] = ttk.Combobox(basic_frame, width=12,
+                                                      values=['None', 'Mild', 'Medium', 'Hot', 'Very Hot'])
+        self.menu_fields['spice_level'].grid(row=3, column=3, sticky=tk.W, padx=5, pady=2)
            
