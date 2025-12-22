@@ -257,7 +257,10 @@ class MenuManager:
         self.competitor_price.pack(side=tk.LEFT, padx=5)
         ttk.Button(competitive_frame, text="Compare", 
                   command=self.compare_pricing).pack(side=tk.LEFT, padx=5)
+    
+    def setup_nutrition_tab(self):
         
+  
         
             
            
