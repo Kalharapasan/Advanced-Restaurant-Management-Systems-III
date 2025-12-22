@@ -449,19 +449,28 @@ Enter ingredient quantities to automatically calculate nutritional values:
                     widget.set(value)
                 elif hasattr(widget, 'insert'):
                     widget.insert(0, value)
-    if item[10]: 
-        self.dietary_vars['is_vegetarian'].set(True)
-    if item[11]: 
-        self.dietary_vars['is_vegan'].set(True)
-    if item[12]:  
-        self.dietary_vars['is_gluten_free'].set(True)    
+        if item[10]: 
+            self.dietary_vars['is_vegetarian'].set(True)
+        if item[11]: 
+            self.dietary_vars['is_vegan'].set(True)
+        if item[12]:  
+            self.dietary_vars['is_gluten_free'].set(True)    
+        
+        if item[13]:  
+            self.availability_vars['is_available'].set(True)
+        if item[14]: 
+            self.availability_vars['is_active'].set(True)
+        
+        self.update_pricing_analysis()
+        
+        if item[8]: 
+            self.load_nutrition_info(item[8])
     
-    if item[13]:  
-        self.availability_vars['is_available'].set(True)
-    if item[14]: 
-        self.availability_vars['is_active'].set(True)
-    
-    self.update_pricing_analysis()
-    
-    if item[8]: 
-        self.load_nutrition_info(item[8])
+    def calculate_margin(self, event=None):
+        try:
+            price = float(self.menu_fields['price'].get() or 0)
+            cost = float(self.menu_fields['cost_price'].get() or 0)
+            
+            self.update_pricing_display(price, cost)
+        except ValueError:
+            pass
