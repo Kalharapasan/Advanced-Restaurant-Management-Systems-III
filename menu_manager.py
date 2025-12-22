@@ -615,5 +615,8 @@ Enter ingredient quantities to automatically calculate nutritional values:
         
         notebook = ttk.Notebook(dialog)
         notebook.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+        
+        basic_tab = ttk.Frame(notebook)
+        notebook.add(basic_tab, text="Basic Info")
     
     
