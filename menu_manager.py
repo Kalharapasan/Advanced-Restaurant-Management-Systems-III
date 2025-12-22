@@ -570,3 +570,17 @@ Enter ingredient quantities to automatically calculate nutritional values:
                 
         except ValueError:
             messagebox.showerror("Error", "Please enter valid prices for comparison")
+    
+    def load_nutrition_info(self, nutrition_json):
+        try:
+            if isinstance(nutrition_json, str):
+                nutrition_data = json.loads(nutrition_json)
+            else:
+                nutrition_data = nutrition_json
+            
+            for key, field in self.nutrition_fields.items():
+                if key in nutrition_data:
+                    field.delete(0, tk.END)
+                    field.insert(0, str(nutrition_data[key]))
+        except:
+            pass
