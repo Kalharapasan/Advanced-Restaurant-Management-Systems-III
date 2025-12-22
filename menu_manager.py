@@ -587,3 +587,6 @@ Enter ingredient quantities to automatically calculate nutritional values:
     
     def calculate_nutrition(self):
         messagebox.showinfo("Feature", "Nutrition calculator feature coming soon!")
+    
+    def add_new_menu_item(self):
+        self.menu_item_dialog(title="Add New Menu Item", mode="add")
