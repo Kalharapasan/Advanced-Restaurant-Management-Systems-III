@@ -331,4 +331,20 @@ Enter ingredient quantities to automatically calculate nutritional values:
             self.category_filter.set('All')
         
         self.update_menu_statistics()
+    
+    def update_menu_statistics(self):
+        try:
+            menu_items = self.db_manager.get_all_menu_items()
+            
+            total_items = len(menu_items)
+            available_items = sum(1 for item in menu_items if item[13]) 
+            categories = len(set(item[2] for item in menu_items)) 
+            
+            avg_price = sum(float(item[3] or 0) for item in menu_items) / total_items if total_items > 0 else 0
+            
+            stats_text = f"Total Items: {total_items} | Available: {available_items} | Categories: {categories} | Avg Price: £{avg_price:.2f}"
+            self.stats_label.config(text=stats_text)
+            
+        except Exception as e:
+            self.stats_label.config(text="Error loading statistics")
            
