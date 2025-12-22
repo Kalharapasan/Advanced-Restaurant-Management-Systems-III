@@ -100,9 +100,6 @@ class MenuManager:
                   command=self.export_menu_csv).pack(side=tk.LEFT, padx=2)
         ttk.Button(import_export_frame, text="🖨️ Print Menu", 
                   command=self.print_menu).pack(side=tk.LEFT, padx=2)
-        
-        
-        
-        
-        
-        
+    
+    def setup_menu_details_panel(self):
+           
