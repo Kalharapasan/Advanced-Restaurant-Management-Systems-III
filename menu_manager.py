@@ -604,3 +604,8 @@ Enter ingredient quantities to automatically calculate nutritional values:
         dialog.geometry("800x600")
         dialog.resizable(True, True)
         dialog.configure(bg='#f0f0f0')
+        
+        dialog.transient(self.parent_frame.winfo_toplevel())
+        dialog.grab_set()
+    
+    
