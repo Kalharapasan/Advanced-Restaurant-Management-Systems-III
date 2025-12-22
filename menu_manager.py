@@ -456,6 +456,11 @@ Enter ingredient quantities to automatically calculate nutritional values:
     if item[12]:  
         self.dietary_vars['is_gluten_free'].set(True)    
     
+    if item[13]:  
+        self.availability_vars['is_available'].set(True)
+    if item[14]: 
+        self.availability_vars['is_active'].set(True)
+    
     
         
         
