@@ -541,3 +541,32 @@ Enter ingredient quantities to automatically calculate nutritional values:
             self.update_pricing_display(price, cost)
         except ValueError:
             pass
+    
+    def compare_pricing(self):
+        try:
+            our_price = float(self.menu_fields['price'].get() or 0)
+            competitor_price = float(self.competitor_price.get() or 0)
+            
+            if competitor_price > 0:
+                difference = our_price - competitor_price
+                percentage = (difference / competitor_price * 100)
+                
+                comparison_text = f"\nCOMPETITOR COMPARISON:\n\n"
+                comparison_text += f"Our Price: £{our_price:.2f}\n"
+                comparison_text += f"Competitor: £{competitor_price:.2f}\n"
+                comparison_text += f"Difference: £{difference:.2f} ({percentage:+.1f}%)\n\n"
+                
+                if percentage > 10:
+                    comparison_text += "⚠️ We are significantly more expensive\n"
+                elif percentage > 0:
+                    comparison_text += "💰 We are moderately more expensive\n"
+                elif percentage > -10:
+                    comparison_text += "✅ Competitive pricing\n"
+                else:
+                    comparison_text += "💸 We are significantly cheaper\n"
+                
+                current_text = self.suggestions_text.get("1.0", tk.END)
+                self.suggestions_text.insert(tk.END, comparison_text)
+                
+        except ValueError:
+            messagebox.showerror("Error", "Please enter valid prices for comparison")
