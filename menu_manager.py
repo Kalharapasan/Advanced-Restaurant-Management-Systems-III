@@ -607,5 +607,10 @@ Enter ingredient quantities to automatically calculate nutritional values:
         
         dialog.transient(self.parent_frame.winfo_toplevel())
         dialog.grab_set()
+        
+        dialog.geometry("+%d+%d" % (
+            dialog.winfo_toplevel().winfo_rootx() + 50,
+            dialog.winfo_toplevel().winfo_rooty() + 50
+        ))
     
     
