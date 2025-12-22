@@ -305,8 +305,8 @@ Enter ingredient quantities to automatically calculate nutritional values:
     def refresh_menu_list(self):
         for item in self.menu_tree.get_children():
             self.menu_tree.delete(item)
-            menu_items = self.db_manager.get_all_menu_items()
-            for item in menu_items:
+        menu_items = self.db_manager.get_all_menu_items()
+        for item in menu_items:
             (id, name, category, price, cost_price, description, ingredients, allergens,
              prep_time, is_vegetarian, is_vegan, is_gluten_free, spice_level,
              is_available, is_active, popularity_score) = item
@@ -324,5 +324,9 @@ Enter ingredient quantities to automatically calculate nutritional values:
                 "Yes" if is_available else "No",
                 "Yes" if is_vegetarian else "No"
             ), tags=(id,))
-            
+        
+        categories = ['all'] + self.db_manager.get_menu_categories()
+        self.category_filter['values'] = [cat.title() for cat in categories]
+        if not self.category_filter.get():
+            self.category_filter.set('All')
            
