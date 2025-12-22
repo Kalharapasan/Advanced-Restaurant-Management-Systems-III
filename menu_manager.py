@@ -32,4 +32,15 @@ class MenuManager:
         self.category_filter.pack(side=tk.LEFT, padx=(0, 10))
         self.category_filter.bind('<<ComboboxSelected>>', self.on_filter_change)
         
+        ttk.Label(filter_frame, text="Search:").pack(side=tk.LEFT, padx=(0, 5))
+        self.search_var = tk.StringVar()
+        self.search_entry = ttk.Entry(filter_frame, textvariable=self.search_var, width=15)
+        self.search_entry.pack(side=tk.LEFT, padx=(0, 5))
+        self.search_entry.bind('<KeyRelease>', self.on_search_change)
+        
+        ttk.Button(filter_frame, text="🔍", 
+                  command=self.search_menu_items).pack(side=tk.LEFT, padx=2)
+        ttk.Button(filter_frame, text="🔄", 
+                  command=self.refresh_menu_list).pack(side=tk.LEFT, padx=2)
+        
         
