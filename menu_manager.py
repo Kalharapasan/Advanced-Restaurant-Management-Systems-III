@@ -412,7 +412,14 @@ Enter ingredient quantities to automatically calculate nutritional values:
             messagebox.showerror("Error", f"Failed to load menu item details: {e}")
     
     def populate_menu_item_form(self, item):
-        
+        for field_name, field_widget in self.menu_fields.items():
+            if hasattr(field_widget, 'delete'):
+                if isinstance(field_widget, tk.Text):
+                    field_widget.delete("1.0", tk.END)
+                else:
+                    field_widget.delete(0, tk.END)
+            elif hasattr(field_widget, 'set'):
+                field_widget.set("")
         
     
     
