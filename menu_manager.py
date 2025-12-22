@@ -516,3 +516,20 @@ Enter ingredient quantities to automatically calculate nutritional values:
             
             suggestions += f"• For 40% margin: £{target_margin_price:.2f}\n"
             suggestions += f"• For 50% margin: £{optimal_price:.2f}\n\n"
+        
+        suggestions += "MARKET POSITIONING:\n\n"
+        if price < 5:
+            suggestions += "• BUDGET CATEGORY: Focus on volume and efficiency\n"
+        elif price < 15:
+            suggestions += "• MID-RANGE CATEGORY: Balance quality and value\n"
+        else:
+            suggestions += "• PREMIUM CATEGORY: Emphasize quality and experience\n"
+        
+        suggestions += "\n"
+        suggestions += "OPTIMIZATION TIPS:\n"
+        suggestions += "• Review ingredient costs regularly\n"
+        suggestions += "• Consider portion size adjustments\n"
+        suggestions += "• Monitor competitor pricing\n"
+        suggestions += "• Track customer price sensitivity\n"
+        
+        self.suggestions_text.insert("1.0", suggestions)
