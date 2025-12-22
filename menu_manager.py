@@ -641,5 +641,12 @@ Enter ingredient quantities to automatically calculate nutritional values:
         ttk.Label(parent, text="Category *:").grid(row=1, column=0, sticky=tk.W, padx=5, pady=5)
         fields['category'] = ttk.Combobox(parent, width=20, values=self.db_manager.get_menu_categories())
         fields['category'].grid(row=1, column=1, sticky=tk.W, padx=5, pady=5)
+        ttk.Label(parent, text="Selling Price (£) *:").grid(row=2, column=0, sticky=tk.W, padx=5, pady=5)
+        fields['price'] = ttk.Entry(parent, width=15)
+        fields['price'].grid(row=2, column=1, sticky=tk.W, padx=5, pady=5)
+        
+        ttk.Label(parent, text="Cost Price (£):").grid(row=2, column=2, sticky=tk.W, padx=5, pady=5)
+        fields['cost_price'] = ttk.Entry(parent, width=15)
+        fields['cost_price'].grid(row=2, column=3, sticky=tk.W, padx=5, pady=5)
     
     
