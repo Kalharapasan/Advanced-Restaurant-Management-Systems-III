@@ -410,3 +410,10 @@ Enter ingredient quantities to automatically calculate nutritional values:
         
         except Exception as e:
             messagebox.showerror("Error", f"Failed to load menu item details: {e}")
+    
+    def populate_menu_item_form(self, item):
+        
+        
+    
+    
+    
