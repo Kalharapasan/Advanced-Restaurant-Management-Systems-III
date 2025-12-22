@@ -187,4 +187,18 @@ class MenuManager:
             var = tk.BooleanVar()
             self.dietary_vars[option] = var
             ttk.Checkbutton(dietary_frame, text=label, variable=var).grid(row=0, column=i, padx=20, pady=5)
+        
+        avail_frame = ttk.LabelFrame(scrollable_frame, text="Availability")
+        avail_frame.pack(fill=tk.X, padx=10, pady=5)
+        
+        self.availability_vars = {}
+        avail_options = ['is_available', 'is_active']
+        avail_labels = ['Currently Available', 'Active on Menu']
+        
+        for i, (option, label) in enumerate(zip(avail_options, avail_labels)):
+            var = tk.BooleanVar()
+            self.availability_vars[option] = var
+            ttk.Checkbutton(avail_frame, text=label, variable=var).grid(row=0, column=i, padx=20, pady=5)
+            
+            
            
