@@ -110,4 +110,10 @@ class MenuManager:
         self.details_notebook.add(self.details_frame, text="📝 Item Details")
         self.pricing_frame = ttk.Frame(self.details_notebook)
         self.details_notebook.add(self.pricing_frame, text="💰 Pricing")
+        self.nutrition_frame = ttk.Frame(self.details_notebook)
+        self.details_notebook.add(self.nutrition_frame, text="🥗 Nutrition")
+        
+        self.setup_details_tab()
+        self.setup_pricing_tab()
+        self.setup_nutrition_tab()
            
