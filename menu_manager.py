@@ -634,6 +634,12 @@ Enter ingredient quantities to automatically calculate nutritional values:
             self.populate_dialog_fields(dialog_fields)
     
     def setup_basic_dialog_tab(self, parent, fields):
+        ttk.Label(parent, text="Item Name *:").grid(row=0, column=0, sticky=tk.W, padx=5, pady=5)
+        fields['name'] = ttk.Entry(parent, width=30)
+        fields['name'].grid(row=0, column=1, columnspan=2, sticky=tk.W, padx=5, pady=5)
         
+        ttk.Label(parent, text="Category *:").grid(row=1, column=0, sticky=tk.W, padx=5, pady=5)
+        fields['category'] = ttk.Combobox(parent, width=20, values=self.db_manager.get_menu_categories())
+        fields['category'].grid(row=1, column=1, sticky=tk.W, padx=5, pady=5)
     
     
