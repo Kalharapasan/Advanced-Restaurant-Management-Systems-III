@@ -133,5 +133,12 @@ class MenuManager:
         basic_frame = ttk.LabelFrame(scrollable_frame, text="Basic Information")
         basic_frame.pack(fill=tk.X, padx=10, pady=5)
         self.menu_fields = {}
+        ttk.Label(basic_frame, text="Item Name *:").grid(row=0, column=0, sticky=tk.W, padx=5, pady=2)
+        self.menu_fields['name'] = ttk.Entry(basic_frame, width=25)
+        self.menu_fields['name'].grid(row=0, column=1, columnspan=2, sticky=tk.W, padx=5, pady=2)
         
+        ttk.Label(basic_frame, text="Category *:").grid(row=1, column=0, sticky=tk.W, padx=5, pady=2)
+        self.menu_fields['category'] = ttk.Combobox(basic_frame, width=15, 
+                                                   values=self.db_manager.get_menu_categories())
+        self.menu_fields['category'].grid(row=1, column=1, sticky=tk.W, padx=5, pady=2)
            
