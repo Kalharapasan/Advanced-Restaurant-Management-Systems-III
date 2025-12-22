@@ -141,4 +141,14 @@ class MenuManager:
         self.menu_fields['category'] = ttk.Combobox(basic_frame, width=15, 
                                                    values=self.db_manager.get_menu_categories())
         self.menu_fields['category'].grid(row=1, column=1, sticky=tk.W, padx=5, pady=2)
+        
+        ttk.Label(basic_frame, text="Selling Price (£) *:").grid(row=2, column=0, sticky=tk.W, padx=5, pady=2)
+        self.menu_fields['price'] = ttk.Entry(basic_frame, width=12)
+        self.menu_fields['price'].grid(row=2, column=1, sticky=tk.W, padx=5, pady=2)
+        self.menu_fields['price'].bind('<KeyRelease>', self.calculate_margin)
+        
+        ttk.Label(basic_frame, text="Cost Price (£):").grid(row=2, column=2, sticky=tk.W, padx=5, pady=2)
+        self.menu_fields['cost_price'] = ttk.Entry(basic_frame, width=12)
+        self.menu_fields['cost_price'].grid(row=2, column=3, sticky=tk.W, padx=5, pady=2)
+        self.menu_fields['cost_price'].bind('<KeyRelease>', self.calculate_margin)
            
