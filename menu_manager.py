@@ -426,6 +426,30 @@ Enter ingredient quantities to automatically calculate nutritional values:
         for var in self.availability_vars.values():
             var.set(False)
         
+        field_mapping = {
+            1: 'name',
+            2: 'category',
+            3: 'price',
+            4: 'cost_price',
+            5: 'description',
+            6: 'ingredients', 
+            7: 'allergens',
+            9: 'preparation_time',
+            14: 'spice_level'
+        }
+        
+        for index, field_name in field_mapping.items():
+            if item[index] is not None and field_name in self.menu_fields:
+                widget = self.menu_fields[field_name]
+                value = str(item[index])
+                
+                if isinstance(widget, tk.Text):
+                    widget.insert("1.0", value)
+                elif hasattr(widget, 'set'):
+                    widget.set(value)
+                elif hasattr(widget, 'insert'):
+                    widget.insert(0, value)
+        
     
     
     
