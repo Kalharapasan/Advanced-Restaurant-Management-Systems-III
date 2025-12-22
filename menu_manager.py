@@ -597,3 +597,10 @@ Enter ingredient quantities to automatically calculate nutritional values:
             return
         
         self.menu_item_dialog(title="Edit Menu Item", mode="edit")
+    
+    def menu_item_dialog(self, title, mode):
+        dialog = tk.Toplevel(self.parent_frame)
+        dialog.title(title)
+        dialog.geometry("800x600")
+        dialog.resizable(True, True)
+        dialog.configure(bg='#f0f0f0')
