@@ -392,3 +392,21 @@ Enter ingredient quantities to automatically calculate nutritional values:
             item_id = self.menu_tree.item(item, 'tags')[0]
             self.selected_item = item_id
             self.load_menu_item_details(item_id)
+    
+    def load_menu_item_details(self, item_id):
+        if not self.db_manager.is_connected():
+            return
+        
+        try:
+            cursor = self.db_manager.get_connection().cursor()
+            query = """
+            SELECT * FROM menu_items WHERE id = %s
+            """
+            cursor.execute(query, (item_id,))
+            item = cursor.fetchone()
+            
+            if item:
+                self.populate_menu_item_form(item)
+        
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to load menu item details: {e}")
