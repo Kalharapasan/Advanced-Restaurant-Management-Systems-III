@@ -225,7 +225,8 @@ class MenuManager:
         scrollbar.pack(side="right", fill="y")
     
     def setup_pricing_tab(self):
-        
+        overview_frame = ttk.LabelFrame(self.pricing_frame, text="Pricing Analysis")
+        overview_frame.pack(fill=tk.X, padx=10, pady=5)
             
             
            
