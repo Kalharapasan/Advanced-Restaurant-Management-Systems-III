@@ -384,3 +384,11 @@ Enter ingredient quantities to automatically calculate nutritional values:
                 "Yes" if is_available else "No",
                 "Yes" if is_vegetarian else "No"
             ), tags=(id,))
+    
+    def on_menu_item_select(self, event):
+        selection = self.menu_tree.selection()
+        if selection:
+            item = selection[0]
+            item_id = self.menu_tree.item(item, 'tags')[0]
+            self.selected_item = item_id
+            self.load_menu_item_details(item_id)
