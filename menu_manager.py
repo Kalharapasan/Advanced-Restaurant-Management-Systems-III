@@ -584,3 +584,6 @@ Enter ingredient quantities to automatically calculate nutritional values:
                     field.insert(0, str(nutrition_data[key]))
         except:
             pass
+    
+    def calculate_nutrition(self):
+        messagebox.showinfo("Feature", "Nutrition calculator feature coming soon!")
