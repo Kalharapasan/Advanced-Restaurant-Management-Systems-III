@@ -612,5 +612,8 @@ Enter ingredient quantities to automatically calculate nutritional values:
             dialog.winfo_toplevel().winfo_rootx() + 50,
             dialog.winfo_toplevel().winfo_rooty() + 50
         ))
+        
+        notebook = ttk.Notebook(dialog)
+        notebook.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
     
     
