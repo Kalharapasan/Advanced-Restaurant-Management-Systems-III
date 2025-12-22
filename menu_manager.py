@@ -347,4 +347,7 @@ Enter ingredient quantities to automatically calculate nutritional values:
             
         except Exception as e:
             self.stats_label.config(text="Error loading statistics")
+    
+    def on_filter_change(self, event=None):
+        self.search_menu_items()
            
