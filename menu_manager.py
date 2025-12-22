@@ -259,7 +259,26 @@ class MenuManager:
                   command=self.compare_pricing).pack(side=tk.LEFT, padx=5)
     
     def setup_nutrition_tab(self):
+        nutrition_frame = ttk.LabelFrame(self.nutrition_frame, text="Nutritional Information (per serving)")
+        nutrition_frame.pack(fill=tk.X, padx=10, pady=5)
         
+        self.nutrition_fields = {}
+        nutrition_items = [
+            ('calories', 'Calories'),
+            ('protein', 'Protein (g)'),
+            ('carbs', 'Carbohydrates (g)'),
+            ('fat', 'Fat (g)'),
+            ('fiber', 'Fiber (g)'),
+            ('sodium', 'Sodium (mg)')
+        ]
+        
+        for i, (key, label) in enumerate(nutrition_items):
+            row = i // 2
+            col = (i % 2) * 2
+            
+            ttk.Label(nutrition_frame, text=f"{label}:").grid(row=row, column=col, sticky=tk.W, padx=5, pady=2)
+            self.nutrition_fields[key] = ttk.Entry(nutrition_frame, width=12)
+            self.nutrition_fields[key].grid(row=row, column=col+1, sticky=tk.W, padx=5, pady=2)
   
         
             
