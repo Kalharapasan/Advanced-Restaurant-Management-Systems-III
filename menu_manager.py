@@ -305,5 +305,6 @@ Enter ingredient quantities to automatically calculate nutritional values:
     def refresh_menu_list(self):
         for item in self.menu_tree.get_children():
             self.menu_tree.delete(item)
+            menu_items = self.db_manager.get_all_menu_items()
             
            
