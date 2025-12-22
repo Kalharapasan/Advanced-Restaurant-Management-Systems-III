@@ -590,3 +590,10 @@ Enter ingredient quantities to automatically calculate nutritional values:
     
     def add_new_menu_item(self):
         self.menu_item_dialog(title="Add New Menu Item", mode="add")
+    
+    def edit_selected_item(self, event=None):
+        if not self.selected_item:
+            messagebox.showwarning("No Selection", "Please select a menu item to edit.")
+            return
+        
+        self.menu_item_dialog(title="Edit Menu Item", mode="edit")
