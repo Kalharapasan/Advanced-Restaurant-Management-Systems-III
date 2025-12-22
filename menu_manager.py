@@ -12,6 +12,7 @@ class MenuManager:
         self.selected_item = None
         self.image_path = None
         self.setup_menu_interface()
+        self.refresh_menu_list()
     
     def setup_menu_interface(self):
         self.parent_frame.grid_rowconfigure(0, weight=1)
