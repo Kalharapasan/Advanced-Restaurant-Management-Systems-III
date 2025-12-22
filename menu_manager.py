@@ -118,5 +118,15 @@ class MenuManager:
         self.setup_nutrition_tab()
     
     def setup_details_tab(self):
-        """Setup item details tab"""
+        canvas = tk.Canvas(self.details_frame)
+        scrollbar = ttk.Scrollbar(self.details_frame, orient="vertical", command=canvas.yview)
+        scrollable_frame = ttk.Frame(canvas)
+        
+        scrollable_frame.bind(
+            "<Configure>",
+            lambda e: canvas.configure(scrollregion=canvas.bbox("all"))
+        )
+        
+        canvas.create_window((0, 0), window=scrollable_frame, anchor="nw")
+        canvas.configure(yscrollcommand=scrollbar.set)
            
