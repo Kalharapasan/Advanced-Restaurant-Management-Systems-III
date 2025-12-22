@@ -249,6 +249,15 @@ class MenuManager:
         self.suggestions_text = tk.Text(suggestions_frame, height=15, wrap=tk.WORD)
         self.suggestions_text.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
         
+        competitive_frame = ttk.Frame(self.pricing_frame)
+        competitive_frame.pack(fill=tk.X, padx=10, pady=5)
+        
+        ttk.Label(competitive_frame, text="Competitor Price:").pack(side=tk.LEFT, padx=5)
+        self.competitor_price = ttk.Entry(competitive_frame, width=10)
+        self.competitor_price.pack(side=tk.LEFT, padx=5)
+        ttk.Button(competitive_frame, text="Compare", 
+                  command=self.compare_pricing).pack(side=tk.LEFT, padx=5)
+        
         
             
            
