@@ -61,4 +61,12 @@ class MenuManager:
         columns = ('Name', 'Category', 'Price', 'Cost', 'Margin', 'Available', 'Vegetarian')
         self.menu_tree = ttk.Treeview(list_frame, columns=columns, show='headings', height=20)
         
+        column_widths = {'Name': 150, 'Category': 100, 'Price': 70, 'Cost': 70,'Margin': 70, 'Available': 70, 'Vegetarian': 80}
+        
+        for col in columns:
+            self.menu_tree.heading(col, text=col, anchor=tk.CENTER)
+            self.menu_tree.column(col, width=column_widths[col], anchor=tk.CENTER)
+        
+        
+        
         
