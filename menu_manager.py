@@ -11,6 +11,7 @@ class MenuManager:
         self.db_manager = db_manager
         self.selected_item = None
         self.image_path = None
+        self.setup_menu_interface()
     
     def setup_menu_interface(self):
         self.parent_frame.grid_rowconfigure(0, weight=1)
