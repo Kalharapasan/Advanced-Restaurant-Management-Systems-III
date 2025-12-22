@@ -507,3 +507,12 @@ Enter ingredient quantities to automatically calculate nutritional values:
         else:
             suggestions += "✅ HEALTHY MARGIN\n"
             suggestions += f"Current margin of {margin:.1f}% is excellent!\n\n"
+        
+        suggestions += "RECOMMENDED ACTIONS:\n\n"
+        
+        if cost > 0:
+            target_margin_price = cost / 0.6  
+            optimal_price = cost / 0.5  
+            
+            suggestions += f"• For 40% margin: £{target_margin_price:.2f}\n"
+            suggestions += f"• For 50% margin: £{optimal_price:.2f}\n\n"
