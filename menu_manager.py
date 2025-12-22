@@ -301,5 +301,8 @@ Enter ingredient quantities to automatically calculate nutritional values:
         
         ttk.Button(calc_frame, text="Calculate Nutrition", 
                   command=self.calculate_nutrition).pack(pady=5)
+    
+    def refresh_menu_list(self):
+        
             
            
