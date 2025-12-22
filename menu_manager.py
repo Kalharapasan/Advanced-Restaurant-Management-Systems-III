@@ -132,4 +132,6 @@ class MenuManager:
         
         basic_frame = ttk.LabelFrame(scrollable_frame, text="Basic Information")
         basic_frame.pack(fill=tk.X, padx=10, pady=5)
+        self.menu_fields = {}
+        
            
