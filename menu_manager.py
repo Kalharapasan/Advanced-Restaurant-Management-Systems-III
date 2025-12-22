@@ -102,4 +102,6 @@ class MenuManager:
                   command=self.print_menu).pack(side=tk.LEFT, padx=2)
     
     def setup_menu_details_panel(self):
+        right_frame = ttk.Frame(self.paned_window)
+        self.paned_window.add(right_frame, weight=1)
            
