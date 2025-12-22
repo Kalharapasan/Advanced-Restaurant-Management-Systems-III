@@ -662,5 +662,3 @@ Enter ingredient quantities to automatically calculate nutritional values:
         fields['ingredients'].grid(row=4, column=1, columnspan=3, padx=5, pady=5)
         ttk.Label(parent, text="Allergens:").grid(row=5, column=0, sticky=tk.NW, padx=5, pady=5)
         fields['allergens'] = tk.Text(parent, width=50, height=2)
-    
-    
