@@ -5,3 +5,8 @@ import csv
 from PIL import Image, ImageTk
 import os
 
+class MenuManager:
+    
+    
+    def setup_menu_interface(self):
+        
