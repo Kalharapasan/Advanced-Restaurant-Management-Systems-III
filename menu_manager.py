@@ -58,4 +58,7 @@ class MenuManager:
         list_frame = ttk.Frame(left_frame)
         list_frame.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
         
+        columns = ('Name', 'Category', 'Price', 'Cost', 'Margin', 'Available', 'Vegetarian')
+        self.menu_tree = ttk.Treeview(list_frame, columns=columns, show='headings', height=20)
+        
         
