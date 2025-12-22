@@ -303,6 +303,7 @@ Enter ingredient quantities to automatically calculate nutritional values:
                   command=self.calculate_nutrition).pack(pady=5)
     
     def refresh_menu_list(self):
-        
+        for item in self.menu_tree.get_children():
+            self.menu_tree.delete(item)
             
            
