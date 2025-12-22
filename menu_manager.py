@@ -82,6 +82,11 @@ class MenuManager:
         list_frame.grid_rowconfigure(0, weight=1)
         list_frame.grid_columnconfigure(0, weight=1)
         
+        self.menu_tree.bind('<<TreeviewSelect>>', self.on_menu_item_select)
+        self.menu_tree.bind('<Double-1>', self.edit_selected_item)
+        
+        
+        
         
         
         
