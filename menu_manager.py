@@ -129,4 +129,7 @@ class MenuManager:
         
         canvas.create_window((0, 0), window=scrollable_frame, anchor="nw")
         canvas.configure(yscrollcommand=scrollbar.set)
+        
+        basic_frame = ttk.LabelFrame(scrollable_frame, text="Basic Information")
+        basic_frame.pack(fill=tk.X, padx=10, pady=5)
            
