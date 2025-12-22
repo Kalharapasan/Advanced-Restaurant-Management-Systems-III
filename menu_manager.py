@@ -329,4 +329,6 @@ Enter ingredient quantities to automatically calculate nutritional values:
         self.category_filter['values'] = [cat.title() for cat in categories]
         if not self.category_filter.get():
             self.category_filter.set('All')
+        
+        self.update_menu_statistics()
            
