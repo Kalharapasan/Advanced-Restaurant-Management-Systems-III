@@ -493,3 +493,4 @@ Enter ingredient quantities to automatically calculate nutritional values:
         
         self.pricing_fields['gross_profit'].config(foreground=color)
         self.pricing_fields['margin_percent'].config(foreground=color)
+        self.update_pricing_suggestions(price, cost, margin)
