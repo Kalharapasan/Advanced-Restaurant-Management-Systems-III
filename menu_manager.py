@@ -104,4 +104,6 @@ class MenuManager:
     def setup_menu_details_panel(self):
         right_frame = ttk.Frame(self.paned_window)
         self.paned_window.add(right_frame, weight=1)
+        self.details_notebook = ttk.Notebook(right_frame)
+        self.details_notebook.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
            
