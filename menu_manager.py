@@ -17,4 +17,5 @@ class MenuManager:
         self.setup_menu_details_panel()
     
     def setup_menu_list_panel(self):
-        
+        left_frame = ttk.Frame(self.paned_window)
+        self.paned_window.add(left_frame, weight=1)
