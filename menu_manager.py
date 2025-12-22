@@ -242,5 +242,13 @@ class MenuManager:
         ttk.Label(overview_frame, text="Margin %:").grid(row=1, column=2, sticky=tk.W, padx=5, pady=2)
         self.pricing_fields['margin_percent'] = ttk.Label(overview_frame, text="0%", foreground='green')
         self.pricing_fields['margin_percent'].grid(row=1, column=3, sticky=tk.W, padx=5, pady=2)
+        
+        suggestions_frame = ttk.LabelFrame(self.pricing_frame, text="Pricing Suggestions")
+        suggestions_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=5)
+        
+        self.suggestions_text = tk.Text(suggestions_frame, height=15, wrap=tk.WORD)
+        self.suggestions_text.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
+        
+        
             
            
