@@ -43,4 +43,16 @@ class MenuManager:
         ttk.Button(filter_frame, text="🔄", 
                   command=self.refresh_menu_list).pack(side=tk.LEFT, padx=2)
         
+        action_frame = ttk.Frame(left_frame)
+        action_frame.pack(fill=tk.X, padx=5, pady=5)
+        
+        ttk.Button(action_frame, text="➕ Add Item", 
+                  command=self.add_new_menu_item).pack(side=tk.LEFT, padx=2)
+        ttk.Button(action_frame, text="✏️ Edit Item", 
+                  command=self.edit_selected_item).pack(side=tk.LEFT, padx=2)
+        ttk.Button(action_frame, text="🗑️ Delete Item", 
+                  command=self.delete_selected_item).pack(side=tk.LEFT, padx=2)
+        ttk.Button(action_frame, text="📋 Duplicate", 
+                  command=self.duplicate_selected_item).pack(side=tk.LEFT, padx=2)
+        
         
