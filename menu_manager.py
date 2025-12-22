@@ -227,6 +227,13 @@ class MenuManager:
     def setup_pricing_tab(self):
         overview_frame = ttk.LabelFrame(self.pricing_frame, text="Pricing Analysis")
         overview_frame.pack(fill=tk.X, padx=10, pady=5)
-            
+        self.pricing_fields = {}    
+        ttk.Label(overview_frame, text="Selling Price:").grid(row=0, column=0, sticky=tk.W, padx=5, pady=2)
+        self.pricing_fields['selling_price'] = ttk.Label(overview_frame, text="£0.00", font=('Segoe UI', 10, 'bold'))
+        self.pricing_fields['selling_price'].grid(row=0, column=1, sticky=tk.W, padx=5, pady=2)
+        
+        ttk.Label(overview_frame, text="Cost Price:").grid(row=0, column=2, sticky=tk.W, padx=5, pady=2)
+        self.pricing_fields['cost_price'] = ttk.Label(overview_frame, text="£0.00")
+        self.pricing_fields['cost_price'].grid(row=0, column=3, sticky=tk.W, padx=5, pady=2)
             
            
