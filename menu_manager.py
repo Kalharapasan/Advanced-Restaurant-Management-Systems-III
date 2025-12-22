@@ -357,3 +357,7 @@ Enter ingredient quantities to automatically calculate nutritional values:
     def search_menu_items(self):
         category = self.category_filter.get()
         search_term = self.search_var.get().strip()
+        if category and category != 'All':
+            category = category.lower()
+        else:
+            category = None
