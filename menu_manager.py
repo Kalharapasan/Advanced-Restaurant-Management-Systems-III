@@ -361,3 +361,5 @@ Enter ingredient quantities to automatically calculate nutritional values:
             category = category.lower()
         else:
             category = None
+        for item in self.menu_tree.get_children():
+            self.menu_tree.delete(item)
