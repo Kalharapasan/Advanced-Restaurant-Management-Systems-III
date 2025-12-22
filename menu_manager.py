@@ -160,4 +160,19 @@ class MenuManager:
         self.menu_fields['spice_level'] = ttk.Combobox(basic_frame, width=12,
                                                       values=['None', 'Mild', 'Medium', 'Hot', 'Very Hot'])
         self.menu_fields['spice_level'].grid(row=3, column=3, sticky=tk.W, padx=5, pady=2)
+        
+        desc_frame = ttk.LabelFrame(scrollable_frame, text="Description & Details")
+        desc_frame.pack(fill=tk.X, padx=10, pady=5)
+        
+        ttk.Label(desc_frame, text="Description:").grid(row=0, column=0, sticky=tk.NW, padx=5, pady=2)
+        self.menu_fields['description'] = tk.Text(desc_frame, width=50, height=3)
+        self.menu_fields['description'].grid(row=0, column=1, columnspan=3, padx=5, pady=2)
+        
+        ttk.Label(desc_frame, text="Ingredients:").grid(row=1, column=0, sticky=tk.NW, padx=5, pady=2)
+        self.menu_fields['ingredients'] = tk.Text(desc_frame, width=50, height=3)
+        self.menu_fields['ingredients'].grid(row=1, column=1, columnspan=3, padx=5, pady=2)
+        
+        ttk.Label(desc_frame, text="Allergens:").grid(row=2, column=0, sticky=tk.NW, padx=5, pady=2)
+        self.menu_fields['allergens'] = tk.Text(desc_frame, width=50, height=2)
+        self.menu_fields['allergens'].grid(row=2, column=1, columnspan=3, padx=5, pady=2)
            
