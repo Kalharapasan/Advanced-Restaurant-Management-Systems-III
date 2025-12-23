@@ -90,3 +90,5 @@ class CustomerManager:
         self.paned_window.add(right_frame, weight=1)
         self.details_notebook = ttk.Notebook(right_frame)
         self.details_notebook.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
+        self.info_frame = ttk.Frame(self.details_notebook)
+        self.details_notebook.add(self.info_frame, text="👤 Customer Info")
