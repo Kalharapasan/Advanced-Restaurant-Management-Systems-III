@@ -178,3 +178,11 @@ class CustomerManager:
                   command=self.send_customer_sms).pack(side=tk.LEFT, padx=5)
         canvas.pack(side="left", fill="both", expand=True)
         scrollbar.pack(side="right", fill="y")
+    
+    def setup_order_history_tab(self):
+        columns = ('Receipt', 'Date', 'Time', 'Items', 'Total', 'Status')
+        self.order_tree = ttk.Treeview(self.history_frame, columns=columns, show='headings')
+        
+        for col in columns:
+            self.order_tree.heading(col, text=col)
+            self.order_tree.column(col, width=120)
