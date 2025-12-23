@@ -186,3 +186,5 @@ class CustomerManager:
         for col in columns:
             self.order_tree.heading(col, text=col)
             self.order_tree.column(col, width=120)
+        
+        
