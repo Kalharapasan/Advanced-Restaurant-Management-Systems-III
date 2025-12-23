@@ -75,3 +75,6 @@ class CustomerManager:
         
         list_frame.grid_rowconfigure(0, weight=1)
         list_frame.grid_columnconfigure(0, weight=1)
+        
+        self.customer_tree.bind('<<TreeviewSelect>>', self.on_customer_select)
+        self.customer_tree.bind('<Double-1>', self.edit_selected_customer)
