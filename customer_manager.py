@@ -37,3 +37,13 @@ class CustomerManager:
                   command=self.search_customers).pack(side=tk.LEFT, padx=2)
         ttk.Button(search_frame, text="🔄 Refresh", 
                   command=self.refresh_customer_list).pack(side=tk.LEFT, padx=2)
+        
+        action_frame = ttk.Frame(left_frame)
+        action_frame.pack(fill=tk.X, padx=5, pady=5)
+        
+        ttk.Button(action_frame, text="➕ Add Customer", 
+                  command=self.add_new_customer).pack(side=tk.LEFT, padx=2)
+        ttk.Button(action_frame, text="✏️ Edit Customer", 
+                  command=self.edit_selected_customer).pack(side=tk.LEFT, padx=2)
+        ttk.Button(action_frame, text="📊 View Orders", 
+                  command=self.view_customer_orders).pack(side=tk.LEFT, padx=2)
