@@ -114,3 +114,5 @@ class CustomerManager:
         canvas.configure(yscrollcommand=scrollbar.set)
         personal_frame = ttk.LabelFrame(scrollable_frame, text="Personal Information")
         personal_frame.pack(fill=tk.X, padx=10, pady=5)
+        self.customer_fields = {}
+        
