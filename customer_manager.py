@@ -176,3 +176,5 @@ class CustomerManager:
                   command=self.send_customer_email).pack(side=tk.LEFT, padx=5)
         ttk.Button(button_frame, text="📱 Send SMS", 
                   command=self.send_customer_sms).pack(side=tk.LEFT, padx=5)
+        canvas.pack(side="left", fill="both", expand=True)
+        scrollbar.pack(side="right", fill="y")
