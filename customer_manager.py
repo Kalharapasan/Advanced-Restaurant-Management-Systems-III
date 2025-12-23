@@ -14,3 +14,5 @@ class CustomerManager:
         self.paned_window.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
         self.setup_customer_list_panel()
         self.setup_customer_details_panel()
+    
+    def setup_customer_list_panel(self):
