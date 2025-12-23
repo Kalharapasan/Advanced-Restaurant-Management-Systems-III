@@ -267,4 +267,7 @@ class CustomerManager:
     
     def on_search_change(self, event=None):
         self.parent_frame.after(300, self.search_customers)
+    
+    def search_customers(self):
+        search_term = self.search_var.get().strip()
         
