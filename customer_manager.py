@@ -84,3 +84,6 @@ class CustomerManager:
         
         self.stats_label = ttk.Label(stats_frame, text="Select a customer to view details")
         self.stats_label.pack(pady=10)
+    
+    def setup_customer_details_panel(self):
+        
