@@ -8,4 +8,5 @@ class CustomerManager:
     
     
     def setup_customer_interface(self):
-        
+        self.parent_frame.grid_rowconfigure(0, weight=1)
+        self.parent_frame.grid_columnconfigure(0, weight=1)
