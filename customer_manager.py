@@ -239,3 +239,6 @@ class CustomerManager:
                   command=self.add_loyalty_points).pack(side=tk.LEFT, padx=2)
         ttk.Button(points_mgmt_frame, text="Deduct Points", 
                   command=self.deduct_loyalty_points).pack(side=tk.LEFT, padx=2)
+    
+    def refresh_customer_list(self):
+        
