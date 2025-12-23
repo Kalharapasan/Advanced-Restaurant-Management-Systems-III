@@ -224,3 +224,7 @@ class CustomerManager:
         ttk.Label(overview_frame, text="Total Spent:").grid(row=1, column=2, sticky=tk.W, padx=5, pady=2)
         self.loyalty_fields['total_spent'] = ttk.Label(overview_frame, text="")
         self.loyalty_fields['total_spent'].grid(row=1, column=3, sticky=tk.W, padx=5, pady=2)
+        benefits_frame = ttk.LabelFrame(self.loyalty_frame, text="Tier Benefits")
+        benefits_frame.pack(fill=tk.X, padx=10, pady=5)
+        self.benefits_text = tk.Text(benefits_frame, height=8, wrap=tk.WORD)
+        self.benefits_text.pack(fill=tk.X, padx=5, pady=5)
