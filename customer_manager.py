@@ -78,3 +78,9 @@ class CustomerManager:
         
         self.customer_tree.bind('<<TreeviewSelect>>', self.on_customer_select)
         self.customer_tree.bind('<Double-1>', self.edit_selected_customer)
+        
+        stats_frame = ttk.LabelFrame(left_frame, text="📈 Quick Stats")
+        stats_frame.pack(fill=tk.X, padx=5, pady=5)
+        
+        self.stats_label = ttk.Label(stats_frame, text="Select a customer to view details")
+        self.stats_label.pack(pady=10)
