@@ -142,4 +142,6 @@ class CustomerManager:
         ttk.Label(personal_frame, text="Address:").grid(row=3, column=0, sticky=tk.W, padx=5, pady=2)
         self.customer_fields['address'] = tk.Text(personal_frame, width=50, height=3)
         self.customer_fields['address'].grid(row=3, column=1, columnspan=3, sticky=tk.W, padx=5, pady=2)
+        pref_frame = ttk.LabelFrame(scrollable_frame, text="Preferences & Settings")
+        pref_frame.pack(fill=tk.X, padx=10, pady=5)
         
