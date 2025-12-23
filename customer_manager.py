@@ -23,3 +23,17 @@ class CustomerManager:
         
         ttk.Label(header_frame, text="👥 Customer Database", 
                  font=('Segoe UI', 14, 'bold')).pack(side=tk.LEFT)
+        search_frame = ttk.Frame(left_frame)
+        search_frame.pack(fill=tk.X, padx=5, pady=5)
+        
+        ttk.Label(search_frame, text="Search:").pack(side=tk.LEFT, padx=(0, 5))
+        
+        self.search_var = tk.StringVar()
+        self.search_entry = ttk.Entry(search_frame, textvariable=self.search_var, width=20)
+        self.search_entry.pack(side=tk.LEFT, padx=(0, 5))
+        self.search_entry.bind('<KeyRelease>', self.on_search_change)
+        
+        ttk.Button(search_frame, text="🔍 Search", 
+                  command=self.search_customers).pack(side=tk.LEFT, padx=2)
+        ttk.Button(search_frame, text="🔄 Refresh", 
+                  command=self.refresh_customer_list).pack(side=tk.LEFT, padx=2)
