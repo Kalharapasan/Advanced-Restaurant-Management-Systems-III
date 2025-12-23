@@ -99,3 +99,6 @@ class CustomerManager:
         self.setup_customer_info_tab()
         self.setup_order_history_tab()
         self.setup_loyalty_tab()
+    
+    def setup_customer_info_tab(self):
+        
