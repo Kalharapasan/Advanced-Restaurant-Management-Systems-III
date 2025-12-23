@@ -228,3 +228,14 @@ class CustomerManager:
         benefits_frame.pack(fill=tk.X, padx=10, pady=5)
         self.benefits_text = tk.Text(benefits_frame, height=8, wrap=tk.WORD)
         self.benefits_text.pack(fill=tk.X, padx=5, pady=5)
+        points_mgmt_frame = ttk.LabelFrame(self.loyalty_frame, text="Points Management")
+        points_mgmt_frame.pack(fill=tk.X, padx=10, pady=5)
+        
+        ttk.Label(points_mgmt_frame, text="Adjust Points:").pack(side=tk.LEFT, padx=5)
+        self.points_adjustment = ttk.Entry(points_mgmt_frame, width=10)
+        self.points_adjustment.pack(side=tk.LEFT, padx=5)
+        
+        ttk.Button(points_mgmt_frame, text="Add Points", 
+                  command=self.add_loyalty_points).pack(side=tk.LEFT, padx=2)
+        ttk.Button(points_mgmt_frame, text="Deduct Points", 
+                  command=self.deduct_loyalty_points).pack(side=tk.LEFT, padx=2)
