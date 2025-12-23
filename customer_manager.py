@@ -101,4 +101,14 @@ class CustomerManager:
         self.setup_loyalty_tab()
     
     def setup_customer_info_tab(self):
+        canvas = tk.Canvas(self.info_frame)
+        scrollbar = ttk.Scrollbar(self.info_frame, orient="vertical", command=canvas.yview)
+        scrollable_frame = ttk.Frame(canvas)
         
+        scrollable_frame.bind(
+            "<Configure>",
+            lambda e: canvas.configure(scrollregion=canvas.bbox("all"))
+        )
+        
+        canvas.create_window((0, 0), window=scrollable_frame, anchor="nw")
+        canvas.configure(yscrollcommand=scrollbar.set)
