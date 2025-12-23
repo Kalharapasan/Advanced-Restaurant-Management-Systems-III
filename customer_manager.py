@@ -68,3 +68,10 @@ class CustomerManager:
         
         self.customer_tree.configure(yscrollcommand=v_scrollbar.set, 
                                     xscrollcommand=h_scrollbar.set)
+        
+        self.customer_tree.grid(row=0, column=0, sticky="nsew")
+        v_scrollbar.grid(row=0, column=1, sticky="ns")
+        h_scrollbar.grid(row=1, column=0, sticky="ew")
+        
+        list_frame.grid_rowconfigure(0, weight=1)
+        list_frame.grid_columnconfigure(0, weight=1)
