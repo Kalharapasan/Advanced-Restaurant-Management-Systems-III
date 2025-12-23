@@ -47,3 +47,6 @@ class CustomerManager:
                   command=self.edit_selected_customer).pack(side=tk.LEFT, padx=2)
         ttk.Button(action_frame, text="📊 View Orders", 
                   command=self.view_customer_orders).pack(side=tk.LEFT, padx=2)
+        
+        list_frame = ttk.Frame(left_frame)
+        list_frame.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
