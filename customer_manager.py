@@ -241,4 +241,5 @@ class CustomerManager:
                   command=self.deduct_loyalty_points).pack(side=tk.LEFT, padx=2)
     
     def refresh_customer_list(self):
-        
+        for item in self.customer_tree.get_children():
+            self.customer_tree.delete(item)
