@@ -187,4 +187,10 @@ class CustomerManager:
             self.order_tree.heading(col, text=col)
             self.order_tree.column(col, width=120)
         
+        order_v_scroll = ttk.Scrollbar(self.history_frame, orient=tk.VERTICAL, 
+                                      command=self.order_tree.yview)
+        order_h_scroll = ttk.Scrollbar(self.history_frame, orient=tk.HORIZONTAL, 
+                                      command=self.order_tree.xview)
         
+        self.order_tree.configure(yscrollcommand=order_v_scroll.set, 
+                                 xscrollcommand=order_h_scroll.set)
