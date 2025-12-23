@@ -207,3 +207,6 @@ class CustomerManager:
         self.order_summary_label = ttk.Label(summary_frame, 
                                            text="Select a customer to view order history")
         self.order_summary_label.pack()
+    
+    def setup_loyalty_tab(self):
+        
