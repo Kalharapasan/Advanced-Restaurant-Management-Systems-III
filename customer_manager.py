@@ -212,3 +212,9 @@ class CustomerManager:
         overview_frame = ttk.LabelFrame(self.loyalty_frame, text="Loyalty Overview")
         overview_frame.pack(fill=tk.X, padx=10, pady=5)
         self.loyalty_fields = {}
+        ttk.Label(overview_frame, text="Current Tier:").grid(row=0, column=0, sticky=tk.W, padx=5, pady=2)
+        self.loyalty_fields['tier'] = ttk.Label(overview_frame, text="", font=('Segoe UI', 10, 'bold'))
+        self.loyalty_fields['tier'].grid(row=0, column=1, sticky=tk.W, padx=5, pady=2)
+        ttk.Label(overview_frame, text="Loyalty Points:").grid(row=0, column=2, sticky=tk.W, padx=5, pady=2)
+        self.loyalty_fields['points'] = ttk.Label(overview_frame, text="", font=('Segoe UI', 10, 'bold'))
+        self.loyalty_fields['points'].grid(row=0, column=3, sticky=tk.W, padx=5, pady=2)
