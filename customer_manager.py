@@ -50,3 +50,6 @@ class CustomerManager:
         
         list_frame = ttk.Frame(left_frame)
         list_frame.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
+        
+        columns = ('ID', 'Name', 'Phone', 'Email', 'Orders', 'Spent', 'Loyalty', 'Tier')
+        self.customer_tree = ttk.Treeview(list_frame, columns=columns, show='headings', height=15)
