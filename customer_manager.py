@@ -165,3 +165,14 @@ class CustomerManager:
         
         self.customer_fields['notes'] = tk.Text(notes_frame, width=50, height=4)
         self.customer_fields['notes'].pack(fill=tk.X, padx=5, pady=5)
+        button_frame = ttk.Frame(scrollable_frame)
+        button_frame.pack(fill=tk.X, padx=10, pady=10)
+        
+        ttk.Button(button_frame, text="💾 Save Changes", 
+                  command=self.save_customer_changes).pack(side=tk.LEFT, padx=5)
+        ttk.Button(button_frame, text="🔄 Refresh", 
+                  command=self.refresh_customer_details).pack(side=tk.LEFT, padx=5)
+        ttk.Button(button_frame, text="📧 Send Email", 
+                  command=self.send_customer_email).pack(side=tk.LEFT, padx=5)
+        ttk.Button(button_frame, text="📱 Send SMS", 
+                  command=self.send_customer_sms).pack(side=tk.LEFT, padx=5)
