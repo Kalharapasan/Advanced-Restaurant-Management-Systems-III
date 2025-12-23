@@ -200,3 +200,10 @@ class CustomerManager:
         
         self.history_frame.grid_rowconfigure(0, weight=1)
         self.history_frame.grid_columnconfigure(0, weight=1)
+        
+        summary_frame = ttk.Frame(self.history_frame)
+        summary_frame.grid(row=2, column=0, columnspan=2, sticky="ew", pady=5)
+        
+        self.order_summary_label = ttk.Label(summary_frame, 
+                                           text="Select a customer to view order history")
+        self.order_summary_label.pack()
