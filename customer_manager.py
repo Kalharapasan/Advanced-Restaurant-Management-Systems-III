@@ -92,3 +92,5 @@ class CustomerManager:
         self.details_notebook.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
         self.info_frame = ttk.Frame(self.details_notebook)
         self.details_notebook.add(self.info_frame, text="👤 Customer Info")
+        self.history_frame = ttk.Frame(self.details_notebook)
+        self.details_notebook.add(self.history_frame, text="📋 Order History")
