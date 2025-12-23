@@ -160,4 +160,8 @@ class CustomerManager:
             self.dietary_vars[option.lower().replace('-', '_')] = var
             ttk.Checkbutton(dietary_frame, text=option, variable=var).grid(row=0, column=i, padx=5)
         
+        notes_frame = ttk.LabelFrame(scrollable_frame, text="Notes")
+        notes_frame.pack(fill=tk.X, padx=10, pady=5)
         
+        self.customer_fields['notes'] = tk.Text(notes_frame, width=50, height=4)
+        self.customer_fields['notes'].pack(fill=tk.X, padx=5, pady=5)
