@@ -139,4 +139,7 @@ class CustomerManager:
         self.customer_fields['gender'] = ttk.Combobox(personal_frame, width=10, 
                                                      values=['Male', 'Female', 'Other'])
         self.customer_fields['gender'].grid(row=2, column=3, sticky=tk.W, padx=5, pady=2)
+        ttk.Label(personal_frame, text="Address:").grid(row=3, column=0, sticky=tk.W, padx=5, pady=2)
+        self.customer_fields['address'] = tk.Text(personal_frame, width=50, height=3)
+        self.customer_fields['address'].grid(row=3, column=1, columnspan=3, sticky=tk.W, padx=5, pady=2)
         
