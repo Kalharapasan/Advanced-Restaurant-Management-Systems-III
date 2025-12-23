@@ -266,5 +266,5 @@ class CustomerManager:
         self.stats_label.config(text=f"Total Customers: {total_customers} | Active: {active_customers}")
     
     def on_search_change(self, event=None):
-        
+        self.parent_frame.after(300, self.search_customers)
         
