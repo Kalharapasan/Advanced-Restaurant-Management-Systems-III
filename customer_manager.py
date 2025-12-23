@@ -243,3 +243,8 @@ class CustomerManager:
     def refresh_customer_list(self):
         for item in self.customer_tree.get_children():
             self.customer_tree.delete(item)
+        customers = self.db_manager.get_all_customers()
+        
+        for customer in customers:
+            (id, customer_id, name, phone, email, total_orders, 
+             total_spent, loyalty_points, loyalty_tier, last_visit, is_active) = customer
