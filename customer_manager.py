@@ -148,4 +148,16 @@ class CustomerManager:
         self.customer_fields['preferred_payment'] = ttk.Combobox(pref_frame, width=15,
                                                                values=['Cash', 'Card', 'Digital'])
         self.customer_fields['preferred_payment'].grid(row=0, column=1, sticky=tk.W, padx=5, pady=2)
+        ttk.Label(pref_frame, text="Dietary Preferences:").grid(row=1, column=0, sticky=tk.W, padx=5, pady=2)
+        dietary_frame = ttk.Frame(pref_frame)
+        dietary_frame.grid(row=1, column=1, columnspan=3, sticky=tk.W, padx=5, pady=2)
+        
+        self.dietary_vars = {}
+        dietary_options = ['Vegetarian', 'Vegan', 'Gluten-Free', 'Dairy-Free', 'Nut-Free']
+        
+        for i, option in enumerate(dietary_options):
+            var = tk.BooleanVar()
+            self.dietary_vars[option.lower().replace('-', '_')] = var
+            ttk.Checkbutton(dietary_frame, text=option, variable=var).grid(row=0, column=i, padx=5)
+        
         
