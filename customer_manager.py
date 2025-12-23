@@ -211,3 +211,4 @@ class CustomerManager:
     def setup_loyalty_tab(self):
         overview_frame = ttk.LabelFrame(self.loyalty_frame, text="Loyalty Overview")
         overview_frame.pack(fill=tk.X, padx=10, pady=5)
+        self.loyalty_fields = {}
