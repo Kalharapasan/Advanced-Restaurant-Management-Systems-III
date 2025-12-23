@@ -262,5 +262,9 @@ class CustomerManager:
                 loyalty_tier or "Bronze"
             ), tags=(id,))
         total_customers = len(customers)
-        active_customers = sum(1 for c in customers if c[10])  # is_active
+        active_customers = sum(1 for c in customers if c[10]) 
         self.stats_label.config(text=f"Total Customers: {total_customers} | Active: {active_customers}")
+    
+    def on_search_change(self, event=None):
+        
+        
