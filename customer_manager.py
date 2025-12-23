@@ -127,5 +127,16 @@ class CustomerManager:
         ttk.Label(personal_frame, text="Email:").grid(row=1, column=2, sticky=tk.W, padx=5, pady=2)
         self.customer_fields['email'] = ttk.Entry(personal_frame, width=25)
         self.customer_fields['email'].grid(row=1, column=3, sticky=tk.W, padx=5, pady=2)
+        ttk.Label(personal_frame, text="Date of Birth:").grid(row=2, column=0, sticky=tk.W, padx=5, pady=2)
+        self.customer_fields['date_of_birth'] = DateEntry(personal_frame, width=12, 
+                                                         background='darkblue',
+                                                         foreground='white', 
+                                                         borderwidth=2,
+                                                         year=1990)
+        self.customer_fields['date_of_birth'].grid(row=2, column=1, sticky=tk.W, padx=5, pady=2)
         
+        ttk.Label(personal_frame, text="Gender:").grid(row=2, column=2, sticky=tk.W, padx=5, pady=2)
+        self.customer_fields['gender'] = ttk.Combobox(personal_frame, width=10, 
+                                                     values=['Male', 'Female', 'Other'])
+        self.customer_fields['gender'].grid(row=2, column=3, sticky=tk.W, padx=5, pady=2)
         
