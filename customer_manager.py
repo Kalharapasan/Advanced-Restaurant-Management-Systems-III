@@ -115,4 +115,11 @@ class CustomerManager:
         personal_frame = ttk.LabelFrame(scrollable_frame, text="Personal Information")
         personal_frame.pack(fill=tk.X, padx=10, pady=5)
         self.customer_fields = {}
+        ttk.Label(personal_frame, text="Customer ID:").grid(row=0, column=0, sticky=tk.W, padx=5, pady=2)
+        self.customer_fields['customer_id'] = ttk.Label(personal_frame, text="", font=('Segoe UI', 9, 'bold'))
+        self.customer_fields['customer_id'].grid(row=0, column=1, sticky=tk.W, padx=5, pady=2)
+        ttk.Label(personal_frame, text="Full Name:").grid(row=0, column=2, sticky=tk.W, padx=5, pady=2)
+        self.customer_fields['name'] = ttk.Entry(personal_frame, width=25)
+        self.customer_fields['name'].grid(row=0, column=3, sticky=tk.W, padx=5, pady=2)
+        
         
