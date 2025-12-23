@@ -53,3 +53,10 @@ class CustomerManager:
         
         columns = ('ID', 'Name', 'Phone', 'Email', 'Orders', 'Spent', 'Loyalty', 'Tier')
         self.customer_tree = ttk.Treeview(list_frame, columns=columns, show='headings', height=15)
+        
+        column_widths = {'ID': 80, 'Name': 120, 'Phone': 100, 'Email': 150, 
+                        'Orders': 60, 'Spent': 80, 'Loyalty': 60, 'Tier': 80}
+        
+        for col in columns:
+            self.customer_tree.heading(col, text=col, anchor=tk.CENTER)
+            self.customer_tree.column(col, width=column_widths[col], anchor=tk.CENTER)
