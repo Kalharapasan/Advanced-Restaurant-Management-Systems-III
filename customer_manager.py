@@ -60,3 +60,11 @@ class CustomerManager:
         for col in columns:
             self.customer_tree.heading(col, text=col, anchor=tk.CENTER)
             self.customer_tree.column(col, width=column_widths[col], anchor=tk.CENTER)
+            
+        v_scrollbar = ttk.Scrollbar(list_frame, orient=tk.VERTICAL, 
+                                   command=self.customer_tree.yview)
+        h_scrollbar = ttk.Scrollbar(list_frame, orient=tk.HORIZONTAL, 
+                                   command=self.customer_tree.xview)
+        
+        self.customer_tree.configure(yscrollcommand=v_scrollbar.set, 
+                                    xscrollcommand=h_scrollbar.set)
