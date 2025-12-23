@@ -12,3 +12,4 @@ class CustomerManager:
         self.parent_frame.grid_columnconfigure(0, weight=1)
         self.paned_window = ttk.PanedWindow(self.parent_frame, orient=tk.HORIZONTAL)
         self.paned_window.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+        self.setup_customer_list_panel()
