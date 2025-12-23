@@ -94,3 +94,8 @@ class CustomerManager:
         self.details_notebook.add(self.info_frame, text="👤 Customer Info")
         self.history_frame = ttk.Frame(self.details_notebook)
         self.details_notebook.add(self.history_frame, text="📋 Order History")
+        self.loyalty_frame = ttk.Frame(self.details_notebook)
+        self.details_notebook.add(self.loyalty_frame, text="⭐ Loyalty")
+        self.setup_customer_info_tab()
+        self.setup_order_history_tab()
+        self.setup_loyalty_tab()
