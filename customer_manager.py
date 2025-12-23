@@ -121,5 +121,11 @@ class CustomerManager:
         ttk.Label(personal_frame, text="Full Name:").grid(row=0, column=2, sticky=tk.W, padx=5, pady=2)
         self.customer_fields['name'] = ttk.Entry(personal_frame, width=25)
         self.customer_fields['name'].grid(row=0, column=3, sticky=tk.W, padx=5, pady=2)
+        ttk.Label(personal_frame, text="Phone:").grid(row=1, column=0, sticky=tk.W, padx=5, pady=2)
+        self.customer_fields['phone'] = ttk.Entry(personal_frame, width=15)
+        self.customer_fields['phone'].grid(row=1, column=1, sticky=tk.W, padx=5, pady=2)
+        ttk.Label(personal_frame, text="Email:").grid(row=1, column=2, sticky=tk.W, padx=5, pady=2)
+        self.customer_fields['email'] = ttk.Entry(personal_frame, width=25)
+        self.customer_fields['email'].grid(row=1, column=3, sticky=tk.W, padx=5, pady=2)
         
         
