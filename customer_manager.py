@@ -86,4 +86,5 @@ class CustomerManager:
         self.stats_label.pack(pady=10)
     
     def setup_customer_details_panel(self):
-        
+        right_frame = ttk.Frame(self.paned_window)
+        self.paned_window.add(right_frame, weight=1)
