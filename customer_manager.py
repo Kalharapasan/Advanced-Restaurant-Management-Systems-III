@@ -261,4 +261,6 @@ class CustomerManager:
                 loyalty_points or 0,
                 loyalty_tier or "Bronze"
             ), tags=(id,))
-        
+        total_customers = len(customers)
+        active_customers = sum(1 for c in customers if c[10])  # is_active
+        self.stats_label.config(text=f"Total Customers: {total_customers} | Active: {active_customers}")
