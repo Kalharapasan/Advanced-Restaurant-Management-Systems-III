@@ -194,3 +194,9 @@ class CustomerManager:
         
         self.order_tree.configure(yscrollcommand=order_v_scroll.set, 
                                  xscrollcommand=order_h_scroll.set)
+        self.order_tree.grid(row=0, column=0, sticky="nsew")
+        order_v_scroll.grid(row=0, column=1, sticky="ns")
+        order_h_scroll.grid(row=1, column=0, sticky="ew")
+        
+        self.history_frame.grid_rowconfigure(0, weight=1)
+        self.history_frame.grid_columnconfigure(0, weight=1)
