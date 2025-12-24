@@ -466,5 +466,12 @@ Spend £500 more to reach Platinum tier!""",
             return
         
         self.customer_dialog(title="Edit Customer", mode="edit")
+    
+    def customer_dialog(self, title, mode):
+        dialog = tk.Toplevel(self.parent_frame)
+        dialog.title(title)
+        dialog.geometry("600x700")
+        dialog.resizable(False, False)
+        dialog.configure(bg='#f0f0f0')
         
        
