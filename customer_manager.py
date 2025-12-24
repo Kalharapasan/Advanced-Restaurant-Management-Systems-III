@@ -628,4 +628,16 @@ Spend £500 more to reach Platinum tier!""",
             messagebox.showerror("Validation Error", "Name and phone are required fields.")
             return
         
+        customer_data = {
+            'name': name,
+            'phone': phone,
+            'email': self.customer_fields['email'].get().strip() or None,
+            'address': self.customer_fields['address'].get("1.0", tk.END).strip() or None,
+            'date_of_birth': self.customer_fields['date_of_birth'].get_date(),
+            'gender': self.customer_fields['gender'].get() or None,
+            'preferred_payment': self.customer_fields['preferred_payment'].get() or None,
+            'notes': self.customer_fields['notes'].get("1.0", tk.END).strip() or None,
+            'dietary_preferences': {key: var.get() for key, var in self.dietary_vars.items()}
+        }
+        
        
