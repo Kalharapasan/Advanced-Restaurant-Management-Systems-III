@@ -647,5 +647,9 @@ Spend £500 more to reach Platinum tier!""",
             self.refresh_customer_list()
         else:
             messagebox.showerror("Error", "Failed to update customer.")
+    
+    def refresh_customer_details(self):
+        if self.selected_customer:
+            self.load_customer_details(self.selected_customer)
         
        
