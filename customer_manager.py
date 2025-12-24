@@ -547,6 +547,23 @@ Spend £500 more to reach Platinum tier!""",
             cursor = self.db_manager.get_connection().cursor()
             cursor.execute("SELECT * FROM customers WHERE id = %s", (self.selected_customer,))
             customer = cursor.fetchone()
+            if customer:
+                if customer[2]:  
+                    fields['name'].insert(0, customer[2])
+                if customer[3]:  
+                    fields['phone'].insert(0, customer[3])
+                if customer[4]: 
+                    fields['email'].insert(0, customer[4])
+                if customer[5]:  
+                    fields['address'].insert("1.0", customer[5])
+                if customer[6]:  
+                    fields['date_of_birth'].set_date(customer[6])
+                if customer[7]:  
+                    fields['gender'].set(customer[7])
+                if customer[13]:  
+                    fields['preferred_payment'].set(customer[13])
+                if customer[16]:  
+                    fields['notes'].insert("1.0", customer[16])
         
         except Exception as e:
             messagebox.showerror("Error", f"Failed to load customer data: {e}")
