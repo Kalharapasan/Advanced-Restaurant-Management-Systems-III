@@ -270,4 +270,5 @@ class CustomerManager:
     
     def search_customers(self):
         search_term = self.search_var.get().strip()
-        
+        for item in self.customer_tree.get_children():
+            self.customer_tree.delete(item)
