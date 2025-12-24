@@ -404,7 +404,10 @@ class CustomerManager:
         )
     
     def load_loyalty_info(self, customer):
-        
+        loyalty_tier = customer[12] or "Bronze"
+        loyalty_points = customer[11] or 0
+        total_orders = customer[8] or 0
+        total_spent = customer[9] or 0
         
         
         
