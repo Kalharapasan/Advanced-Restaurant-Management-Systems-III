@@ -656,3 +656,4 @@ Spend £500 more to reach Platinum tier!""",
         if not self.selected_customer:
             messagebox.showwarning("No Selection", "Please select a customer first.")
             return
+        self.details_notebook.select(1)
