@@ -510,5 +510,8 @@ Spend £500 more to reach Platinum tier!""",
         fields['date_of_birth'] = DateEntry(parent, width=12, background='darkblue',
                                           foreground='white', borderwidth=2, year=1990)
         fields['date_of_birth'].grid(row=3, column=1, sticky=tk.W, padx=5, pady=5)
+        ttk.Label(parent, text="Gender:").grid(row=4, column=0, sticky=tk.W, padx=5, pady=5)
+        fields['gender'] = ttk.Combobox(parent, width=15, values=['Male', 'Female', 'Other'])
+        fields['gender'].grid(row=4, column=1, sticky=tk.W, padx=5, pady=5)
         
        
