@@ -536,4 +536,6 @@ Spend £500 more to reach Platinum tier!""",
         ttk.Label(parent, text="Notes:").grid(row=2, column=0, sticky=tk.NW, padx=5, pady=5)
         fields['notes'] = tk.Text(parent, width=35, height=6)
         fields['notes'].grid(row=2, column=1, columnspan=2, padx=5, pady=5)
+        ttk.Label(parent, text="* Required fields", font=('Segoe UI', 8), 
+                 foreground='red').grid(row=3, column=0, columnspan=3, padx=5, pady=10)
        
