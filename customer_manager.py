@@ -416,5 +416,45 @@ class CustomerManager:
         self.benefits_text.delete("1.0", tk.END)
         self.benefits_text.insert("1.0", benefits)
         self.benefits_text.config(state=tk.DISABLED)
+    
+    def get_tier_benefits(self, tier):
+        benefits = {
+            'Bronze': """Bronze Tier Benefits:
+• Welcome to our loyalty program!
+• Earn 1 point per £1 spent
+• Birthday discount: 5%
+• Special member-only offers
+
+Spend £100 more to reach Silver tier!""",
+            
+            'Silver': """Silver Tier Benefits:
+• Earn 1.5 points per £1 spent
+• Birthday discount: 10%
+• Priority reservations
+• Free appetizer on birthday
+• Monthly exclusive offers
+
+Spend £250 more to reach Gold tier!""",
+            
+            'Gold': """Gold Tier Benefits:
+• Earn 2 points per £1 spent
+• Birthday discount: 15%
+• Complimentary valet parking
+• Free dessert with main course
+• Early access to new menu items
+• Dedicated customer service line
+
+Spend £500 more to reach Platinum tier!""",
+            
+            'Platinum': """Platinum Tier Benefits:
+• Earn 3 points per £1 spent
+• Birthday discount: 20%
+• Complimentary champagne service
+• Private dining room access
+• Personal chef consultation
+• Annual dining credit: £100
+• VIP event invitations"""
+        }
+        return benefits.get(tier, "No benefits information available.")
         
        
