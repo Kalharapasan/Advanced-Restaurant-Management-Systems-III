@@ -483,5 +483,8 @@ Spend £500 more to reach Platinum tier!""",
         notebook.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
         contact_tab = ttk.Frame(notebook)
         notebook.add(contact_tab, text="Contact & Preferences")
+        dialog_fields = {}
+        self.setup_personal_tab(personal_tab, dialog_fields)
+        self.setup_contact_tab(contact_tab, dialog_fields)
         
        
