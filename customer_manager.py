@@ -525,5 +525,11 @@ Spend £500 more to reach Platinum tier!""",
         ttk.Label(parent, text="Dietary Preferences:").grid(row=1, column=0, sticky=tk.NW, padx=5, pady=5)
         dietary_frame = ttk.Frame(parent)
         dietary_frame.grid(row=1, column=1, columnspan=2, sticky=tk.W, padx=5, pady=5)
+        fields['dietary_vars'] = {}
+        dietary_options = ['Vegetarian', 'Vegan', 'Gluten-Free', 'Dairy-Free', 'Nut-Free']
         
+        for i, option in enumerate(dietary_options):
+            var = tk.BooleanVar()
+            fields['dietary_vars'][option.lower().replace('-', '_')] = var
+            ttk.Checkbutton(dietary_frame, text=option, variable=var).grid(row=i//3, column=i%3, padx=5, sticky=tk.W)
        
