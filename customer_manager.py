@@ -495,5 +495,8 @@ Spend £500 more to reach Platinum tier!""",
                   command=dialog.destroy).pack(side=tk.RIGHT, padx=5)
         if mode == "edit" and self.selected_customer:
             self.populate_dialog_fields(dialog_fields)
+    
+    def setup_personal_tab(self, parent, fields):
+        
         
        
