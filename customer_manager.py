@@ -707,3 +707,8 @@ Spend £500 more to reach Platinum tier!""",
             messagebox.showerror("Invalid Input", "Please enter a valid number.")
         except Exception as e:
             messagebox.showerror("Error", f"Failed to add points: {e}")
+    
+    def deduct_loyalty_points(self):
+        if not self.selected_customer:
+            messagebox.showwarning("No Selection", "Please select a customer first.")
+            return
