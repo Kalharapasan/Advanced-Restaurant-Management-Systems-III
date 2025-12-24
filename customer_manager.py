@@ -712,3 +712,34 @@ Spend £500 more to reach Platinum tier!""",
         if not self.selected_customer:
             messagebox.showwarning("No Selection", "Please select a customer first.")
             return
+        
+        try:
+            points = int(self.points_adjustment.get() or 0)
+            if points <= 0:
+                messagebox.showerror("Invalid Points", "Please enter a positive number of points.")
+                return
+            
+            cursor = self.db_manager.get_connection().cursor()
+            cursor.execute("SELECT loyalty_points FROM customers WHERE id = %s", (self.selected_customer,))
+            current_points = cursor.fetchone()[0] or 0
+            
+            if current_points < points:
+                messagebox.showerror("Insufficient Points", 
+                                   f"Customer only has {current_points} points available.")
+                return
+            
+            cursor.execute("""
+                UPDATE customers 
+                SET loyalty_points = loyalty_points - %s 
+                WHERE id = %s
+            """, (points, self.selected_customer))
+            self.db_manager.get_connection().commit()
+            
+            messagebox.showinfo("Success", f"Deducted {points} loyalty points!")
+            self.load_customer_details(self.selected_customer)
+            self.points_adjustment.delete(0, tk.END)
+            
+        except ValueError:
+            messagebox.showerror("Invalid Input", "Please enter a valid number.")
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to deduct points: {e}")
