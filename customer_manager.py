@@ -402,6 +402,10 @@ class CustomerManager:
         self.order_summary_label.config(
             text=f"Total Orders: {total_orders} | Total Value: £{total_value:.2f} | Average Order: £{avg_order:.2f}"
         )
+    
+    def load_loyalty_info(self, customer):
+        
+        
         
         
        
