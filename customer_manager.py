@@ -576,7 +576,13 @@ Spend £500 more to reach Platinum tier!""",
             messagebox.showerror("Error", f"Failed to load customer data: {e}")
     
     def save_customer_dialog(self, dialog, fields, mode):
+        if not fields['name'].get().strip():
+            messagebox.showerror("Validation Error", "Name is required.")
+            return
         
+        if not fields['phone'].get().strip():
+            messagebox.showerror("Validation Error", "Phone number is required.")
+            return
         
         
        
