@@ -652,4 +652,7 @@ Spend £500 more to reach Platinum tier!""",
         if self.selected_customer:
             self.load_customer_details(self.selected_customer)
         
-       
+    def view_customer_orders(self):
+        if not self.selected_customer:
+            messagebox.showwarning("No Selection", "Please select a customer first.")
+            return
