@@ -9,6 +9,7 @@ class CustomerManager:
         self.parent_frame = parent_frame
         self.db_manager = db_manager
         self.selected_customer = None
+        self.setup_customer_interface()
     
     def setup_customer_interface(self):
         self.parent_frame.grid_rowconfigure(0, weight=1)
