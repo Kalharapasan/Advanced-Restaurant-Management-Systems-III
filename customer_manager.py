@@ -497,6 +497,9 @@ Spend £500 more to reach Platinum tier!""",
             self.populate_dialog_fields(dialog_fields)
     
     def setup_personal_tab(self, parent, fields):
+        ttk.Label(parent, text="Full Name *:").grid(row=0, column=0, sticky=tk.W, padx=5, pady=5)
+        fields['name'] = ttk.Entry(parent, width=30)
+        fields['name'].grid(row=0, column=1, columnspan=2, sticky=tk.W, padx=5, pady=5)
         
         
        
