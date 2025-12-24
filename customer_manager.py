@@ -290,3 +290,11 @@ class CustomerManager:
                 loyalty_points or 0,
                 loyalty_tier or "Bronze"
             ), tags=(id,))
+    
+    def on_customer_select(self, event):
+        selection = self.customer_tree.selection()
+        if selection:
+            item = selection[0]
+            customer_id = self.customer_tree.item(item, 'tags')[0]
+            self.selected_customer = customer_id
+            self.load_customer_details(customer_id)
