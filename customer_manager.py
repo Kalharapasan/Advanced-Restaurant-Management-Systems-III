@@ -519,6 +519,8 @@ Spend £500 more to reach Platinum tier!""",
     
     
     def setup_contact_tab(self, parent, fields):
-        
+        ttk.Label(parent, text="Preferred Payment:").grid(row=0, column=0, sticky=tk.W, padx=5, pady=5)
+        fields['preferred_payment'] = ttk.Combobox(parent, width=15, values=['Cash', 'Card', 'Digital'])
+        fields['preferred_payment'].grid(row=0, column=1, sticky=tk.W, padx=5, pady=5)
         
        
