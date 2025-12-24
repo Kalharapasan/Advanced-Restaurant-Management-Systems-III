@@ -272,3 +272,21 @@ class CustomerManager:
         search_term = self.search_var.get().strip()
         for item in self.customer_tree.get_children():
             self.customer_tree.delete(item)
+        customers = self.db_manager.get_all_customers(search_term if search_term else None)
+        
+        for customer in customers:
+            (id, customer_id, name, phone, email, total_orders, 
+             total_spent, loyalty_points, loyalty_tier, last_visit, is_active) = customer
+            
+            formatted_spent = f"£{float(total_spent or 0):.2f}"
+            
+            self.customer_tree.insert('', 'end', values=(
+                customer_id or f"CUST{id:06d}",
+                name or "N/A",
+                phone or "N/A",
+                email or "N/A", 
+                total_orders or 0,
+                formatted_spent,
+                loyalty_points or 0,
+                loyalty_tier or "Bronze"
+            ), tags=(id,))
