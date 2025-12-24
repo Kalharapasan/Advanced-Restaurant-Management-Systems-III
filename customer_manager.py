@@ -329,4 +329,17 @@ class CustomerManager:
                 field_widget.set("")
             elif hasattr(field_widget, 'config'):
                 field_widget.config(text="")
+        
+        field_mapping = {
+            1: 'customer_id',    
+            2: 'name',           
+            3: 'phone',          
+            4: 'email',        
+            5: 'address',      
+            6: 'date_of_birth', 
+            7: 'gender',         
+            13: 'preferred_payment',  
+            14: 'dietary_preferences',  
+            16: 'notes'          # notes
+        }
     
