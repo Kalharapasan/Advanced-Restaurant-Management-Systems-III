@@ -668,3 +668,13 @@ Spend £500 more to reach Platinum tier!""",
             messagebox.showwarning("No Email", "Customer does not have an email address.")
             return
         messagebox.showinfo("Email", f"Email functionality would send message to: {email}")
+    
+    def send_customer_sms(self):
+        if not self.selected_customer:
+            messagebox.showwarning("No Selection", "Please select a customer first.")
+            return
+        
+        phone = self.customer_fields['phone'].get().strip()
+        if not phone:
+            messagebox.showwarning("No Phone", "Customer does not have a phone number.")
+            return
