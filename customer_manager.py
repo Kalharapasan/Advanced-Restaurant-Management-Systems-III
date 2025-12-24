@@ -408,7 +408,10 @@ class CustomerManager:
         loyalty_points = customer[11] or 0
         total_orders = customer[8] or 0
         total_spent = customer[9] or 0
-        
+        self.loyalty_fields['tier'].config(text=loyalty_tier, foreground=self.get_tier_color(loyalty_tier))
+        self.loyalty_fields['points'].config(text=str(loyalty_points))
+        self.loyalty_fields['total_orders'].config(text=str(total_orders))
+        self.loyalty_fields['total_spent'].config(text=f"£{float(total_spent):.2f}")
         
         
        
