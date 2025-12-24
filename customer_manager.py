@@ -340,6 +340,34 @@ class CustomerManager:
             7: 'gender',         
             13: 'preferred_payment',  
             14: 'dietary_preferences',  
-            16: 'notes'          # notes
+            16: 'notes'         
         }
+        
+        for index, field_name in field_mapping.items():
+            value = customer[index] if customer[index] is not None else ""
+            
+            if field_name in self.customer_fields:
+                widget = self.customer_fields[field_name]
+                
+                if field_name == 'customer_id':
+                    widget.config(text=str(value))
+                elif field_name == 'date_of_birth' and value:
+                    if isinstance(value, str):
+                        widget.set_date(datetime.strptime(value, '%Y-%m-%d').date())
+                    else:
+                        widget.set_date(value)
+                elif field_name == 'address' or field_name == 'notes':
+                    widget.insert("1.0", str(value))
+                elif field_name == 'dietary_preferences':
+                    if value:
+                        try:
+                            prefs = json.loads(value) if isinstance(value, str) else value
+                            for pref_key, var in self.dietary_vars.items():
+                                var.set(prefs.get(pref_key, False))
+                        except:
+                            pass
+                elif hasattr(widget, 'set'):
+                    widget.set(str(value))
+                elif hasattr(widget, 'insert'):
+                    widget.insert(0, str(value))
     
