@@ -584,5 +584,17 @@ Spend £500 more to reach Platinum tier!""",
             messagebox.showerror("Validation Error", "Phone number is required.")
             return
         
+        customer_data = {
+            'name': fields['name'].get().strip(),
+            'phone': fields['phone'].get().strip(),
+            'email': fields['email'].get().strip() or None,
+            'address': fields['address'].get("1.0", tk.END).strip() or None,
+            'date_of_birth': fields['date_of_birth'].get_date(),
+            'gender': fields['gender'].get() or None,
+            'preferred_payment': fields['preferred_payment'].get() or None,
+            'notes': fields['notes'].get("1.0", tk.END).strip() or None,
+            'dietary_preferences': {key: var.get() for key, var in fields['dietary_vars'].items()}
+        }
+        
         
        
