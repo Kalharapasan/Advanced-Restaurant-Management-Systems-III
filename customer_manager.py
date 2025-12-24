@@ -680,3 +680,30 @@ Spend £500 more to reach Platinum tier!""",
             return
         messagebox.showinfo("SMS", f"SMS functionality would send message to: {phone}")
     
+    def add_loyalty_points(self):
+        if not self.selected_customer:
+            messagebox.showwarning("No Selection", "Please select a customer first.")
+            return
+        
+        try:
+            points = int(self.points_adjustment.get() or 0)
+            if points <= 0:
+                messagebox.showerror("Invalid Points", "Please enter a positive number of points.")
+                return
+            
+            cursor = self.db_manager.get_connection().cursor()
+            cursor.execute("""
+                UPDATE customers 
+                SET loyalty_points = loyalty_points + %s 
+                WHERE id = %s
+            """, (points, self.selected_customer))
+            self.db_manager.get_connection().commit()
+            
+            messagebox.showinfo("Success", f"Added {points} loyalty points!")
+            self.load_customer_details(self.selected_customer)
+            self.points_adjustment.delete(0, tk.END)
+            
+        except ValueError:
+            messagebox.showerror("Invalid Input", "Please enter a valid number.")
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to add points: {e}")
