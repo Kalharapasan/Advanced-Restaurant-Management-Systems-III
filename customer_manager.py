@@ -500,6 +500,9 @@ Spend £500 more to reach Platinum tier!""",
         ttk.Label(parent, text="Full Name *:").grid(row=0, column=0, sticky=tk.W, padx=5, pady=5)
         fields['name'] = ttk.Entry(parent, width=30)
         fields['name'].grid(row=0, column=1, columnspan=2, sticky=tk.W, padx=5, pady=5)
+        ttk.Label(parent, text="Phone *:").grid(row=1, column=0, sticky=tk.W, padx=5, pady=5)
+        fields['phone'] = ttk.Entry(parent, width=20)
+        fields['phone'].grid(row=1, column=1, sticky=tk.W, padx=5, pady=5)
         
         
        
