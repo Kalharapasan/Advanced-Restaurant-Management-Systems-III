@@ -506,6 +506,9 @@ Spend £500 more to reach Platinum tier!""",
         ttk.Label(parent, text="Email:").grid(row=2, column=0, sticky=tk.W, padx=5, pady=5)
         fields['email'] = ttk.Entry(parent, width=30)
         fields['email'].grid(row=2, column=1, columnspan=2, sticky=tk.W, padx=5, pady=5)
-        
+        ttk.Label(parent, text="Date of Birth:").grid(row=3, column=0, sticky=tk.W, padx=5, pady=5)
+        fields['date_of_birth'] = DateEntry(parent, width=12, background='darkblue',
+                                          foreground='white', borderwidth=2, year=1990)
+        fields['date_of_birth'].grid(row=3, column=1, sticky=tk.W, padx=5, pady=5)
         
        
