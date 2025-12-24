@@ -513,5 +513,8 @@ Spend £500 more to reach Platinum tier!""",
         ttk.Label(parent, text="Gender:").grid(row=4, column=0, sticky=tk.W, padx=5, pady=5)
         fields['gender'] = ttk.Combobox(parent, width=15, values=['Male', 'Female', 'Other'])
         fields['gender'].grid(row=4, column=1, sticky=tk.W, padx=5, pady=5)
+        ttk.Label(parent, text="Address:").grid(row=5, column=0, sticky=tk.NW, padx=5, pady=5)
+        fields['address'] = tk.Text(parent, width=35, height=4)
+        fields['address'].grid(row=5, column=1, columnspan=2, padx=5, pady=5)
         
        
