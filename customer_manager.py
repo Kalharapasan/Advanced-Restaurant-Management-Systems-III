@@ -481,5 +481,7 @@ Spend £500 more to reach Platinum tier!""",
         ))
         notebook = ttk.Notebook(dialog)
         notebook.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+        contact_tab = ttk.Frame(notebook)
+        notebook.add(contact_tab, text="Contact & Preferences")
         
        
