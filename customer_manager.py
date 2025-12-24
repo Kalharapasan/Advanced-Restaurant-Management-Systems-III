@@ -574,4 +574,9 @@ Spend £500 more to reach Platinum tier!""",
         
         except Exception as e:
             messagebox.showerror("Error", f"Failed to load customer data: {e}")
+    
+    def save_customer_dialog(self, dialog, fields, mode):
+        
+        
+        
        
