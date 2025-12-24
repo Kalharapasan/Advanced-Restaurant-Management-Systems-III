@@ -318,3 +318,6 @@ class CustomerManager:
         except Exception as e:
             messagebox.showerror("Error", f"Failed to load customer details: {e}")
     
+    def populate_customer_form(self, customer):
+        
+    
