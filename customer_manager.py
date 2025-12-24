@@ -678,3 +678,5 @@ Spend £500 more to reach Platinum tier!""",
         if not phone:
             messagebox.showwarning("No Phone", "Customer does not have a phone number.")
             return
+        messagebox.showinfo("SMS", f"SMS functionality would send message to: {phone}")
+    
