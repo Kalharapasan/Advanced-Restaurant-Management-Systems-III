@@ -542,4 +542,12 @@ Spend £500 more to reach Platinum tier!""",
     def populate_dialog_fields(self, fields):
         if not self.selected_customer:
             return
+        
+        try:
+            cursor = self.db_manager.get_connection().cursor()
+            cursor.execute("SELECT * FROM customers WHERE id = %s", (self.selected_customer,))
+            customer = cursor.fetchone()
+        
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to load customer data: {e}")
        
