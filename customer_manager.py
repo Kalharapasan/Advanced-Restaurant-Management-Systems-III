@@ -596,5 +596,25 @@ Spend £500 more to reach Platinum tier!""",
             'dietary_preferences': {key: var.get() for key, var in fields['dietary_vars'].items()}
         }
         
+        try:
+            if mode == "add":
+                success = self.db_manager.add_customer(customer_data)
+                message = "Customer added successfully!"
+            else:
+                success = self.db_manager.update_customer(self.selected_customer, customer_data)
+                message = "Customer updated successfully!"
+            
+            if success:
+                messagebox.showinfo("Success", message)
+                dialog.destroy()
+                self.refresh_customer_list()
+                if mode == "edit":
+                    self.load_customer_details(self.selected_customer)
+            else:
+                messagebox.showerror("Error", "Failed to save customer.")
+                
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to save customer: {e}")
+        
         
        
