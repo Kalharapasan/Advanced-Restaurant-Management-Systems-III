@@ -640,4 +640,12 @@ Spend £500 more to reach Platinum tier!""",
             'dietary_preferences': {key: var.get() for key, var in self.dietary_vars.items()}
         }
         
+        success = self.db_manager.update_customer(self.selected_customer, customer_data)
+        
+        if success:
+            messagebox.showinfo("Success", "Customer updated successfully!")
+            self.refresh_customer_list()
+        else:
+            messagebox.showerror("Error", "Failed to update customer.")
+        
        
