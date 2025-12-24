@@ -459,5 +459,12 @@ Spend £500 more to reach Platinum tier!""",
     
     def add_new_customer(self):
         self.customer_dialog(title="Add New Customer", mode="add")
+    
+    def edit_selected_customer(self, event=None):
+        if not self.selected_customer:
+            messagebox.showwarning("No Selection", "Please select a customer to edit.")
+            return
+        
+        self.customer_dialog(title="Edit Customer", mode="edit")
         
        
