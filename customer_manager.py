@@ -532,4 +532,8 @@ Spend £500 more to reach Platinum tier!""",
             var = tk.BooleanVar()
             fields['dietary_vars'][option.lower().replace('-', '_')] = var
             ttk.Checkbutton(dietary_frame, text=option, variable=var).grid(row=i//3, column=i%3, padx=5, sticky=tk.W)
+        
+        ttk.Label(parent, text="Notes:").grid(row=2, column=0, sticky=tk.NW, padx=5, pady=5)
+        fields['notes'] = tk.Text(parent, width=35, height=6)
+        fields['notes'].grid(row=2, column=1, columnspan=2, padx=5, pady=5)
        
