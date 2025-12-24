@@ -620,5 +620,12 @@ Spend £500 more to reach Platinum tier!""",
         if not self.selected_customer:
             messagebox.showwarning("No Selection", "Please select a customer first.")
             return
+
+        name = self.customer_fields['name'].get().strip()
+        phone = self.customer_fields['phone'].get().strip()
+        
+        if not name or not phone:
+            messagebox.showerror("Validation Error", "Name and phone are required fields.")
+            return
         
        
