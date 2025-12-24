@@ -5,7 +5,10 @@ import json
 from datetime import datetime, date
 
 class CustomerManager:
-    
+    def __init__(self, parent_frame, db_manager):
+        self.parent_frame = parent_frame
+        self.db_manager = db_manager
+        self.selected_customer = None
     
     def setup_customer_interface(self):
         self.parent_frame.grid_rowconfigure(0, weight=1)
