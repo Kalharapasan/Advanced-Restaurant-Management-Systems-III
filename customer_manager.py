@@ -370,4 +370,5 @@ class CustomerManager:
                     widget.set(str(value))
                 elif hasattr(widget, 'insert'):
                     widget.insert(0, str(value))
-    
+    def load_customer_orders(self, customer_id):
+       
