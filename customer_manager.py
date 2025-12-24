@@ -522,5 +522,8 @@ Spend £500 more to reach Platinum tier!""",
         ttk.Label(parent, text="Preferred Payment:").grid(row=0, column=0, sticky=tk.W, padx=5, pady=5)
         fields['preferred_payment'] = ttk.Combobox(parent, width=15, values=['Cash', 'Card', 'Digital'])
         fields['preferred_payment'].grid(row=0, column=1, sticky=tk.W, padx=5, pady=5)
+        ttk.Label(parent, text="Dietary Preferences:").grid(row=1, column=0, sticky=tk.NW, padx=5, pady=5)
+        dietary_frame = ttk.Frame(parent)
+        dietary_frame.grid(row=1, column=1, columnspan=2, sticky=tk.W, padx=5, pady=5)
         
        
