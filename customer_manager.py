@@ -564,6 +564,13 @@ Spend £500 more to reach Platinum tier!""",
                     fields['preferred_payment'].set(customer[13])
                 if customer[16]:  
                     fields['notes'].insert("1.0", customer[16])
+            if customer[14]:
+                    try:
+                        prefs = json.loads(customer[14])
+                        for pref_key, var in fields['dietary_vars'].items():
+                            var.set(prefs.get(pref_key, False))
+                    except:
+                        pass
         
         except Exception as e:
             messagebox.showerror("Error", f"Failed to load customer data: {e}")
