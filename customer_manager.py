@@ -370,5 +370,16 @@ class CustomerManager:
                     widget.set(str(value))
                 elif hasattr(widget, 'insert'):
                     widget.insert(0, str(value))
+    
     def load_customer_orders(self, customer_id):
+        for item in self.order_tree.get_children():
+            self.order_tree.delete(item)
+        
+        orders = self.db_manager.get_customer_orders(customer_id)
+        
+        total_orders = len(orders)
+        total_value = 0
+        
+        for order in orders:
+            receipt_ref, order_date, order_time, items_json, total_cost, status = order
        
