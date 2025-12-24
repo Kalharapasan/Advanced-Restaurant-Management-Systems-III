@@ -298,3 +298,7 @@ class CustomerManager:
             customer_id = self.customer_tree.item(item, 'tags')[0]
             self.selected_customer = customer_id
             self.load_customer_details(customer_id)
+    
+    def load_customer_details(self, customer_id):
+        if not self.db_manager.is_connected():
+            return
