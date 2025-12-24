@@ -412,6 +412,9 @@ class CustomerManager:
         self.loyalty_fields['points'].config(text=str(loyalty_points))
         self.loyalty_fields['total_orders'].config(text=str(total_orders))
         self.loyalty_fields['total_spent'].config(text=f"£{float(total_spent):.2f}")
-        
+        benefits = self.get_tier_benefits(loyalty_tier)
+        self.benefits_text.delete("1.0", tk.END)
+        self.benefits_text.insert("1.0", benefits)
+        self.benefits_text.config(state=tk.DISABLED)
         
        
