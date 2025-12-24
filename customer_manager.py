@@ -456,5 +456,8 @@ Spend £500 more to reach Platinum tier!""",
 • VIP event invitations"""
         }
         return benefits.get(tier, "No benefits information available.")
+    
+    def add_new_customer(self):
+        self.customer_dialog(title="Add New Customer", mode="add")
         
        
