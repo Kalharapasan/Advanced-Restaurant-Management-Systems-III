@@ -302,3 +302,19 @@ class CustomerManager:
     def load_customer_details(self, customer_id):
         if not self.db_manager.is_connected():
             return
+        try:
+            cursor = self.db_manager.get_connection().cursor()
+            query = """
+            SELECT * FROM customers WHERE id = %s
+            """
+            cursor.execute(query, (customer_id,))
+            customer = cursor.fetchone()
+            
+            if customer:
+                self.populate_customer_form(customer)
+                self.load_customer_orders(customer_id)
+                self.load_loyalty_info(customer)
+        
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to load customer details: {e}")
+    
