@@ -615,6 +615,10 @@ Spend £500 more to reach Platinum tier!""",
                 
         except Exception as e:
             messagebox.showerror("Error", f"Failed to save customer: {e}")
-        
+    
+    def save_customer_changes(self):
+        if not self.selected_customer:
+            messagebox.showwarning("No Selection", "Please select a customer first.")
+            return
         
        
