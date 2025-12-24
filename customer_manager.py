@@ -516,5 +516,9 @@ Spend £500 more to reach Platinum tier!""",
         ttk.Label(parent, text="Address:").grid(row=5, column=0, sticky=tk.NW, padx=5, pady=5)
         fields['address'] = tk.Text(parent, width=35, height=4)
         fields['address'].grid(row=5, column=1, columnspan=2, padx=5, pady=5)
+    
+    
+    def setup_contact_tab(self, parent, fields):
+        
         
        
