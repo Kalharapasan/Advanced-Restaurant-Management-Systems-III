@@ -473,5 +473,7 @@ Spend £500 more to reach Platinum tier!""",
         dialog.geometry("600x700")
         dialog.resizable(False, False)
         dialog.configure(bg='#f0f0f0')
+        dialog.transient(self.parent_frame.winfo_toplevel())
+        dialog.grab_set()
         
        
