@@ -382,4 +382,22 @@ class CustomerManager:
         
         for order in orders:
             receipt_ref, order_date, order_time, items_json, total_cost, status = order
+            try:
+                items = json.loads(items_json) if items_json else {}
+                item_count = len(items)
+            except:
+                item_count = 0
+            
+            total_value += float(total_cost or 0)
+            
+            self.order_tree.insert('', 'end', values=(
+                receipt_ref,
+                order_date.strftime('%Y-%m-%d') if order_date else 'N/A',
+                order_time.strftime('%H:%M') if order_time else 'N/A',
+                f"{item_count} items",
+                f"£{float(total_cost or 0):.2f}",
+                status
+            ))
+        
+        
        
