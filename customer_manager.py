@@ -657,3 +657,13 @@ Spend £500 more to reach Platinum tier!""",
             messagebox.showwarning("No Selection", "Please select a customer first.")
             return
         self.details_notebook.select(1)
+    
+    def send_customer_email(self):
+        if not self.selected_customer:
+            messagebox.showwarning("No Selection", "Please select a customer first.")
+            return
+        
+        email = self.customer_fields['email'].get().strip()
+        if not email:
+            messagebox.showwarning("No Email", "Customer does not have an email address.")
+            return
