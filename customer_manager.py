@@ -398,6 +398,10 @@ class CustomerManager:
                 f"£{float(total_cost or 0):.2f}",
                 status
             ))
+        avg_order = total_value / total_orders if total_orders > 0 else 0
+        self.order_summary_label.config(
+            text=f"Total Orders: {total_orders} | Total Value: £{total_value:.2f} | Average Order: £{avg_order:.2f}"
+        )
         
         
        
