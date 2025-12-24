@@ -667,3 +667,4 @@ Spend £500 more to reach Platinum tier!""",
         if not email:
             messagebox.showwarning("No Email", "Customer does not have an email address.")
             return
+        messagebox.showinfo("Email", f"Email functionality would send message to: {email}")
