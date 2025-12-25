@@ -107,3 +107,5 @@ class RestaurantManagementSystem:
         self.root.bind('<Control-q>', lambda e: self.exit_application())
     
     def setup_ui(self):
+        self.root.title("🍽️ Advanced Restaurant Management System - Professional Edition v3.0")
+        self.root.configure(background='#f0f0f0')
