@@ -38,3 +38,8 @@ class RestaurantManagementSystem:
     def setup_variables(self):
         self.item_vars = {}
         self.item_entries = {}
+        self.customer_name = tk.StringVar()
+        self.customer_phone = tk.StringVar()
+        self.payment_method = tk.StringVar(value="Cash")
+        self.discount_percent = tk.StringVar(value="0")
+        
