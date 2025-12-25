@@ -87,4 +87,10 @@ class RestaurantManagementSystem:
         file_menu.add_command(label="Import Menu", command=self.import_menu)
         file_menu.add_separator()
         file_menu.add_command(label="Exit", command=self.exit_application, accelerator="Ctrl+Q")
+        view_menu = tk.Menu(menubar, tearoff=0)
+        menubar.add_cascade(label="View", menu=view_menu)
+        view_menu.add_command(label="Sales Analytics", command=self.show_analytics)
+        view_menu.add_command(label="Order History", command=self.show_order_history)
+        view_menu.add_command(label="Menu Management", command=self.show_menu_management)
+        view_menu.add_command(label="Customer Database", command=self.show_customer_database)
         
