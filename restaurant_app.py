@@ -36,3 +36,5 @@ class RestaurantManagementSystem:
     
     
     def setup_variables(self):
+        self.item_vars = {}
+        self.item_entries = {}
