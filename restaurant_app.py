@@ -115,3 +115,7 @@ class RestaurantManagementSystem:
         screen_height = self.root.winfo_screenheight()
         window_width = min(1800, int(screen_width * 0.95))
         window_height = min(1000, int(screen_height * 0.9))
+        x = (screen_width - window_width) // 2
+        y = (screen_height - window_height) // 2
+        self.root.geometry(f"{window_width}x{window_height}+{x}+{y}")
+        self.root.minsize(1400, 800)
