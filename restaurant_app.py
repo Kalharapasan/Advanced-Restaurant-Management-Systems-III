@@ -16,3 +16,9 @@ except ImportError as e:
     print(f"Import error: {e}")
     print("Make sure all module files are in the same directory as this script")
     sys.exit(1)
+    
+try:
+    from tkcalendar import DateEntry
+except ImportError:
+    print("Warning: tkcalendar not installed. Some features may be limited.")
+    DateEntry = None
