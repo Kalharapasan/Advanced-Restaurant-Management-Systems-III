@@ -51,4 +51,7 @@ class RestaurantManagementSystem:
         self.CostofDrinks = tk.StringVar()
         self.ServiceCharge = tk.StringVar()
         self.DiscountAmount = tk.StringVar()
+        for var in [self.PaidTax, self.SubTotal, self.TotalCost, self.CostofCakes, 
+                   self.CostofDrinks, self.ServiceCharge, self.DiscountAmount]:
+            var.set("$0.00")
         
