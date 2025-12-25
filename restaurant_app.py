@@ -22,3 +22,12 @@ try:
 except ImportError:
     print("Warning: tkcalendar not installed. Some features may be limited.")
     DateEntry = None
+
+try:
+    import matplotlib.pyplot as plt
+    from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+    import pandas as pd
+    ANALYTICS_AVAILABLE = True
+except ImportError:
+    print("Warning: matplotlib/pandas not installed. Analytics features will be limited.")
+    ANALYTICS_AVAILABLE = False
