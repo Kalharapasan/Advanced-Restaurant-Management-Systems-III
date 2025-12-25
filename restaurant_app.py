@@ -105,3 +105,5 @@ class RestaurantManagementSystem:
         help_menu.add_command(label="About", command=self.show_about)
         self.root.bind('<Control-n>', lambda e: self.new_order())
         self.root.bind('<Control-q>', lambda e: self.exit_application())
+    
+    def setup_ui(self):
