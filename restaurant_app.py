@@ -93,4 +93,10 @@ class RestaurantManagementSystem:
         view_menu.add_command(label="Order History", command=self.show_order_history)
         view_menu.add_command(label="Menu Management", command=self.show_menu_management)
         view_menu.add_command(label="Customer Database", command=self.show_customer_database)
+        tools_menu = tk.Menu(menubar, tearoff=0)
+        menubar.add_cascade(label="Tools", menu=tools_menu)
+        tools_menu.add_command(label="User Management", command=self.show_user_management)
+        tools_menu.add_command(label="Reports", command=self.show_reports)
+        tools_menu.add_command(label="Settings", command=self.show_settings)
+        tools_menu.add_command(label="Backup Database", command=self.backup_database)
         
