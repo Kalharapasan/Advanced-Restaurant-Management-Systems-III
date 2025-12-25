@@ -58,4 +58,5 @@ class RestaurantManagementSystem:
         self.text_Input = tk.StringVar()
         self.text_Input.set("0")
         self.DateofOrder.set(time.strftime("%d/%m/%Y"))
+        self.menu_items = {}
         
