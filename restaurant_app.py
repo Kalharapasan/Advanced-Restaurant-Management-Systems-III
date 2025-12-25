@@ -79,4 +79,12 @@ class RestaurantManagementSystem:
     def create_menu_bar(self):
         menubar = tk.Menu(self.root)
         self.root.config(menu=menubar)
+        file_menu = tk.Menu(menubar, tearoff=0)
+        menubar.add_cascade(label="File", menu=file_menu)
+        file_menu.add_command(label="New Order", command=self.new_order, accelerator="Ctrl+N")
+        file_menu.add_separator()
+        file_menu.add_command(label="Export Orders", command=self.export_orders)
+        file_menu.add_command(label="Import Menu", command=self.import_menu)
+        file_menu.add_separator()
+        file_menu.add_command(label="Exit", command=self.exit_application, accelerator="Ctrl+Q")
         
