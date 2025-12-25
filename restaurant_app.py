@@ -133,3 +133,8 @@ class RestaurantManagementSystem:
                             font=('Segoe UI', 32),
                             bg='#2c3e50', fg='white')
         logo_label.grid(row=0, column=0, padx=20, pady=15)
+        title_label = tk.Label(title_frame, 
+                             text="Advanced Restaurant Management System",
+                             font=('Segoe UI', 24, 'bold'),
+                             bg='#2c3e50', fg='white')
+        title_label.grid(row=0, column=1, pady=15)
