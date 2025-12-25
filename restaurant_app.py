@@ -42,4 +42,13 @@ class RestaurantManagementSystem:
         self.customer_phone = tk.StringVar()
         self.payment_method = tk.StringVar(value="Cash")
         self.discount_percent = tk.StringVar(value="0")
+        self.DateofOrder = tk.StringVar()
+        self.Receipt_Ref = tk.StringVar()
+        self.PaidTax = tk.StringVar()
+        self.SubTotal = tk.StringVar()
+        self.TotalCost = tk.StringVar()
+        self.CostofCakes = tk.StringVar()
+        self.CostofDrinks = tk.StringVar()
+        self.ServiceCharge = tk.StringVar()
+        self.DiscountAmount = tk.StringVar()
         
