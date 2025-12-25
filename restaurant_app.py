@@ -75,4 +75,8 @@ class RestaurantManagementSystem:
         self.style.configure('Custom.TButton',
                            font=('Segoe UI', 10, 'bold'),
                            padding=(10, 5))
+    
+    def create_menu_bar(self):
+        menubar = tk.Menu(self.root)
+        self.root.config(menu=menubar)
         
