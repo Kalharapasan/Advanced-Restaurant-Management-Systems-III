@@ -138,3 +138,17 @@ class RestaurantManagementSystem:
                              font=('Segoe UI', 24, 'bold'),
                              bg='#2c3e50', fg='white')
         title_label.grid(row=0, column=1, pady=15)
+        info_frame = tk.Frame(title_frame, bg='#2c3e50')
+        info_frame.grid(row=0, column=2, padx=20, pady=15)
+        
+        user_label = tk.Label(info_frame,
+                            text=f"User: {self.current_user}",
+                            font=('Segoe UI', 12),
+                            bg='#2c3e50', fg='white')
+        user_label.pack()
+        
+        self.time_label = tk.Label(info_frame,
+                                 text=time.strftime("%H:%M:%S"),
+                                 font=('Segoe UI', 14, 'bold'),
+                                 bg='#2c3e50', fg='white')
+        self.time_label.pack()
