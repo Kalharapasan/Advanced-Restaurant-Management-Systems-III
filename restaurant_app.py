@@ -113,3 +113,5 @@ class RestaurantManagementSystem:
         self.root.grid_columnconfigure(0, weight=1)
         screen_width = self.root.winfo_screenwidth()
         screen_height = self.root.winfo_screenheight()
+        window_width = min(1800, int(screen_width * 0.95))
+        window_height = min(1000, int(screen_height * 0.9))
