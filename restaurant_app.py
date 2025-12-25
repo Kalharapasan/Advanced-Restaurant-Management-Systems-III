@@ -109,3 +109,5 @@ class RestaurantManagementSystem:
     def setup_ui(self):
         self.root.title("🍽️ Advanced Restaurant Management System - Professional Edition v3.0")
         self.root.configure(background='#f0f0f0')
+        self.root.grid_rowconfigure(1, weight=1)
+        self.root.grid_columnconfigure(0, weight=1)
