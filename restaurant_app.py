@@ -111,3 +111,5 @@ class RestaurantManagementSystem:
         self.root.configure(background='#f0f0f0')
         self.root.grid_rowconfigure(1, weight=1)
         self.root.grid_columnconfigure(0, weight=1)
+        screen_width = self.root.winfo_screenwidth()
+        screen_height = self.root.winfo_screenheight()
