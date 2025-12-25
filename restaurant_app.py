@@ -31,3 +31,8 @@ try:
 except ImportError:
     print("Warning: matplotlib/pandas not installed. Analytics features will be limited.")
     ANALYTICS_AVAILABLE = False
+
+class RestaurantManagementSystem:
+    
+    
+    def setup_variables(self):
