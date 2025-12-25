@@ -99,4 +99,8 @@ class RestaurantManagementSystem:
         tools_menu.add_command(label="Reports", command=self.show_reports)
         tools_menu.add_command(label="Settings", command=self.show_settings)
         tools_menu.add_command(label="Backup Database", command=self.backup_database)
+        help_menu = tk.Menu(menubar, tearoff=0)
+        menubar.add_cascade(label="Help", menu=help_menu)
+        help_menu.add_command(label="User Manual", command=self.show_help)
+        help_menu.add_command(label="About", command=self.show_about)
         
