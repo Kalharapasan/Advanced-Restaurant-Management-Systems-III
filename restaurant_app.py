@@ -103,4 +103,5 @@ class RestaurantManagementSystem:
         menubar.add_cascade(label="Help", menu=help_menu)
         help_menu.add_command(label="User Manual", command=self.show_help)
         help_menu.add_command(label="About", command=self.show_about)
-        
+        self.root.bind('<Control-n>', lambda e: self.new_order())
+        self.root.bind('<Control-q>', lambda e: self.exit_application())
