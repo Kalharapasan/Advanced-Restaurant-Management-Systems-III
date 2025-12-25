@@ -122,3 +122,9 @@ class RestaurantManagementSystem:
         self.setup_title_frame()
         self.setup_main_content()
         self.setup_status_bar()
+    
+    def setup_title_frame(self):
+        title_frame = tk.Frame(self.root, bg='#2c3e50', height=80)
+        title_frame.grid(row=0, column=0, sticky="ew")
+        title_frame.grid_columnconfigure(1, weight=1)
+        title_frame.grid_propagate(False)
