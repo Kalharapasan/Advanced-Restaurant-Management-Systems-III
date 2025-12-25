@@ -63,4 +63,16 @@ class RestaurantManagementSystem:
     def setup_styles(self):
         self.style = ttk.Style()
         self.style.theme_use('clam')
+        self.style.configure('Title.TLabel', 
+                           font=('Segoe UI', 16, 'bold'),
+                           background='#2c3e50',
+                           foreground='white')
+        
+        self.style.configure('Heading.TLabel',
+                           font=('Segoe UI', 12, 'bold'),
+                           background='#ecf0f1')
+        
+        self.style.configure('Custom.TButton',
+                           font=('Segoe UI', 10, 'bold'),
+                           padding=(10, 5))
         
