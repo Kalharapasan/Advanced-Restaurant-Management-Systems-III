@@ -55,3 +55,6 @@ class RestaurantManagementSystem:
                    self.CostofDrinks, self.ServiceCharge, self.DiscountAmount]:
             var.set("$0.00")
         
+        self.text_Input = tk.StringVar()
+        self.text_Input.set("0")
+        
