@@ -128,3 +128,8 @@ class RestaurantManagementSystem:
         title_frame.grid(row=0, column=0, sticky="ew")
         title_frame.grid_columnconfigure(1, weight=1)
         title_frame.grid_propagate(False)
+        logo_label = tk.Label(title_frame, 
+                            text="🍽️",
+                            font=('Segoe UI', 32),
+                            bg='#2c3e50', fg='white')
+        logo_label.grid(row=0, column=0, padx=20, pady=15)
