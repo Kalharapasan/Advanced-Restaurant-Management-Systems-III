@@ -286,3 +286,12 @@ class RestaurantManagementSystem:
                                    bg='#e8f4fd', fg='#2c3e50')
         self.stats_label.pack(pady=5)
         self.update_quick_stats()
+    
+    def setup_receipt_section(self, parent):
+        receipt_frame = tk.LabelFrame(parent, text="🧾 Receipt Preview",
+                                    font=('Segoe UI', 12, 'bold'),
+                                    bg='#f8f9fa', fg='#2c3e50',
+                                    relief=tk.RIDGE, bd=2)
+        receipt_frame.grid(row=1, column=0, sticky="nsew", padx=5, pady=5)
+        receipt_frame.grid_rowconfigure(0, weight=1)
+        receipt_frame.grid_columnconfigure(0, weight=1)
