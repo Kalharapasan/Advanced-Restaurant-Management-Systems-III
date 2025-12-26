@@ -410,5 +410,8 @@ class RestaurantManagementSystem:
         for col in columns:
             self.menu_tree.heading(col, text=col)
             self.menu_tree.column(col, width=150)
+        v_scrollbar_menu = ttk.Scrollbar(categories_frame, orient=tk.VERTICAL, command=self.menu_tree.yview)
+        h_scrollbar_menu = ttk.Scrollbar(categories_frame, orient=tk.HORIZONTAL, command=self.menu_tree.xview)
+        self.menu_tree.configure(yscrollcommand=v_scrollbar_menu.set, xscrollcommand=h_scrollbar_menu.set)
         
         
