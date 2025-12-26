@@ -705,3 +705,16 @@ class RestaurantManagementSystem:
                 font=('Segoe UI', 18, 'bold'), bg='#f0f0f0').pack(pady=20)
         reports_btn_frame = tk.Frame(self.reports_frame, bg='#f0f0f0')
         reports_btn_frame.pack(pady=20)
+        reports = [
+            ("📊 Daily Sales Report", self.generate_daily_report, '#3498db'),
+            ("📅 Weekly Report", self.generate_weekly_report, '#9b59b6'),
+            ("📆 Monthly Report", self.generate_monthly_report, '#e67e22'),
+            ("🏆 Top Items Report", self.generate_top_items_report, '#27ae60')
+        ]
+        
+        for i, (text, command, color) in enumerate(reports):
+            btn = tk.Button(reports_btn_frame, text=text, command=command,
+                          font=('Segoe UI', 12, 'bold'),
+                          bg=color, fg='white', relief=tk.RAISED, bd=2,
+                          width=20, height=2)
+            btn.grid(row=i//2, column=i%2, padx=10, pady=10)
