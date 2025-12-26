@@ -413,5 +413,6 @@ class RestaurantManagementSystem:
         v_scrollbar_menu = ttk.Scrollbar(categories_frame, orient=tk.VERTICAL, command=self.menu_tree.yview)
         h_scrollbar_menu = ttk.Scrollbar(categories_frame, orient=tk.HORIZONTAL, command=self.menu_tree.xview)
         self.menu_tree.configure(yscrollcommand=v_scrollbar_menu.set, xscrollcommand=h_scrollbar_menu.set)
-        
+        self.menu_tree.pack(side='left', fill='both', expand=True)
+        v_scrollbar_menu.pack(side='right', fill='y')
         
