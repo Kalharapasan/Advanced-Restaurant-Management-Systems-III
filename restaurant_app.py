@@ -200,3 +200,8 @@ class RestaurantManagementSystem:
                 font=('Segoe UI', 10, 'bold')).grid(row=0, column=2, sticky=tk.W, padx=5, pady=2)
         tk.Entry(customer_frame, textvariable=self.customer_phone,
                 font=('Segoe UI', 10), width=15).grid(row=0, column=3, sticky=tk.EW, padx=5, pady=2)
+        tk.Label(customer_frame, text="Payment:", bg='#e8f4fd',
+                font=('Segoe UI', 10, 'bold')).grid(row=1, column=0, sticky=tk.W, padx=5, pady=2)
+        payment_combo = ttk.Combobox(customer_frame, textvariable=self.payment_method,
+                                   values=["Cash", "Card", "Digital"], state="readonly", width=18)
+        payment_combo.grid(row=1, column=1, sticky=tk.EW, padx=5, pady=2)
