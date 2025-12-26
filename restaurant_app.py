@@ -491,3 +491,4 @@ class RestaurantManagementSystem:
         self.customer_tree.configure(yscrollcommand=v_scrollbar_cust.set)
         self.customer_tree.pack(side='left', fill='both', expand=True)
         v_scrollbar_cust.pack(side='right', fill='y')
+        self.refresh_customers()
