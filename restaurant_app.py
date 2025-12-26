@@ -405,5 +405,7 @@ class RestaurantManagementSystem:
         categories_frame = tk.LabelFrame(self.menu_mgmt_frame, text="Menu Categories",
                                        font=('Segoe UI', 12, 'bold'), bg='#f0f0f0')
         categories_frame.pack(fill='both', expand=True, padx=20, pady=10)
+        columns = ('Name', 'Category', 'Price', 'Available')
+        self.menu_tree = ttk.Treeview(categories_frame, columns=columns, show='headings', height=15)
         
         
