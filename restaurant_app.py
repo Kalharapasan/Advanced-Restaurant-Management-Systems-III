@@ -670,3 +670,27 @@ class RestaurantManagementSystem:
             entry = tk.Entry(frame, font=('Segoe UI', 10), width=30)
             entry.pack(side='right')
             entries[field_name] = entry
+        btn_frame = tk.Frame(dialog, bg='#f0f0f0')
+        btn_frame.pack(pady=20)
+        
+        def save_customer():
+            new_customer = {
+                'name': entries['name'].get(),
+                'phone': entries['phone'].get(),
+                'email': entries['email'].get(),
+                'total_orders': 0,
+                'total_spent': 0.0
+            }
+            
+            if new_customer['name'] and new_customer['phone']:
+                self.sample_customers.append(new_customer)
+                self.populate_customer_data()
+                self.update_status(f"Customer {new_customer['name']} added successfully")
+                dialog.destroy()
+            else:
+                messagebox.showerror("Error", "Name and phone are required fields")
+        
+        tk.Button(btn_frame, text="Save", command=save_customer,
+                 bg='#27ae60', fg='white', font=('Segoe UI', 10, 'bold')).pack(side='left', padx=5)
+        tk.Button(btn_frame, text="Cancel", command=dialog.destroy,
+                 bg='#e74c3c', fg='white', font=('Segoe UI', 10, 'bold')).pack(side='left', padx=5)
