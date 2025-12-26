@@ -183,3 +183,12 @@ class RestaurantManagementSystem:
         self.setup_menu_items_section(parent)
         self.setup_order_summary_section(parent)
         self.setup_action_buttons(parent)
+    
+    def setup_customer_info_section(self, parent):
+        customer_frame = tk.LabelFrame(parent, text="👤 Customer Information",
+                                     font=('Segoe UI', 12, 'bold'),
+                                     bg='#e8f4fd', fg='#2c3e50',
+                                     relief=tk.RIDGE, bd=2)
+        customer_frame.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
+        customer_frame.grid_columnconfigure(1, weight=1)
+        customer_frame.grid_columnconfigure(3, weight=1)
