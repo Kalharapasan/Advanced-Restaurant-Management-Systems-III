@@ -390,3 +390,4 @@ class RestaurantManagementSystem:
         tk.Label(title_frame, text="🍽️ Menu Management",
                 font=('Segoe UI', 18, 'bold'), bg='#f0f0f0').pack(side='left')
         
+        
