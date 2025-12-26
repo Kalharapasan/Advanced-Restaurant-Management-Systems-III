@@ -281,3 +281,7 @@ class RestaurantManagementSystem:
                                   bg='#e8f4fd', fg='#2c3e50',
                                   relief=tk.RIDGE, bd=1)
         stats_frame.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
+        self.stats_label = tk.Label(stats_frame, text="Loading statistics...",
+                                   font=('Segoe UI', 9),
+                                   bg='#e8f4fd', fg='#2c3e50')
+        self.stats_label.pack(pady=5)
