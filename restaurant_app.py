@@ -192,3 +192,7 @@ class RestaurantManagementSystem:
         customer_frame.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
         customer_frame.grid_columnconfigure(1, weight=1)
         customer_frame.grid_columnconfigure(3, weight=1)
+        tk.Label(customer_frame, text="Name:", bg='#e8f4fd', 
+                font=('Segoe UI', 10, 'bold')).grid(row=0, column=0, sticky=tk.W, padx=5, pady=2)
+        tk.Entry(customer_frame, textvariable=self.customer_name,
+                font=('Segoe UI', 10), width=20).grid(row=0, column=1, sticky=tk.EW, padx=5, pady=2)
