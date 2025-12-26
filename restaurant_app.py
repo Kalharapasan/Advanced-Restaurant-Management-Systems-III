@@ -150,5 +150,10 @@ class RestaurantManagementSystem:
         self.time_label = tk.Label(info_frame,
                                  text=time.strftime("%H:%M:%S"),
                                  font=('Segoe UI', 14, 'bold'),
-                                 bg='#2c3e50', fg='white')
+                                 bg='#2c3e5
+                                 0', fg='white')
         self.time_label.pack()
+    
+    def setup_main_content(self):
+        self.notebook = ttk.Notebook(self.root)
+        self.notebook.grid(row=1, column=0, sticky="nsew", padx=10, pady=10)
