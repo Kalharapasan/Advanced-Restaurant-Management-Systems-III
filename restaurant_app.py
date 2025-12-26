@@ -285,3 +285,4 @@ class RestaurantManagementSystem:
                                    font=('Segoe UI', 9),
                                    bg='#e8f4fd', fg='#2c3e50')
         self.stats_label.pack(pady=5)
+        self.update_quick_stats()
