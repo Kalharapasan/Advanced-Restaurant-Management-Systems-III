@@ -377,3 +377,8 @@ class RestaurantManagementSystem:
         tk.Label(self.analytics_frame, text="📊 Sales Analytics Dashboard",
                 font=('Segoe UI', 16, 'bold'), bg='#f0f0f0').pack(pady=20)
         self.setup_analytics_content()
+    
+    def create_menu_management_tab(self):
+        self.menu_mgmt_frame = tk.Frame(self.notebook, bg='#f0f0f0')
+        self.notebook.add(self.menu_mgmt_frame, text="🍽️ Menu")
+        
