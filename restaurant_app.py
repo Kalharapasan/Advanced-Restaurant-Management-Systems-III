@@ -327,3 +327,7 @@ class RestaurantManagementSystem:
                                  bg='#f8f9fa', fg='#2c3e50',
                                  relief=tk.RIDGE, bd=2)
         calc_frame.grid(row=2, column=0, sticky="ew", padx=5, pady=5)
+        calc_display = tk.Entry(calc_frame, textvariable=self.text_Input,
+                              font=('Segoe UI', 14, 'bold'), justify='right',
+                              state='readonly', bg='#2c3e50', fg='white')
+        calc_display.grid(row=0, column=0, columnspan=4, sticky="ew", padx=5, pady=5)
