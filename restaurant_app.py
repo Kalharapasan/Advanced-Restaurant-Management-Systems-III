@@ -416,4 +416,8 @@ class RestaurantManagementSystem:
         self.menu_tree.pack(side='left', fill='both', expand=True)
         v_scrollbar_menu.pack(side='right', fill='y')
         self.refresh_menu()
+    
+    def populate_menu_management(self):
+        if not hasattr(self, 'menu_tree') or not self.menu_tree:
+            return
         
