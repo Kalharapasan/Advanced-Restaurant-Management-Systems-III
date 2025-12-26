@@ -443,4 +443,8 @@ class RestaurantManagementSystem:
         self.setup_customer_management_content()
     
     def setup_customer_management_content(self):
+        title_frame = tk.Frame(self.customer_frame, bg='#f0f0f0')
+        title_frame.pack(fill='x', padx=20, pady=10)
         
+        tk.Label(title_frame, text="👥 Customer Management",
+                font=('Segoe UI', 18, 'bold'), bg='#f0f0f0').pack(side='left')
