@@ -383,6 +383,10 @@ class RestaurantManagementSystem:
         self.notebook.add(self.menu_mgmt_frame, text="🍽️ Menu")
         self.setup_menu_management_content()
     
+    def refresh_menu(self):
+        self.populate_menu_management()
+        self.update_status("Menu refreshed successfully")
+    
     def setup_menu_management_content(self):
         title_frame = tk.Frame(self.menu_mgmt_frame, bg='#f0f0f0')
         title_frame.pack(fill='x', padx=20, pady=10)
@@ -432,3 +436,5 @@ class RestaurantManagementSystem:
                 self.menu_tree.insert('', 'end', values=(
                     name, category.replace('_', ' ').title(), price, available
                 ))
+    
+    
