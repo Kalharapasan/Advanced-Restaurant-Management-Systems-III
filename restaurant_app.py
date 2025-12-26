@@ -295,3 +295,13 @@ class RestaurantManagementSystem:
         receipt_frame.grid(row=1, column=0, sticky="nsew", padx=5, pady=5)
         receipt_frame.grid_rowconfigure(0, weight=1)
         receipt_frame.grid_columnconfigure(0, weight=1)
+        text_frame = tk.Frame(receipt_frame)
+        text_frame.grid(row=0, column=0, sticky="nsew", padx=5, pady=5)
+        text_frame.grid_rowconfigure(0, weight=1)
+        text_frame.grid_columnconfigure(0, weight=1)
+        
+        self.receipt_text = tk.Text(text_frame,
+                                  font=('Courier New', 9),
+                                  bg='#ffffff', fg='#2c3e50',
+                                  wrap=tk.WORD, relief=tk.SOLID, bd=1)
+        self.receipt_text.grid(row=0, column=0, sticky="nsew")
