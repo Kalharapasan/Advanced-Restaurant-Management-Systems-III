@@ -718,3 +718,6 @@ class RestaurantManagementSystem:
                           bg=color, fg='white', relief=tk.RAISED, bd=2,
                           width=20, height=2)
             btn.grid(row=i//2, column=i%2, padx=10, pady=10)
+        self.reports_text_frame = tk.LabelFrame(self.reports_frame, text="Report Results",
+                                              font=('Segoe UI', 12, 'bold'), bg='#f0f0f0')
+        self.reports_text_frame.pack(fill='both', expand=True, padx=20, pady=20)
