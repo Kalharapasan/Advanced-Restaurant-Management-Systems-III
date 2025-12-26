@@ -440,3 +440,4 @@ class RestaurantManagementSystem:
     def create_customer_management_tab(self):
         self.customer_frame = tk.Frame(self.notebook, bg='#f0f0f0')
         self.notebook.add(self.customer_frame, text="👥 Customers")
+        self.setup_customer_management_content()
