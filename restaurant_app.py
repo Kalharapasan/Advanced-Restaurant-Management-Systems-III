@@ -175,3 +175,7 @@ class RestaurantManagementSystem:
         
         self.setup_order_left_panel(left_panel)
         self.setup_order_right_panel(right_panel)
+        
+    def setup_order_left_panel(self, parent):
+        parent.grid_rowconfigure(1, weight=1)
+        parent.grid_columnconfigure(0, weight=1)
