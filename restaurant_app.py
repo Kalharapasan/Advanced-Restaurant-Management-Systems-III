@@ -448,3 +448,21 @@ class RestaurantManagementSystem:
         
         tk.Label(title_frame, text="👥 Customer Management",
                 font=('Segoe UI', 18, 'bold'), bg='#f0f0f0').pack(side='left')
+        
+        btn_frame = tk.Frame(title_frame, bg='#f0f0f0')
+        btn_frame.pack(side='right')
+        
+        tk.Button(btn_frame, text="➕ Add Customer", 
+                 font=('Segoe UI', 10, 'bold'),
+                 bg='#27ae60', fg='white',
+                 command=self.add_customer).pack(side='left', padx=5)
+        
+        tk.Button(btn_frame, text="🔍 Search", 
+                 font=('Segoe UI', 10, 'bold'),
+                 bg='#3498db', fg='white',
+                 command=self.search_customers).pack(side='left', padx=5)
+        
+        tk.Button(btn_frame, text="🔄 Refresh", 
+                 font=('Segoe UI', 10, 'bold'),
+                 bg='#e67e22', fg='white',
+                 command=self.force_refresh_customers).pack(side='left', padx=5)
