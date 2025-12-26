@@ -370,3 +370,7 @@ class RestaurantManagementSystem:
                         font=('Segoe UI', 12, 'bold'),
                         bg=bg_color, fg='white',
                         relief=tk.RAISED, bd=2, width=3, height=1)
+    
+    def create_analytics_tab(self):
+        self.analytics_frame = tk.Frame(self.notebook, bg='#f0f0f0')
+        self.notebook.add(self.analytics_frame, text="📊 Analytics")
