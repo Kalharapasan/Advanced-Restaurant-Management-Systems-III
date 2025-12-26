@@ -421,3 +421,6 @@ class RestaurantManagementSystem:
         if not hasattr(self, 'menu_tree') or not self.menu_tree:
             return
         
+        for item in self.menu_tree.get_children():
+            self.menu_tree.delete(item)
+        
