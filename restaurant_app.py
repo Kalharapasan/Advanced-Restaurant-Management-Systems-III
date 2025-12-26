@@ -211,3 +211,12 @@ class RestaurantManagementSystem:
                                 font=('Segoe UI', 10), width=8)
         discount_entry.grid(row=1, column=3, sticky=tk.W, padx=5, pady=2)
         discount_entry.bind('<KeyRelease>', self.on_discount_change)
+    
+    def setup_menu_items_section(self, parent):
+        menu_frame = tk.LabelFrame(parent, text="🍽️ Menu Items",
+                                 font=('Segoe UI', 12, 'bold'),
+                                 bg='#f8f9fa', fg='#2c3e50',
+                                 relief=tk.RIDGE, bd=2)
+        menu_frame.grid(row=1, column=0, sticky="nsew", padx=5, pady=5)
+        menu_frame.grid_rowconfigure(0, weight=1)
+        menu_frame.grid_columnconfigure(0, weight=1)
