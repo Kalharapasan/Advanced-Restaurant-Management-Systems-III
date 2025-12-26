@@ -170,3 +170,8 @@ class RestaurantManagementSystem:
         self.order_frame.grid_columnconfigure(1, weight=1)
         left_panel = tk.Frame(self.order_frame, bg='#ecf0f1', relief=tk.RIDGE, bd=2)
         left_panel.grid(row=0, column=0, sticky="nsew", padx=(0, 5))
+        right_panel = tk.Frame(self.order_frame, bg='#ecf0f1', relief=tk.RIDGE, bd=2)
+        right_panel.grid(row=0, column=1, sticky="nsew", padx=(5, 0))
+        
+        self.setup_order_left_panel(left_panel)
+        self.setup_order_right_panel(right_panel)
