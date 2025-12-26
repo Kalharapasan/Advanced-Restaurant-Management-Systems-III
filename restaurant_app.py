@@ -182,3 +182,4 @@ class RestaurantManagementSystem:
         self.setup_customer_info_section(parent)
         self.setup_menu_items_section(parent)
         self.setup_order_summary_section(parent)
+        self.setup_action_buttons(parent)
