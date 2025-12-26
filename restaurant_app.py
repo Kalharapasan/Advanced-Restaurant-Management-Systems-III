@@ -731,3 +731,6 @@ class RestaurantManagementSystem:
         
         self.reports_text.pack(side='left', fill='both', expand=True)
         reports_scrollbar.pack(side='right', fill='y')
+    
+    def setup_analytics_content(self):
+        
