@@ -247,3 +247,7 @@ class RestaurantManagementSystem:
             cost_entry = tk.Entry(summary_frame, textvariable=var, state='readonly',
                                 font=('Segoe UI', 10), width=12)
             cost_entry.grid(row=row, column=col+1, sticky=tk.EW, padx=5, pady=2)
+        
+    def setup_action_buttons(self, parent):
+        button_frame = tk.Frame(parent, bg='#ecf0f1')
+        button_frame.grid(row=3, column=0, sticky="ew", padx=5, pady=10)
