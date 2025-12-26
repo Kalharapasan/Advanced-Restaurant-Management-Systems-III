@@ -415,4 +415,5 @@ class RestaurantManagementSystem:
         self.menu_tree.configure(yscrollcommand=v_scrollbar_menu.set, xscrollcommand=h_scrollbar_menu.set)
         self.menu_tree.pack(side='left', fill='both', expand=True)
         v_scrollbar_menu.pack(side='right', fill='y')
+        self.refresh_menu()
         
