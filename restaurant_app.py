@@ -402,5 +402,8 @@ class RestaurantManagementSystem:
                  font=('Segoe UI', 10, 'bold'),
                  bg='#3498db', fg='white',
                  command=self.refresh_menu).pack(side='left', padx=5)
+        categories_frame = tk.LabelFrame(self.menu_mgmt_frame, text="Menu Categories",
+                                       font=('Segoe UI', 12, 'bold'), bg='#f0f0f0')
+        categories_frame.pack(fill='both', expand=True, padx=20, pady=10)
         
         
