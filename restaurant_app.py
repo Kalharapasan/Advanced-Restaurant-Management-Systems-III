@@ -698,3 +698,4 @@ class RestaurantManagementSystem:
     def create_reports_tab(self):
         self.reports_frame = tk.Frame(self.notebook, bg='#f0f0f0')
         self.notebook.add(self.reports_frame, text="📈 Reports")
+        self.setup_reports_content()
