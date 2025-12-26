@@ -653,3 +653,20 @@ class RestaurantManagementSystem:
         dialog.geometry("+%d+%d" % (self.root.winfo_rootx() + 50, self.root.winfo_rooty() + 50))
         tk.Label(dialog, text="Add New Customer", font=('Segoe UI', 16, 'bold'), 
                 bg='#f0f0f0').pack(pady=10)
+        fields = [
+            ('Name:', 'name'),
+            ('Phone:', 'phone'),
+            ('Email:', 'email')
+        ]
+        
+        entries = {}
+        for label_text, field_name in fields:
+            frame = tk.Frame(dialog, bg='#f0f0f0')
+            frame.pack(fill='x', padx=20, pady=5)
+            
+            tk.Label(frame, text=label_text, bg='#f0f0f0', 
+                    font=('Segoe UI', 10, 'bold')).pack(side='left')
+            
+            entry = tk.Entry(frame, font=('Segoe UI', 10), width=30)
+            entry.pack(side='right')
+            entries[field_name] = entry
