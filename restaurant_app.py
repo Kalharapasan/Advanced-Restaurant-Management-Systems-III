@@ -376,3 +376,4 @@ class RestaurantManagementSystem:
         self.notebook.add(self.analytics_frame, text="📊 Analytics")
         tk.Label(self.analytics_frame, text="📊 Sales Analytics Dashboard",
                 font=('Segoe UI', 16, 'bold'), bg='#f0f0f0').pack(pady=20)
+        self.setup_analytics_content()
