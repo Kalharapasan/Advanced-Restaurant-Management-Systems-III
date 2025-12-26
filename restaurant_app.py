@@ -381,4 +381,5 @@ class RestaurantManagementSystem:
     def create_menu_management_tab(self):
         self.menu_mgmt_frame = tk.Frame(self.notebook, bg='#f0f0f0')
         self.notebook.add(self.menu_mgmt_frame, text="🍽️ Menu")
+        self.setup_menu_management_content()
         
