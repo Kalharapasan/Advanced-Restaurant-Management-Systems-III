@@ -594,4 +594,9 @@ class RestaurantManagementSystem:
             self.update_status("❌ Error: Customer table not found")
     
     def refresh_customers(self):
-       
+        self.load_sample_customers()
+        self.populate_customer_data()
+        self.update_status(f"Customers refreshed - {len(self.sample_customers)} customers loaded")
+        print(f"DEBUG: Loaded {len(self.sample_customers)} customers")
+        for i, customer in enumerate(self.sample_customers):
+            print(f"DEBUG: Customer {i+1}: {customer['name']} - {customer['phone']}")
