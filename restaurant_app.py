@@ -622,3 +622,5 @@ class RestaurantManagementSystem:
     
     def on_customer_search(self, event=None):
         search_term = self.customer_search_var.get().lower()
+        for item in self.customer_tree.get_children():
+            self.customer_tree.delete(item)
