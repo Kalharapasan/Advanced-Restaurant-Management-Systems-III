@@ -338,3 +338,10 @@ class RestaurantManagementSystem:
             ('1', 4, 0), ('2', 4, 1), ('3', 4, 2), ('+', 4, 3),
             ('0', 5, 0), ('.', 5, 2), ('=', 5, 3)
         ]
+        for (text, row, col) in buttons:
+            if text == '0':
+                self.create_calc_button(calc_frame, text, row, col).grid(
+                    row=row, column=col, columnspan=2, sticky="ew", padx=1, pady=1)
+            else:
+                self.create_calc_button(calc_frame, text, row, col).grid(
+                    row=row, column=col, sticky="ew", padx=1, pady=1)
