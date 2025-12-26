@@ -478,3 +478,7 @@ class RestaurantManagementSystem:
                               font=('Segoe UI', 10), width=30)
         search_entry.pack(side='left', padx=5)
         search_entry.bind('<KeyRelease>', self.on_customer_search)
+        
+        customers_frame = tk.LabelFrame(self.customer_frame, text="Customer Database",
+                                      font=('Segoe UI', 12, 'bold'), bg='#f0f0f0')
+        customers_frame.pack(fill='both', expand=True, padx=20, pady=10)
