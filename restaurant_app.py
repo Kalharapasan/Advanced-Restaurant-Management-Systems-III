@@ -600,3 +600,8 @@ class RestaurantManagementSystem:
         print(f"DEBUG: Loaded {len(self.sample_customers)} customers")
         for i, customer in enumerate(self.sample_customers):
             print(f"DEBUG: Customer {i+1}: {customer['name']} - {customer['phone']}")
+    
+    def populate_customer_data(self):
+        if not hasattr(self, 'customer_tree') or not self.customer_tree:
+            print("DEBUG: No customer_tree found")
+            return
