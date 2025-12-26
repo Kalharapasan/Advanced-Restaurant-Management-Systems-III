@@ -165,3 +165,6 @@ class RestaurantManagementSystem:
     def create_order_tab(self):
         self.order_frame = tk.Frame(self.notebook, bg='#f0f0f0')
         self.notebook.add(self.order_frame, text="📋 Order Management")
+        self.order_frame.grid_rowconfigure(0, weight=1)
+        self.order_frame.grid_columnconfigure(0, weight=2)
+        self.order_frame.grid_columnconfigure(1, weight=1)
