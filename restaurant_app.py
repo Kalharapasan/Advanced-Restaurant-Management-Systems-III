@@ -230,3 +230,5 @@ class RestaurantManagementSystem:
                                     bg='#f8f9fa', fg='#2c3e50',
                                     relief=tk.RIDGE, bd=2)
         summary_frame.grid(row=2, column=0, sticky="ew", padx=5, pady=5)
+        for i in range(4):
+            summary_frame.grid_columnconfigure(i, weight=1)
