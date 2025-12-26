@@ -566,3 +566,8 @@ class RestaurantManagementSystem:
                 'total_spent': 156.85
             }
         ]
+    
+    def force_refresh_customers(self):
+        print("DEBUG: Force refreshing customers")
+        self.load_sample_customers()
+        print(f"DEBUG: Loaded {len(self.sample_customers)} customers")
