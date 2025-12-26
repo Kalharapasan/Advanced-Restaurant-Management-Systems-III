@@ -320,3 +320,10 @@ class RestaurantManagementSystem:
                  command=self.email_receipt,
                  bg='#16a085', fg='white',
                  font=('Segoe UI', 9, 'bold')).pack(side=tk.LEFT, padx=2)
+    
+    def setup_calculator_section(self, parent):
+        calc_frame = tk.LabelFrame(parent, text="🧮 Calculator",
+                                 font=('Segoe UI', 10, 'bold'),
+                                 bg='#f8f9fa', fg='#2c3e50',
+                                 relief=tk.RIDGE, bd=2)
+        calc_frame.grid(row=2, column=0, sticky="ew", padx=5, pady=5)
