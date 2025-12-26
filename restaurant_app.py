@@ -437,4 +437,6 @@ class RestaurantManagementSystem:
                     name, category.replace('_', ' ').title(), price, available
                 ))
     
-    
+    def create_customer_management_tab(self):
+        self.customer_frame = tk.Frame(self.notebook, bg='#f0f0f0')
+        self.notebook.add(self.customer_frame, text="👥 Customers")
