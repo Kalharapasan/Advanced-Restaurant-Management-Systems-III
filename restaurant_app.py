@@ -572,3 +572,6 @@ class RestaurantManagementSystem:
         self.load_sample_customers()
         print(f"DEBUG: Loaded {len(self.sample_customers)} customers")
         if hasattr(self, 'customer_tree') and self.customer_tree:
+            for item in self.customer_tree.get_children():
+                self.customer_tree.delete(item)
+            print("DEBUG: Cleared existing treeview items")
