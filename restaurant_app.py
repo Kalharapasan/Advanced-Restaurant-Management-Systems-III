@@ -308,3 +308,15 @@ class RestaurantManagementSystem:
         receipt_scrollbar = tk.Scrollbar(text_frame, command=self.receipt_text.yview)
         receipt_scrollbar.grid(row=0, column=1, sticky="ns")
         self.receipt_text.config(yscrollcommand=receipt_scrollbar.set)
+        receipt_btn_frame = tk.Frame(receipt_frame, bg='#f8f9fa')
+        receipt_btn_frame.grid(row=1, column=0, sticky="ew", padx=5, pady=5)
+        
+        tk.Button(receipt_btn_frame, text="🖨️ Print",
+                 command=self.print_receipt,
+                 bg='#34495e', fg='white',
+                 font=('Segoe UI', 9, 'bold')).pack(side=tk.LEFT, padx=2)
+        
+        tk.Button(receipt_btn_frame, text="📧 Email",
+                 command=self.email_receipt,
+                 bg='#16a085', fg='white',
+                 font=('Segoe UI', 9, 'bold')).pack(side=tk.LEFT, padx=2)
