@@ -575,3 +575,7 @@ class RestaurantManagementSystem:
             for item in self.customer_tree.get_children():
                 self.customer_tree.delete(item)
             print("DEBUG: Cleared existing treeview items")
+            
+        else:
+            print("DEBUG: No customer_tree found!")
+            self.update_status("❌ Error: Customer table not found")
