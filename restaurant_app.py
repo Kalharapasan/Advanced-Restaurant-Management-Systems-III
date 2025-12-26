@@ -205,3 +205,9 @@ class RestaurantManagementSystem:
         payment_combo = ttk.Combobox(customer_frame, textvariable=self.payment_method,
                                    values=["Cash", "Card", "Digital"], state="readonly", width=18)
         payment_combo.grid(row=1, column=1, sticky=tk.EW, padx=5, pady=2)
+        tk.Label(customer_frame, text="Discount %:", bg='#e8f4fd',
+                font=('Segoe UI', 10, 'bold')).grid(row=1, column=2, sticky=tk.W, padx=5, pady=2)
+        discount_entry = tk.Entry(customer_frame, textvariable=self.discount_percent,
+                                font=('Segoe UI', 10), width=8)
+        discount_entry.grid(row=1, column=3, sticky=tk.W, padx=5, pady=2)
+        discount_entry.bind('<KeyRelease>', self.on_discount_change)
