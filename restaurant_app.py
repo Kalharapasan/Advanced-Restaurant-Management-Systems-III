@@ -181,3 +181,4 @@ class RestaurantManagementSystem:
         parent.grid_columnconfigure(0, weight=1)
         self.setup_customer_info_section(parent)
         self.setup_menu_items_section(parent)
+        self.setup_order_summary_section(parent)
