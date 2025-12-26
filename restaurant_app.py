@@ -222,3 +222,4 @@ class RestaurantManagementSystem:
         menu_frame.grid_columnconfigure(0, weight=1)
         self.menu_notebook = ttk.Notebook(menu_frame)
         self.menu_notebook.grid(row=0, column=0, sticky="nsew", padx=5, pady=5)
+        self.menu_tab_frames = {}
