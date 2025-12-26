@@ -466,3 +466,15 @@ class RestaurantManagementSystem:
                  font=('Segoe UI', 10, 'bold'),
                  bg='#e67e22', fg='white',
                  command=self.force_refresh_customers).pack(side='left', padx=5)
+        
+        search_frame = tk.Frame(self.customer_frame, bg='#f0f0f0')
+        search_frame.pack(fill='x', padx=20, pady=5)
+        
+        tk.Label(search_frame, text="Search:", font=('Segoe UI', 10, 'bold'), 
+                bg='#f0f0f0').pack(side='left')
+        
+        self.customer_search_var = tk.StringVar()
+        search_entry = tk.Entry(search_frame, textvariable=self.customer_search_var,
+                              font=('Segoe UI', 10), width=30)
+        search_entry.pack(side='left', padx=5)
+        search_entry.bind('<KeyRelease>', self.on_customer_search)
