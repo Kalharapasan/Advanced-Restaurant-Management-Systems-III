@@ -196,3 +196,7 @@ class RestaurantManagementSystem:
                 font=('Segoe UI', 10, 'bold')).grid(row=0, column=0, sticky=tk.W, padx=5, pady=2)
         tk.Entry(customer_frame, textvariable=self.customer_name,
                 font=('Segoe UI', 10), width=20).grid(row=0, column=1, sticky=tk.EW, padx=5, pady=2)
+        tk.Label(customer_frame, text="Phone:", bg='#e8f4fd',
+                font=('Segoe UI', 10, 'bold')).grid(row=0, column=2, sticky=tk.W, padx=5, pady=2)
+        tk.Entry(customer_frame, textvariable=self.customer_phone,
+                font=('Segoe UI', 10), width=15).grid(row=0, column=3, sticky=tk.EW, padx=5, pady=2)
