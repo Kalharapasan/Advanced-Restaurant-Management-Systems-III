@@ -642,3 +642,6 @@ class RestaurantManagementSystem:
         if search_term:
             self.customer_search_var.set(search_term)
             self.on_customer_search()
+    
+    def add_customer(self):
+        
