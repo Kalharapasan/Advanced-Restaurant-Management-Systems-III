@@ -345,3 +345,6 @@ class RestaurantManagementSystem:
             else:
                 self.create_calc_button(calc_frame, text, row, col).grid(
                     row=row, column=col, sticky="ew", padx=1, pady=1)
+        
+        for i in range(4):
+            calc_frame.grid_columnconfigure(i, weight=1)
