@@ -251,3 +251,6 @@ class RestaurantManagementSystem:
     def setup_action_buttons(self, parent):
         button_frame = tk.Frame(parent, bg='#ecf0f1')
         button_frame.grid(row=3, column=0, sticky="ew", padx=5, pady=10)
+        for i in range(5):
+            button_frame.grid_columnconfigure(i, weight=1)
+        
