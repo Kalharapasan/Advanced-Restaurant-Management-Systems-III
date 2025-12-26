@@ -694,3 +694,7 @@ class RestaurantManagementSystem:
                  bg='#27ae60', fg='white', font=('Segoe UI', 10, 'bold')).pack(side='left', padx=5)
         tk.Button(btn_frame, text="Cancel", command=dialog.destroy,
                  bg='#e74c3c', fg='white', font=('Segoe UI', 10, 'bold')).pack(side='left', padx=5)
+    
+    def create_reports_tab(self):
+        self.reports_frame = tk.Frame(self.notebook, bg='#f0f0f0')
+        self.notebook.add(self.reports_frame, text="📈 Reports")
