@@ -162,4 +162,6 @@ class RestaurantManagementSystem:
         self.create_customer_management_tab()
         self.create_reports_tab()
     
-    
+    def create_order_tab(self):
+        self.order_frame = tk.Frame(self.notebook, bg='#f0f0f0')
+        self.notebook.add(self.order_frame, text="📋 Order Management")
