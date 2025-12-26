@@ -423,4 +423,12 @@ class RestaurantManagementSystem:
         
         for item in self.menu_tree.get_children():
             self.menu_tree.delete(item)
-        
+        for category, items in self.menu_items.items():
+            for item in items:
+                name = item.get('name', 'Unknown')
+                price = f"${item.get('price', 0):.2f}"
+                available = 'Yes' if item.get('available', True) else 'No'
+                
+                self.menu_tree.insert('', 'end', values=(
+                    name, category.replace('_', ' ').title(), price, available
+                ))
