@@ -482,3 +482,5 @@ class RestaurantManagementSystem:
         customers_frame = tk.LabelFrame(self.customer_frame, text="Customer Database",
                                       font=('Segoe UI', 12, 'bold'), bg='#f0f0f0')
         customers_frame.pack(fill='both', expand=True, padx=20, pady=10)
+        cust_columns = ('Name', 'Phone', 'Email', 'Total Orders', 'Total Spent')
+        self.customer_tree = ttk.Treeview(customers_frame, columns=cust_columns, show='headings', height=15)
