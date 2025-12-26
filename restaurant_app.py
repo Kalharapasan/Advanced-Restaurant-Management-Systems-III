@@ -407,5 +407,8 @@ class RestaurantManagementSystem:
         categories_frame.pack(fill='both', expand=True, padx=20, pady=10)
         columns = ('Name', 'Category', 'Price', 'Available')
         self.menu_tree = ttk.Treeview(categories_frame, columns=columns, show='headings', height=15)
+        for col in columns:
+            self.menu_tree.heading(col, text=col)
+            self.menu_tree.column(col, width=150)
         
         
