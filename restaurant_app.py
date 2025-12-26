@@ -272,3 +272,4 @@ class RestaurantManagementSystem:
         parent.grid_rowconfigure(1, weight=1)
         parent.grid_columnconfigure(0, weight=1)
         self.setup_quick_stats(parent)
+        self.setup_receipt_section(parent)
