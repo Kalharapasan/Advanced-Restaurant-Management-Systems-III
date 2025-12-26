@@ -274,3 +274,10 @@ class RestaurantManagementSystem:
         self.setup_quick_stats(parent)
         self.setup_receipt_section(parent)
         self.setup_calculator_section(parent)
+    
+    def setup_quick_stats(self, parent):
+        stats_frame = tk.LabelFrame(parent, text="📊 Today's Stats",
+                                  font=('Segoe UI', 10, 'bold'),
+                                  bg='#e8f4fd', fg='#2c3e50',
+                                  relief=tk.RIDGE, bd=1)
+        stats_frame.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
