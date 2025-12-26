@@ -701,3 +701,5 @@ class RestaurantManagementSystem:
         self.setup_reports_content()
     
     def setup_reports_content(self):
+        tk.Label(self.reports_frame, text="📈 Business Reports & Insights",
+                font=('Segoe UI', 18, 'bold'), bg='#f0f0f0').pack(pady=20)
