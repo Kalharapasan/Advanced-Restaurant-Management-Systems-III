@@ -624,3 +624,15 @@ class RestaurantManagementSystem:
         search_term = self.customer_search_var.get().lower()
         for item in self.customer_tree.get_children():
             self.customer_tree.delete(item)
+        for customer in self.sample_customers:
+            if (search_term in customer['name'].lower() or 
+                search_term in customer['phone'] or
+                search_term in customer['email'].lower()):
+                
+                self.customer_tree.insert('', 'end', values=(
+                    customer['name'],
+                    customer['phone'],
+                    customer['email'],
+                    customer['total_orders'],
+                    f"${customer['total_spent']:.2f}"
+                ))
