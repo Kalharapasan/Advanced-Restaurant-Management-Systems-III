@@ -232,3 +232,11 @@ class RestaurantManagementSystem:
         summary_frame.grid(row=2, column=0, sticky="ew", padx=5, pady=5)
         for i in range(4):
             summary_frame.grid_columnconfigure(i, weight=1)
+        
+        summary_data = [
+            ("Subtotal:", self.SubTotal, 0, 0),
+            ("Discount:", self.DiscountAmount, 0, 2),
+            ("Service Charge:", self.ServiceCharge, 1, 0),
+            ("Tax (15%):", self.PaidTax, 1, 2),
+            ("Total Cost:", self.TotalCost, 2, 0)
+        ]
