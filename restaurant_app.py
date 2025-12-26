@@ -240,3 +240,10 @@ class RestaurantManagementSystem:
             ("Tax (15%):", self.PaidTax, 1, 2),
             ("Total Cost:", self.TotalCost, 2, 0)
         ]
+        
+        for label_text, var, row, col in summary_data:
+            tk.Label(summary_frame, text=label_text, bg='#f8f9fa',
+                    font=('Segoe UI', 10, 'bold')).grid(row=row, column=col, sticky=tk.W, padx=5, pady=2)
+            cost_entry = tk.Entry(summary_frame, textvariable=var, state='readonly',
+                                font=('Segoe UI', 10), width=12)
+            cost_entry.grid(row=row, column=col+1, sticky=tk.EW, padx=5, pady=2)
