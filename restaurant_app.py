@@ -348,3 +348,25 @@ class RestaurantManagementSystem:
         
         for i in range(4):
             calc_frame.grid_columnconfigure(i, weight=1)
+    
+    def create_calc_button(self, parent, text, row, col):
+        color_map = {
+            'C': '#e74c3c', '±': '#f39c12', '%': '#f39c12', '/': '#3498db',
+            '*': '#3498db', '-': '#3498db', '+': '#3498db', '=': '#27ae60'
+        }
+        
+        bg_color = color_map.get(text, '#95a5a6')
+        
+        if text == 'C':
+            command = self.calc_clear
+        elif text == '±':
+            command = self.calc_negate
+        elif text == '=':
+            command = self.calc_equals
+        else:
+            command = lambda t=text: self.calc_input(t)
+        
+        return tk.Button(parent, text=text, command=command,
+                        font=('Segoe UI', 12, 'bold'),
+                        bg=bg_color, fg='white',
+                        relief=tk.RAISED, bd=2, width=3, height=1)
