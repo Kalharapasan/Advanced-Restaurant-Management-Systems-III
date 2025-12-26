@@ -150,8 +150,7 @@ class RestaurantManagementSystem:
         self.time_label = tk.Label(info_frame,
                                  text=time.strftime("%H:%M:%S"),
                                  font=('Segoe UI', 14, 'bold'),
-                                 bg='#2c3e5
-                                 0', fg='white')
+                                 bg='#2c3e50', fg='white')
         self.time_label.pack()
     
     def setup_main_content(self):
@@ -162,3 +161,5 @@ class RestaurantManagementSystem:
         self.create_menu_management_tab()
         self.create_customer_management_tab()
         self.create_reports_tab()
+    
+    
