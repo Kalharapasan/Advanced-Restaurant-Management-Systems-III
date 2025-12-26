@@ -492,3 +492,77 @@ class RestaurantManagementSystem:
         self.customer_tree.pack(side='left', fill='both', expand=True)
         v_scrollbar_cust.pack(side='right', fill='y')
         self.refresh_customers()
+    
+    def load_sample_customers(self):
+        self.sample_customers = [
+            {
+                'name': 'John Smith',
+                'phone': '555-0101',
+                'email': 'john.smith@email.com',
+                'total_orders': 15,
+                'total_spent': 285.50
+            },
+            {
+                'name': 'Sarah Johnson',  
+                'phone': '555-0102',
+                'email': 'sarah.j@email.com',
+                'total_orders': 8,
+                'total_spent': 124.75
+            },
+            {
+                'name': 'Mike Wilson',
+                'phone': '555-0103', 
+                'email': 'mike.wilson@email.com',
+                'total_orders': 22,
+                'total_spent': 456.20
+            },
+            {
+                'name': 'Emily Davis',
+                'phone': '555-0104',
+                'email': 'emily.d@email.com', 
+                'total_orders': 5,
+                'total_spent': 89.25
+            },
+            {
+                'name': 'David Brown',
+                'phone': '555-0105',
+                'email': 'david.brown@email.com',
+                'total_orders': 12,
+                'total_spent': 198.80
+            },
+            {
+                'name': 'Lisa Anderson',
+                'phone': '555-0106', 
+                'email': 'lisa.a@email.com',
+                'total_orders': 18,
+                'total_spent': 334.65
+            },
+            {
+                'name': 'Robert Martinez',
+                'phone': '555-0107',
+                'email': 'robert.m@email.com', 
+                'total_orders': 25,
+                'total_spent': 567.40
+            },
+            {
+                'name': 'Jennifer Lee',
+                'phone': '555-0108',
+                'email': 'jennifer.lee@email.com',
+                'total_orders': 11,
+                'total_spent': 223.15
+            },
+            {
+                'name': 'Michael Garcia',
+                'phone': '555-0109',
+                'email': 'michael.g@email.com',
+                'total_orders': 19,
+                'total_spent': 412.90
+            },
+            {
+                'name': 'Amanda Taylor',
+                'phone': '555-0110',
+                'email': 'amanda.t@email.com',
+                'total_orders': 7,
+                'total_spent': 156.85
+            }
+        ]
