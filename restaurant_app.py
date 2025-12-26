@@ -487,3 +487,5 @@ class RestaurantManagementSystem:
         for col in cust_columns:
             self.customer_tree.heading(col, text=col)
             self.customer_tree.column(col, width=150)
+        v_scrollbar_cust = ttk.Scrollbar(customers_frame, orient=tk.VERTICAL, command=self.customer_tree.yview)
+        self.customer_tree.configure(yscrollcommand=v_scrollbar_cust.set)
