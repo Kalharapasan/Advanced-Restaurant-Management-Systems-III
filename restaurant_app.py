@@ -644,4 +644,9 @@ class RestaurantManagementSystem:
             self.on_customer_search()
     
     def add_customer(self):
-        
+        dialog = tk.Toplevel(self.root)
+        dialog.title("Add New Customer")
+        dialog.geometry("400x300")
+        dialog.configure(bg='#f0f0f0')
+        dialog.transient(self.root)
+        dialog.grab_set()
