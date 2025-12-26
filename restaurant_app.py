@@ -157,3 +157,8 @@ class RestaurantManagementSystem:
     def setup_main_content(self):
         self.notebook = ttk.Notebook(self.root)
         self.notebook.grid(row=1, column=0, sticky="nsew", padx=10, pady=10)
+        self.create_order_tab()
+        self.create_analytics_tab()
+        self.create_menu_management_tab()
+        self.create_customer_management_tab()
+        self.create_reports_tab()
