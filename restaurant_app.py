@@ -271,4 +271,4 @@ class RestaurantManagementSystem:
     def setup_order_right_panel(self, parent):
         parent.grid_rowconfigure(1, weight=1)
         parent.grid_columnconfigure(0, weight=1)
-        
+        self.setup_quick_stats(parent)
