@@ -651,3 +651,5 @@ class RestaurantManagementSystem:
         dialog.transient(self.root)
         dialog.grab_set()
         dialog.geometry("+%d+%d" % (self.root.winfo_rootx() + 50, self.root.winfo_rooty() + 50))
+        tk.Label(dialog, text="Add New Customer", font=('Segoe UI', 16, 'bold'), 
+                bg='#f0f0f0').pack(pady=10)
