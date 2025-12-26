@@ -484,3 +484,6 @@ class RestaurantManagementSystem:
         customers_frame.pack(fill='both', expand=True, padx=20, pady=10)
         cust_columns = ('Name', 'Phone', 'Email', 'Total Orders', 'Total Spent')
         self.customer_tree = ttk.Treeview(customers_frame, columns=cust_columns, show='headings', height=15)
+        for col in cust_columns:
+            self.customer_tree.heading(col, text=col)
+            self.customer_tree.column(col, width=150)
