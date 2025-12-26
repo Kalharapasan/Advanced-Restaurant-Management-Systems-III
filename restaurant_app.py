@@ -733,4 +733,5 @@ class RestaurantManagementSystem:
         reports_scrollbar.pack(side='right', fill='y')
     
     def setup_analytics_content(self):
+        self.analytics_display = AnalyticsDisplay(self.analytics_frame, self.analytics_manager)
         
