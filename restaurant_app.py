@@ -382,4 +382,11 @@ class RestaurantManagementSystem:
         self.menu_mgmt_frame = tk.Frame(self.notebook, bg='#f0f0f0')
         self.notebook.add(self.menu_mgmt_frame, text="🍽️ Menu")
         self.setup_menu_management_content()
+    
+    def setup_menu_management_content(self):
+        title_frame = tk.Frame(self.menu_mgmt_frame, bg='#f0f0f0')
+        title_frame.pack(fill='x', padx=20, pady=10)
+        
+        tk.Label(title_frame, text="🍽️ Menu Management",
+                font=('Segoe UI', 18, 'bold'), bg='#f0f0f0').pack(side='left')
         
