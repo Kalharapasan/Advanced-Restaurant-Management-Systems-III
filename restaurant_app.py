@@ -636,3 +636,9 @@ class RestaurantManagementSystem:
                     customer['total_orders'],
                     f"${customer['total_spent']:.2f}"
                 ))
+    
+    def search_customers(self):
+        search_term = tk.simpledialog.askstring("Search Customers", "Enter name, phone, or email:")
+        if search_term:
+            self.customer_search_var.set(search_term)
+            self.on_customer_search()
