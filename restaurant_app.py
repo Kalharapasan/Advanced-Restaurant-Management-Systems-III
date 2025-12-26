@@ -253,4 +253,18 @@ class RestaurantManagementSystem:
         button_frame.grid(row=3, column=0, sticky="ew", padx=5, pady=10)
         for i in range(5):
             button_frame.grid_columnconfigure(i, weight=1)
+        buttons = [
+            ("🧮 Calculate", self.calculate_total, '#27ae60'),
+            ("🧾 Receipt", self.generate_receipt, '#3498db'),
+            ("💾 Save Order", self.save_order, '#9b59b6'),
+            ("🔄 Reset", self.reset_order, '#f39c12'),
+            ("❌ Clear", self.clear_all, '#e74c3c')
+        ]
+        
+        for i, (text, command, color) in enumerate(buttons):
+            btn = tk.Button(button_frame, text=text, command=command,
+                          font=('Segoe UI', 10, 'bold'),
+                          bg=color, fg='white', relief=tk.RAISED, bd=2,
+                          width=12, height=2)
+            btn.grid(row=0, column=i, padx=2)
         
