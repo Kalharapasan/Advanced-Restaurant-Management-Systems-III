@@ -592,3 +592,6 @@ class RestaurantManagementSystem:
         else:
             print("DEBUG: No customer_tree found!")
             self.update_status("❌ Error: Customer table not found")
+    
+    def refresh_customers(self):
+       
