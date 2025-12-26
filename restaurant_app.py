@@ -609,3 +609,13 @@ class RestaurantManagementSystem:
             self.customer_tree.delete(item)
         
         print(f"DEBUG: Adding {len(self.sample_customers)} customers to treeview")
+        for customer in self.sample_customers:
+            values = (
+                customer['name'],
+                customer['phone'], 
+                customer['email'],
+                customer['total_orders'],
+                f"${customer['total_spent']:.2f}"
+            )
+            print(f"DEBUG: Adding customer: {values}")
+            self.customer_tree.insert('', 'end', values=values)
