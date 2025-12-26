@@ -619,3 +619,6 @@ class RestaurantManagementSystem:
             )
             print(f"DEBUG: Adding customer: {values}")
             self.customer_tree.insert('', 'end', values=values)
+    
+    def on_customer_search(self, event=None):
+        search_term = self.customer_search_var.get().lower()
