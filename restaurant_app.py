@@ -305,3 +305,6 @@ class RestaurantManagementSystem:
                                   bg='#ffffff', fg='#2c3e50',
                                   wrap=tk.WORD, relief=tk.SOLID, bd=1)
         self.receipt_text.grid(row=0, column=0, sticky="nsew")
+        receipt_scrollbar = tk.Scrollbar(text_frame, command=self.receipt_text.yview)
+        receipt_scrollbar.grid(row=0, column=1, sticky="ns")
+        self.receipt_text.config(yscrollcommand=receipt_scrollbar.set)
