@@ -571,3 +571,4 @@ class RestaurantManagementSystem:
         print("DEBUG: Force refreshing customers")
         self.load_sample_customers()
         print(f"DEBUG: Loaded {len(self.sample_customers)} customers")
+        if hasattr(self, 'customer_tree') and self.customer_tree:
