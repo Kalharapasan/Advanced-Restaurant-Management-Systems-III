@@ -721,3 +721,13 @@ class RestaurantManagementSystem:
         self.reports_text_frame = tk.LabelFrame(self.reports_frame, text="Report Results",
                                               font=('Segoe UI', 12, 'bold'), bg='#f0f0f0')
         self.reports_text_frame.pack(fill='both', expand=True, padx=20, pady=20)
+        self.reports_text = tk.Text(self.reports_text_frame,
+                                  font=('Courier New', 10),
+                                  bg='#ffffff', fg='#2c3e50',
+                                  wrap=tk.WORD, relief=tk.SOLID, bd=1)
+        
+        reports_scrollbar = tk.Scrollbar(self.reports_text_frame, command=self.reports_text.yview)
+        self.reports_text.configure(yscrollcommand=reports_scrollbar.set)
+        
+        self.reports_text.pack(side='left', fill='both', expand=True)
+        reports_scrollbar.pack(side='right', fill='y')
