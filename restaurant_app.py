@@ -575,6 +575,19 @@ class RestaurantManagementSystem:
             for item in self.customer_tree.get_children():
                 self.customer_tree.delete(item)
             print("DEBUG: Cleared existing treeview items")
+            for i, customer in enumerate(self.sample_customers):
+                values = (
+                    customer['name'],
+                    customer['phone'],
+                    customer['email'], 
+                    customer['total_orders'],
+                    f"${customer['total_spent']:.2f}"
+                )
+                self.customer_tree.insert('', 'end', values=values)
+                print(f"DEBUG: Added customer {i+1}: {customer['name']} - {customer['phone']}")
+            
+            self.update_status(f"✅ Refreshed: {len(self.sample_customers)} customers loaded")
+            messagebox.showinfo("Refresh Complete", f"Loaded {len(self.sample_customers)} customers with updated data")
             
         else:
             print("DEBUG: No customer_tree found!")
