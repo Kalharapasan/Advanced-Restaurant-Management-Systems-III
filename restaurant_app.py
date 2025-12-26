@@ -605,3 +605,7 @@ class RestaurantManagementSystem:
         if not hasattr(self, 'customer_tree') or not self.customer_tree:
             print("DEBUG: No customer_tree found")
             return
+        for item in self.customer_tree.get_children():
+            self.customer_tree.delete(item)
+        
+        print(f"DEBUG: Adding {len(self.sample_customers)} customers to treeview")
