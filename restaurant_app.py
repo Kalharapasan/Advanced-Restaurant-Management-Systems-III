@@ -919,3 +919,14 @@ class RestaurantManagementSystem:
         details_frame = tk.Frame(item_frame, bg='#ffffff')
         details_frame.grid(row=0, column=1, sticky="ew", padx=5, pady=5)
         details_frame.grid_columnconfigure(0, weight=1)
+        name_price_frame = tk.Frame(details_frame, bg='#ffffff')
+        name_price_frame.grid(row=0, column=0, sticky="ew")
+        name_price_frame.grid_columnconfigure(0, weight=1)
+        
+        tk.Label(name_price_frame, text=item_name,
+                font=('Segoe UI', 11, 'bold'), bg='#ffffff',
+                anchor="w").grid(row=0, column=0, sticky="ew")
+        
+        tk.Label(name_price_frame, text=f"${item.get('price', 0.00):.2f}",
+                font=('Segoe UI', 11, 'bold'), bg='#ffffff', fg='#27ae60',
+                anchor="e").grid(row=0, column=1, sticky="e")
