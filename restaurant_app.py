@@ -823,3 +823,5 @@ class RestaurantManagementSystem:
     def populate_order_menu(self):
         if not hasattr(self, 'menu_notebook') or not self.menu_notebook:
             return
+        for tab in self.menu_notebook.tabs():
+            self.menu_notebook.forget(tab)
