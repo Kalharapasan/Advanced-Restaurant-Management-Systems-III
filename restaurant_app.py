@@ -962,6 +962,16 @@ class RestaurantManagementSystem:
             for item_name, var in self.item_vars.items():
                 if var.get():  
                     try:
+                        qty = int(self.item_entries[item_name].get() or 1)
+                        for category, items in self.menu_items.items():
+                            for item in items:
+                                if item['name'] == item_name:
+                                    price = float(item.get('price', 0))
+                                    item_total = price * qty
+                                    subtotal += item_total
+                                    
+                    except (ValueError, TypeError):
+                        continue
         
         except Exception as e:
             messagebox.showerror("Calculation Error", f"Error calculating totals: {e}")
