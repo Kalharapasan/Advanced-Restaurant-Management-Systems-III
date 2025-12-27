@@ -1000,6 +1000,9 @@ class RestaurantManagementSystem:
             receipt_ref = f"RCP{random.randint(10000, 99999)}{time.strftime('%H%M')}"
             self.Receipt_Ref.set(receipt_ref)
             receipt_content = self.create_receipt_content(receipt_ref)
+            self.receipt_text.delete('1.0', tk.END)
+            self.receipt_text.insert('1.0', receipt_content)
             
+            self.update_status("Receipt generated successfully")
         except Exception as e:
             messagebox.showerror("Receipt Error", f"Error generating receipt: {e}")
