@@ -812,4 +812,5 @@ class RestaurantManagementSystem:
     
     def update_all_displays(self):
         print("DEBUG: Updating all displays")
+        self.populate_order_menu()
         
