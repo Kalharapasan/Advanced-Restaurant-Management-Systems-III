@@ -916,3 +916,6 @@ class RestaurantManagementSystem:
                                 command=lambda: self.toggle_item(item_name),
                                 bg='#ffffff', font=('Segoe UI', 10))
         checkbox.grid(row=0, column=0, padx=5, pady=5)
+        details_frame = tk.Frame(item_frame, bg='#ffffff')
+        details_frame.grid(row=0, column=1, sticky="ew", padx=5, pady=5)
+        details_frame.grid_columnconfigure(0, weight=1)
