@@ -825,3 +825,6 @@ class RestaurantManagementSystem:
             return
         for tab in self.menu_notebook.tabs():
             self.menu_notebook.forget(tab)
+        self.menu_tab_frames = {}
+        self.item_vars = {}
+        self.item_entries = {}
