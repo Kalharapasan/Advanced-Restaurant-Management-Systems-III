@@ -805,5 +805,8 @@ class RestaurantManagementSystem:
                 {'name': 'Buffalo Wings', 'price': 9.99, 'description': 'Spicy wings with ranch dressing', 'available': True, 'id': 19},
                 {'name': 'Loaded Nachos', 'price': 8.49, 'description': 'Tortilla chips with cheese and jalapeños', 'available': True, 'id': 20}
             ]
+            
         }
+        
+        self.update_all_displays()
         
