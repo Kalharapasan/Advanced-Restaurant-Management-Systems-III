@@ -949,3 +949,5 @@ class RestaurantManagementSystem:
         qty_entry.pack(side=tk.LEFT, padx=(2, 0))
     
     def toggle_item(self, item_name):
+        if self.item_vars[item_name].get():
+            self.update_status(f"Added {item_name} to order")
