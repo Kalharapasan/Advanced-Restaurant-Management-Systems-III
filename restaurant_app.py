@@ -776,5 +776,5 @@ class RestaurantManagementSystem:
             self.load_sample_menu()
     
     def load_sample_menu(self):
-        
+        self.menu_items = {}
         
