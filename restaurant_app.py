@@ -740,4 +740,8 @@ class RestaurantManagementSystem:
         self.status_frame.grid(row=2, column=0, sticky="ew")
         self.status_frame.grid_propagate(False)
         self.status_frame.grid_columnconfigure(1, weight=1)
+        self.status_label = tk.Label(self.status_frame, text="Ready",
+                                   font=('Segoe UI', 10),
+                                   bg='#34495e', fg='white', anchor=tk.W)
+        self.status_label.grid(row=0, column=0, sticky="ew", padx=10)
         
