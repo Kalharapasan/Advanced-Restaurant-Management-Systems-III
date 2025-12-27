@@ -770,7 +770,7 @@ class RestaurantManagementSystem:
             if not self.menu_items:
                 self.load_sample_menu()
                 return
-        
+            self.update_all_displays()
         except Exception as e:
             print(f"Database menu loading failed: {e}")
             self.load_sample_menu()
