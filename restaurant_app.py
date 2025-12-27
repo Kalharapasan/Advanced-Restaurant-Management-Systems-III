@@ -762,6 +762,11 @@ class RestaurantManagementSystem:
                 return
             menu_data = self.db_manager.get_all_menu_items()
             self.menu_items = {}
+            for item in menu_data:
+                category = item.get('category', 'other')
+                if category not in self.menu_items:
+                    self.menu_items[category] = []
+                self.menu_items[category].append(item)
         
         except Exception as e:
             print(f"Database menu loading failed: {e}")
