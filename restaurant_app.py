@@ -983,5 +983,14 @@ class RestaurantManagementSystem:
             subtotal_after_discount = subtotal - discount_amount
             tax = subtotal_after_discount * 0.15
             total = subtotal_after_discount + service_charge + tax
+            self.SubTotal.set(f"${subtotal:.2f}")
+            self.CostofDrinks.set(f"${cost_of_drinks:.2f}")
+            self.CostofCakes.set(f"${cost_of_cakes:.2f}")
+            self.ServiceCharge.set(f"${service_charge:.2f}")
+            self.DiscountAmount.set(f"${discount_amount:.2f}")
+            self.PaidTax.set(f"${tax:.2f}")
+            self.TotalCost.set(f"${total:.2f}")
+            
+            self.update_status("Order totals calculated successfully")
         except Exception as e:
             messagebox.showerror("Calculation Error", f"Error calculating totals: {e}")
