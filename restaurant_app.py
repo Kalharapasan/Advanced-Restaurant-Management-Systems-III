@@ -959,6 +959,9 @@ class RestaurantManagementSystem:
             subtotal = 0.0
             cost_of_drinks = 0.0
             cost_of_cakes = 0.0
+            for item_name, var in self.item_vars.items():
+                if var.get():  
+                    try:
         
         except Exception as e:
             messagebox.showerror("Calculation Error", f"Error calculating totals: {e}")
