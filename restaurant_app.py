@@ -809,4 +809,7 @@ class RestaurantManagementSystem:
         }
         
         self.update_all_displays()
+    
+    def update_all_displays(self):
+        print("DEBUG: Updating all displays")
         
