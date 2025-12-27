@@ -870,3 +870,15 @@ class RestaurantManagementSystem:
             if item_desc:
                 tk.Label(details_frame, text=item_desc, font=('Segoe UI', 9),
                         bg='white', fg='#7f8c8d', wraplength=200).grid(row=1, column=0, sticky="w")
+            qty_frame = tk.Frame(item_frame, bg='white')
+            qty_frame.grid(row=0, column=2, padx=5, pady=5)
+            
+            tk.Label(qty_frame, text="Qty:", font=('Segoe UI', 9),
+                    bg='white').pack(side='left')
+            qty_entry = tk.Entry(qty_frame, width=5, font=('Segoe UI', 9))
+            qty_entry.insert(0, "1")
+            qty_entry.bind('<KeyRelease>', lambda e: self.calculate_total())
+            qty_entry.pack(side='left', padx=2)
+            self.item_entries[item_name] = qty_entry
+            
+            row += 1
