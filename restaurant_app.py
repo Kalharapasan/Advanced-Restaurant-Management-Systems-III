@@ -935,3 +935,15 @@ class RestaurantManagementSystem:
             tk.Label(details_frame, text=description[:100] + "..." if len(description) > 100 else description,
                     font=('Segoe UI', 9), bg='#ffffff', fg='#7f8c8d',
                     anchor="w", justify="left").grid(row=1, column=0, sticky="ew")
+        qty_frame = tk.Frame(item_frame, bg='#ffffff')
+        qty_frame.grid(row=0, column=2, padx=5, pady=5)
+        
+        tk.Label(qty_frame, text="Qty:", bg='#ffffff',
+                font=('Segoe UI', 9)).pack(side=tk.LEFT)
+        
+        qty_var = tk.StringVar(value="1")
+        self.item_entries[item_name] = qty_var
+        
+        qty_entry = tk.Entry(qty_frame, textvariable=qty_var, width=5,
+                           font=('Segoe UI', 10), justify='center')
+        qty_entry.pack(side=tk.LEFT, padx=(2, 0))
