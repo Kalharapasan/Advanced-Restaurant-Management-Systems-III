@@ -864,3 +864,6 @@ class RestaurantManagementSystem:
             details_frame = tk.Frame(item_frame, bg='white')
             details_frame.grid(row=0, column=1, sticky="ew", padx=5, pady=5)
             details_frame.grid_columnconfigure(0, weight=1)
+            name_price = f"{item_name} - ${item_price:.2f}"
+            tk.Label(details_frame, text=name_price, font=('Segoe UI', 11, 'bold'),
+                    bg='white', fg='#2c3e50').grid(row=0, column=0, sticky="w")
