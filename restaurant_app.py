@@ -819,3 +819,7 @@ class RestaurantManagementSystem:
             self.analytics_manager.refresh_data()
             if hasattr(self, 'analytics_display') and self.analytics_display:
                 self.analytics_display.refresh_display()
+    
+    def populate_order_menu(self):
+        if not hasattr(self, 'menu_notebook') or not self.menu_notebook:
+            return
