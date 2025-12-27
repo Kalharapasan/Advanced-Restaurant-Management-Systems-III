@@ -953,3 +953,9 @@ class RestaurantManagementSystem:
             self.update_status(f"Added {item_name} to order")
         else:
             self.update_status(f"Removed {item_name} from order")
+
+    def calculate_total(self):
+        try:
+            subtotal = 0.0
+            cost_of_drinks = 0.0
+            cost_of_cakes = 0.0
