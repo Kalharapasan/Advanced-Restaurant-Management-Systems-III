@@ -815,4 +815,7 @@ class RestaurantManagementSystem:
         self.populate_order_menu()
         self.populate_menu_management()
         self.refresh_customers()
-        
+        if hasattr(self, 'analytics_manager') and self.analytics_manager:
+            self.analytics_manager.refresh_data()
+            if hasattr(self, 'analytics_display') and self.analytics_display:
+                self.analytics_display.refresh_display()
