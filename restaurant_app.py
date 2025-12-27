@@ -830,3 +830,6 @@ class RestaurantManagementSystem:
         self.item_entries = {}
         for category, items in self.menu_items.items():
             self.create_order_menu_tab(category, items)
+    
+    def create_order_menu_tab(self, category, items):
+        
