@@ -980,6 +980,7 @@ class RestaurantManagementSystem:
             discount_percent = float(self.discount_percent.get() or 0)
             discount_amount = subtotal * (discount_percent / 100)
             service_charge = subtotal * 0.10
+            subtotal_after_discount = subtotal - discount_amount
         
         except Exception as e:
             messagebox.showerror("Calculation Error", f"Error calculating totals: {e}")
