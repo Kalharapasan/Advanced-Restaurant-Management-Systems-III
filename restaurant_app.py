@@ -996,4 +996,7 @@ class RestaurantManagementSystem:
             messagebox.showerror("Calculation Error", f"Error calculating totals: {e}")
             
     def generate_receipt(self):
-        
+        try:
+            
+        except Exception as e:
+            messagebox.showerror("Receipt Error", f"Error generating receipt: {e}")
