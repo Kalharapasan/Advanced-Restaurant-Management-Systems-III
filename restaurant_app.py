@@ -930,3 +930,8 @@ class RestaurantManagementSystem:
         tk.Label(name_price_frame, text=f"${item.get('price', 0.00):.2f}",
                 font=('Segoe UI', 11, 'bold'), bg='#ffffff', fg='#27ae60',
                 anchor="e").grid(row=0, column=1, sticky="e")
+        description = item.get('description', '')
+        if description:
+            tk.Label(details_frame, text=description[:100] + "..." if len(description) > 100 else description,
+                    font=('Segoe UI', 9), bg='#ffffff', fg='#7f8c8d',
+                    anchor="w", justify="left").grid(row=1, column=0, sticky="ew")
