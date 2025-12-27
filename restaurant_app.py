@@ -792,5 +792,12 @@ class RestaurantManagementSystem:
                 {'name': 'Fish & Chips', 'price': 14.75, 'description': 'Battered fish with crispy fries', 'available': True, 'id': 10},
                 {'name': 'Burger Deluxe', 'price': 13.00, 'description': 'Premium beef burger with sides', 'available': True, 'id': 11}
             ],
+            'desserts': [
+                {'name': 'Chocolate Cake', 'price': 4.99, 'description': 'Moist chocolate cake with frosting', 'available': True, 'id': 12},
+                {'name': 'Cheesecake', 'price': 5.99, 'description': 'Creamy New York style cheesecake', 'available': True, 'id': 13},
+                {'name': 'Red Velvet', 'price': 5.49, 'description': 'Classic red velvet with cream cheese', 'available': True, 'id': 14},
+                {'name': 'Tiramisu', 'price': 6.49, 'description': 'Italian coffee-flavored dessert', 'available': True, 'id': 15},
+                {'name': 'Ice Cream', 'price': 3.99, 'description': 'Vanilla, chocolate, or strawberry', 'available': True, 'id': 16}
+            ],
         }
         
