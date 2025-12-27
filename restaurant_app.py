@@ -749,4 +749,9 @@ class RestaurantManagementSystem:
                                       font=('Segoe UI', 10),
                                       bg='#34495e', fg='#2ecc71' if self.db_manager.is_connected() else '#e74c3c')
         self.db_status_label.grid(row=0, column=1, sticky="e", padx=10)
+    
+    def update_time(self):
+        current_time = time.strftime("%H:%M:%S")
+        self.time_label.config(text=current_time)
+        self.root.after(1000, self.update_time)
         
