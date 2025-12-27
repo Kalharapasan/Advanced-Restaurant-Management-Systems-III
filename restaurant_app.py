@@ -959,3 +959,6 @@ class RestaurantManagementSystem:
             subtotal = 0.0
             cost_of_drinks = 0.0
             cost_of_cakes = 0.0
+        
+        except Exception as e:
+            messagebox.showerror("Calculation Error", f"Error calculating totals: {e}")
