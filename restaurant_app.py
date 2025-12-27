@@ -852,3 +852,7 @@ class RestaurantManagementSystem:
             item_name = item['name']
             item_price = item.get('price', 0)
             item_desc = item.get('description', '')
+            item_frame = tk.Frame(scrollable_frame, bg='white', relief=tk.RIDGE, bd=1)
+            item_frame.grid(row=row, column=0, sticky="ew", padx=5, pady=2)
+            scrollable_frame.grid_columnconfigure(0, weight=1)
+            item_frame.grid_columnconfigure(1, weight=1)
