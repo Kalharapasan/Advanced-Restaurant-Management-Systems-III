@@ -776,5 +776,14 @@ class RestaurantManagementSystem:
             self.load_sample_menu()
     
     def load_sample_menu(self):
-        self.menu_items = {}
+        self.menu_items = {
+            'drinks': [
+                {'name': 'Espresso', 'price': 2.50, 'description': 'Rich and strong coffee', 'available': True, 'id': 1},
+                {'name': 'Cappuccino', 'price': 3.50, 'description': 'Coffee with steamed milk foam', 'available': True, 'id': 2},
+                {'name': 'Latte', 'price': 4.00, 'description': 'Coffee with steamed milk', 'available': True, 'id': 3},
+                {'name': 'Americano', 'price': 3.00, 'description': 'Espresso with hot water', 'available': True, 'id': 4},
+                {'name': 'Hot Chocolate', 'price': 3.25, 'description': 'Rich chocolate drink', 'available': True, 'id': 5},
+                {'name': 'Green Tea', 'price': 2.75, 'description': 'Fresh green tea', 'available': True, 'id': 6}
+            ],
+        }
         
