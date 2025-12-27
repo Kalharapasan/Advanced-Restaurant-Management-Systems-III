@@ -909,3 +909,10 @@ class RestaurantManagementSystem:
         parent.grid_columnconfigure(0, weight=1)
         item_frame.grid_columnconfigure(1, weight=1)
         item_name = item.get('name', 'Unknown Item')
+        var = tk.BooleanVar()
+        self.item_vars[item_name] = var
+        
+        checkbox = tk.Checkbutton(item_frame, variable=var,
+                                command=lambda: self.toggle_item(item_name),
+                                bg='#ffffff', font=('Segoe UI', 10))
+        checkbox.grid(row=0, column=0, padx=5, pady=5)
