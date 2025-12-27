@@ -754,4 +754,7 @@ class RestaurantManagementSystem:
         current_time = time.strftime("%H:%M:%S")
         self.time_label.config(text=current_time)
         self.root.after(1000, self.update_time)
+    
+    def load_menu_from_database(self):
+        
         
