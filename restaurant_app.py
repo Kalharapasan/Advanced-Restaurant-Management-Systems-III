@@ -908,3 +908,4 @@ class RestaurantManagementSystem:
         item_frame.grid(row=row, column=0, sticky="ew", padx=5, pady=2)
         parent.grid_columnconfigure(0, weight=1)
         item_frame.grid_columnconfigure(1, weight=1)
+        item_name = item.get('name', 'Unknown Item')
