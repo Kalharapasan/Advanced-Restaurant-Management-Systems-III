@@ -760,6 +760,8 @@ class RestaurantManagementSystem:
             if not self.db_manager.is_connected():
                 self.load_sample_menu()
                 return
+            menu_data = self.db_manager.get_all_menu_items()
+            self.menu_items = {}
         
         except Exception as e:
             print(f"Database menu loading failed: {e}")
