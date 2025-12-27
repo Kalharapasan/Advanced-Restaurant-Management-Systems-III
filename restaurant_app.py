@@ -900,3 +900,5 @@ class RestaurantManagementSystem:
         
         canvas.pack(side="left", fill="both", expand=True)
         scrollbar.pack(side="right", fill="y")
+        for i, item in enumerate(items):
+            self.create_menu_item_widget(scrollable_frame, item, i)
