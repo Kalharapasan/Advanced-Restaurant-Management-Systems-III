@@ -744,4 +744,9 @@ class RestaurantManagementSystem:
                                    font=('Segoe UI', 10),
                                    bg='#34495e', fg='white', anchor=tk.W)
         self.status_label.grid(row=0, column=0, sticky="ew", padx=10)
+        db_status = "Connected" if self.db_manager.is_connected() else "Disconnected"
+        self.db_status_label = tk.Label(self.status_frame, text=f"DB: {db_status}",
+                                      font=('Segoe UI', 10),
+                                      bg='#34495e', fg='#2ecc71' if self.db_manager.is_connected() else '#e74c3c')
+        self.db_status_label.grid(row=0, column=1, sticky="e", padx=10)
         
