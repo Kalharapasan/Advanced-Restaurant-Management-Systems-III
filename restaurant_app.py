@@ -799,5 +799,11 @@ class RestaurantManagementSystem:
                 {'name': 'Tiramisu', 'price': 6.49, 'description': 'Italian coffee-flavored dessert', 'available': True, 'id': 15},
                 {'name': 'Ice Cream', 'price': 3.99, 'description': 'Vanilla, chocolate, or strawberry', 'available': True, 'id': 16}
             ],
+            'appetizers': [
+                {'name': 'Bruschetta', 'price': 6.99, 'description': 'Toasted bread with tomatoes', 'available': True, 'id': 17},
+                {'name': 'Mozzarella Sticks', 'price': 7.99, 'description': 'Fried cheese with marinara', 'available': True, 'id': 18},
+                {'name': 'Buffalo Wings', 'price': 9.99, 'description': 'Spicy wings with ranch dressing', 'available': True, 'id': 19},
+                {'name': 'Loaded Nachos', 'price': 8.49, 'description': 'Tortilla chips with cheese and jalapeños', 'available': True, 'id': 20}
+            ]
         }
         
