@@ -756,5 +756,10 @@ class RestaurantManagementSystem:
         self.root.after(1000, self.update_time)
     
     def load_menu_from_database(self):
+        try:
+            if not self.db_manager.is_connected():
+                self.load_sample_menu()
+                return
+        
         
         
