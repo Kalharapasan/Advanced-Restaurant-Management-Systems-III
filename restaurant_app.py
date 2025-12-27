@@ -841,8 +841,7 @@ class RestaurantManagementSystem:
         scrollable_frame.bind(
             "<Configure>",
             lambda e: canvas.configure(scrollregion=canvas.bbox("all"))
-        )
-        
+        ) 
         canvas.create_window((0, 0), window=scrollable_frame, anchor="nw")
         canvas.configure(yscrollcommand=scrollbar.set)
         canvas.pack(side="left", fill="both", expand=True)
@@ -882,3 +881,6 @@ class RestaurantManagementSystem:
             self.item_entries[item_name] = qty_entry
             
             row += 1
+    
+    def create_menu_category_tab(self, category, items):
+        
