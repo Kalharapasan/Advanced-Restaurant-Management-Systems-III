@@ -734,4 +734,10 @@ class RestaurantManagementSystem:
     
     def setup_analytics_content(self):
         self.analytics_display = AnalyticsDisplay(self.analytics_frame, self.analytics_manager)
+    
+    def setup_status_bar(self):
+        self.status_frame = tk.Frame(self.root, bg='#34495e', height=30)
+        self.status_frame.grid(row=2, column=0, sticky="ew")
+        self.status_frame.grid_propagate(False)
+        self.status_frame.grid_columnconfigure(1, weight=1)
         
