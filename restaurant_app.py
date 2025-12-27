@@ -969,6 +969,11 @@ class RestaurantManagementSystem:
                                     price = float(item.get('price', 0))
                                     item_total = price * qty
                                     subtotal += item_total
+                                    if category == 'drinks':
+                                        cost_of_drinks += item_total
+                                    elif category == 'cakes':
+                                        cost_of_cakes += item_total
+                                    break
                                     
                     except (ValueError, TypeError):
                         continue
