@@ -838,3 +838,10 @@ class RestaurantManagementSystem:
         canvas = tk.Canvas(tab_frame, bg='#f8f9fa', height=300)
         scrollbar = tk.Scrollbar(tab_frame, orient="vertical", command=canvas.yview)
         scrollable_frame = tk.Frame(canvas, bg='#f8f9fa')
+        scrollable_frame.bind(
+            "<Configure>",
+            lambda e: canvas.configure(scrollregion=canvas.bbox("all"))
+        )
+        
+        canvas.create_window((0, 0), window=scrollable_frame, anchor="nw")
+        canvas.configure(yscrollcommand=scrollbar.set)
