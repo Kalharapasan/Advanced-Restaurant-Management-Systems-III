@@ -856,3 +856,8 @@ class RestaurantManagementSystem:
             item_frame.grid(row=row, column=0, sticky="ew", padx=5, pady=2)
             scrollable_frame.grid_columnconfigure(0, weight=1)
             item_frame.grid_columnconfigure(1, weight=1)
+            var = tk.BooleanVar()
+            self.item_vars[item_name] = var
+            check = tk.Checkbutton(item_frame, variable=var, bg='white',
+                                 command=self.calculate_total)
+            check.grid(row=0, column=0, padx=5, pady=5)
