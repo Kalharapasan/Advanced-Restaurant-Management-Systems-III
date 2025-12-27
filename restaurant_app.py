@@ -982,6 +982,6 @@ class RestaurantManagementSystem:
             service_charge = subtotal * 0.10
             subtotal_after_discount = subtotal - discount_amount
             tax = subtotal_after_discount * 0.15
-            
+            total = subtotal_after_discount + service_charge + tax
         except Exception as e:
             messagebox.showerror("Calculation Error", f"Error calculating totals: {e}")
