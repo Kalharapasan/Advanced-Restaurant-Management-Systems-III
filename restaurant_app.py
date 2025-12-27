@@ -994,3 +994,6 @@ class RestaurantManagementSystem:
             self.update_status("Order totals calculated successfully")
         except Exception as e:
             messagebox.showerror("Calculation Error", f"Error calculating totals: {e}")
+            
+    def generate_receipt(self):
+        
