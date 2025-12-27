@@ -828,3 +828,5 @@ class RestaurantManagementSystem:
         self.menu_tab_frames = {}
         self.item_vars = {}
         self.item_entries = {}
+        for category, items in self.menu_items.items():
+            self.create_order_menu_tab(category, items)
