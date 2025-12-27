@@ -886,3 +886,17 @@ class RestaurantManagementSystem:
         tab_frame = tk.Frame(self.menu_notebook, bg='#f8f9fa')
         self.menu_notebook.add(tab_frame, text=category.title())
         self.menu_tab_frames[category] = tab_frame
+        canvas = tk.Canvas(tab_frame, bg='#f8f9fa')
+        scrollbar = tk.Scrollbar(tab_frame, orient="vertical", command=canvas.yview)
+        scrollable_frame = tk.Frame(canvas, bg='#f8f9fa')
+        
+        scrollable_frame.bind(
+            "<Configure>",
+            lambda e: canvas.configure(scrollregion=canvas.bbox("all"))
+        )
+        
+        canvas.create_window((0, 0), window=scrollable_frame, anchor="nw")
+        canvas.configure(yscrollcommand=scrollbar.set)
+        
+        canvas.pack(side="left", fill="both", expand=True)
+        scrollbar.pack(side="right", fill="y")
