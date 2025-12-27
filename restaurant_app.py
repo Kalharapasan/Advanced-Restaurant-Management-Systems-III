@@ -951,3 +951,5 @@ class RestaurantManagementSystem:
     def toggle_item(self, item_name):
         if self.item_vars[item_name].get():
             self.update_status(f"Added {item_name} to order")
+        else:
+            self.update_status(f"Removed {item_name} from order")
