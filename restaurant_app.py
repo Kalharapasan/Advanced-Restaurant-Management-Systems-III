@@ -761,5 +761,7 @@ class RestaurantManagementSystem:
                 self.load_sample_menu()
                 return
         
-        
+        except Exception as e:
+            print(f"Database menu loading failed: {e}")
+            self.load_sample_menu()
         
