@@ -847,3 +847,8 @@ class RestaurantManagementSystem:
         canvas.configure(yscrollcommand=scrollbar.set)
         canvas.pack(side="left", fill="both", expand=True)
         scrollbar.pack(side="right", fill="y")
+        row = 0
+        for item in items:
+            item_name = item['name']
+            item_price = item.get('price', 0)
+            item_desc = item.get('description', '')
