@@ -947,3 +947,5 @@ class RestaurantManagementSystem:
         qty_entry = tk.Entry(qty_frame, textvariable=qty_var, width=5,
                            font=('Segoe UI', 10), justify='center')
         qty_entry.pack(side=tk.LEFT, padx=(2, 0))
+    
+    def toggle_item(self, item_name):
