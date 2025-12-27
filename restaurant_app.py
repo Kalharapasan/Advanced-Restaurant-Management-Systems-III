@@ -767,6 +767,9 @@ class RestaurantManagementSystem:
                 if category not in self.menu_items:
                     self.menu_items[category] = []
                 self.menu_items[category].append(item)
+            if not self.menu_items:
+                self.load_sample_menu()
+                return
         
         except Exception as e:
             print(f"Database menu loading failed: {e}")
