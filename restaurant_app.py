@@ -883,4 +883,6 @@ class RestaurantManagementSystem:
             row += 1
     
     def create_menu_category_tab(self, category, items):
-        
+        tab_frame = tk.Frame(self.menu_notebook, bg='#f8f9fa')
+        self.menu_notebook.add(tab_frame, text=category.title())
+        self.menu_tab_frames[category] = tab_frame
