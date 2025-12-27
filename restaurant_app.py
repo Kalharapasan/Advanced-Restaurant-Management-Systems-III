@@ -814,4 +814,5 @@ class RestaurantManagementSystem:
         print("DEBUG: Updating all displays")
         self.populate_order_menu()
         self.populate_menu_management()
+        self.refresh_customers()
         
