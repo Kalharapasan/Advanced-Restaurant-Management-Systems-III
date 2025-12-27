@@ -867,3 +867,6 @@ class RestaurantManagementSystem:
             name_price = f"{item_name} - ${item_price:.2f}"
             tk.Label(details_frame, text=name_price, font=('Segoe UI', 11, 'bold'),
                     bg='white', fg='#2c3e50').grid(row=0, column=0, sticky="w")
+            if item_desc:
+                tk.Label(details_frame, text=item_desc, font=('Segoe UI', 9),
+                        bg='white', fg='#7f8c8d', wraplength=200).grid(row=1, column=0, sticky="w")
