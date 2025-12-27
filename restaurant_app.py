@@ -785,5 +785,12 @@ class RestaurantManagementSystem:
                 {'name': 'Hot Chocolate', 'price': 3.25, 'description': 'Rich chocolate drink', 'available': True, 'id': 5},
                 {'name': 'Green Tea', 'price': 2.75, 'description': 'Fresh green tea', 'available': True, 'id': 6}
             ],
+            'main_courses': [
+                {'name': 'Grilled Chicken', 'price': 15.99, 'description': 'Seasoned grilled chicken breast', 'available': True, 'id': 7},
+                {'name': 'Pasta Carbonara', 'price': 12.50, 'description': 'Creamy pasta with bacon', 'available': True, 'id': 8},
+                {'name': 'Caesar Salad', 'price': 8.99, 'description': 'Fresh romaine with caesar dressing', 'available': True, 'id': 9},
+                {'name': 'Fish & Chips', 'price': 14.75, 'description': 'Battered fish with crispy fries', 'available': True, 'id': 10},
+                {'name': 'Burger Deluxe', 'price': 13.00, 'description': 'Premium beef burger with sides', 'available': True, 'id': 11}
+            ],
         }
         
