@@ -1130,4 +1130,7 @@ class RestaurantManagementSystem:
             print(f"Save order error: {e}")
     
     def reset_order(self):
-        
+        self.customer_name.set("")
+        self.customer_phone.set("")
+        self.payment_method.set("Cash")
+        self.discount_percent.set("0")
