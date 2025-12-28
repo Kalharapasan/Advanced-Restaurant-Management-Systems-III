@@ -1254,3 +1254,6 @@ class RestaurantManagementSystem:
         for col in columns:
             tree.heading(col, text=col)
             tree.column(col, width=150, anchor='center')
+        v_scrollbar = ttk.Scrollbar(history_window, orient=tk.VERTICAL, command=tree.yview)
+        h_scrollbar = ttk.Scrollbar(history_window, orient=tk.HORIZONTAL, command=tree.xview)
+        tree.configure(yscrollcommand=v_scrollbar.set, xscrollcommand=h_scrollbar.set)
