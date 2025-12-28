@@ -1348,3 +1348,10 @@ class RestaurantManagementSystem:
             ("Phone:", tk.StringVar()),
             ("Email:", tk.StringVar())
         ]
+        entries = {}
+        for i, (label, var) in enumerate(fields):
+            tk.Label(form_frame, text=label, font=('Segoe UI', 10, 'bold'),
+                    bg='#f0f0f0').grid(row=i, column=0, sticky='w', padx=5, pady=5)
+            entry = tk.Entry(form_frame, textvariable=var, font=('Segoe UI', 10), width=25)
+            entry.grid(row=i, column=1, padx=5, pady=5)
+            entries[label[:-1]] = var
