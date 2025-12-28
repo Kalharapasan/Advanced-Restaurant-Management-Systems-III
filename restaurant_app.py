@@ -1085,6 +1085,24 @@ class RestaurantManagementSystem:
                                     'category': category
                                 })
                                 break
+            order_data = {
+                'receipt_ref': receipt_ref,
+                'customer_name': self.customer_name.get() or 'Walk-in Customer',
+                'customer_phone': self.customer_phone.get(),
+                'payment_method': self.payment_method.get(),
+                'items': json.dumps(items_data),
+                'cost_of_drinks': float(self.CostofDrinks.get().replace('$', '') or 0),
+                'cost_of_cakes': float(self.CostofCakes.get().replace('$', '') or 0),
+                'service_charge': float(self.ServiceCharge.get().replace('$', '') or 0),
+                'discount_percent': float(self.discount_percent.get() or 0),
+                'discount': float(self.DiscountAmount.get().replace('$', '') or 0),
+                'subtotal': float(self.SubTotal.get().replace('$', '') or 0),
+                'tax_paid': float(self.PaidTax.get().replace('$', '') or 0),
+                'total_cost': float(self.TotalCost.get().replace('$', '') or 0),
+                'served_by': self.current_user,
+                'order_type': 'Dine-in',  
+                'status': 'Completed'
+            }
             
         except Exception as e:
             messagebox.showerror("Save Error", f"Error saving order: {e}")
