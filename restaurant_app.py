@@ -1103,6 +1103,25 @@ class RestaurantManagementSystem:
                 'order_type': 'Dine-in',  
                 'status': 'Completed'
             }
+        
+            cursor = self.db_manager.get_connection().cursor()
+            
+            insert_query = """
+            INSERT INTO orders (receipt_ref, order_date, order_time, customer_name, 
+                              customer_phone, payment_method, items, cost_of_drinks, 
+                              cost_of_cakes, service_charge, discount, discount_percent, 
+                              subtotal, tax_paid, total_cost, served_by, order_type, status)
+            VALUES (%(receipt_ref)s, CURDATE(), CURTIME(), %(customer_name)s, 
+                   %(customer_phone)s, %(payment_method)s, %(items)s, %(cost_of_drinks)s,
+                   %(cost_of_cakes)s, %(service_charge)s, %(discount)s, %(discount_percent)s,
+                   %(subtotal)s, %(tax_paid)s, %(total_cost)s, %(served_by)s, %(order_type)s, %(status)s)
+            """
+            
+            cursor.execute(insert_query, order_data)
+            self.db_manager.get_connection().commit()
+            
+            messagebox.showinfo("Order Saved", f"Order saved successfully!\nReceipt #: {receipt_ref}")
+            self.update_status(f"Order {receipt_ref} saved to database")
             
         except Exception as e:
             messagebox.showerror("Save Error", f"Error saving order: {e}")
