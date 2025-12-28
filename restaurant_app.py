@@ -1155,3 +1155,7 @@ class RestaurantManagementSystem:
         result = messagebox.askyesno("Clear All", "This will clear all current data. Continue?")
         if result:
             self.reset_order()
+    
+    def new_order(self):
+        self.reset_order()
+        self.update_status("New order started")
