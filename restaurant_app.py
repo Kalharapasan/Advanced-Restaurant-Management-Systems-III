@@ -1017,3 +1017,9 @@ class RestaurantManagementSystem:
         content.append(f"Time: {time.strftime('%H:%M:%S')}")
         content.append(f"Receipt #: {receipt_ref}")
         content.append("-" * 50)
+        if self.customer_name.get():
+            content.append(f"Customer: {self.customer_name.get()}")
+        if self.customer_phone.get():
+            content.append(f"Phone: {self.customer_phone.get()}")
+        content.append(f"Payment: {self.payment_method.get()}")
+        content.append("-" * 50)
