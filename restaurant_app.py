@@ -1185,4 +1185,5 @@ class RestaurantManagementSystem:
         except:
             pass
     
-    
+    def print_receipt(self):
+        
