@@ -1301,3 +1301,6 @@ class RestaurantManagementSystem:
     
     def export_orders(self):
         messagebox.showinfo("Export", "Order export feature coming soon!")
+    
+    def import_menu(self):
+        messagebox.showinfo("Import", "Menu import feature coming soon!")
