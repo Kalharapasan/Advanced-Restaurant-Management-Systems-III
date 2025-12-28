@@ -1292,3 +1292,6 @@ class RestaurantManagementSystem:
         db_frame = tk.LabelFrame(settings_window, text="Database Settings",
                                font=('Segoe UI', 12, 'bold'), bg='#f0f0f0')
         db_frame.pack(pady=10, padx=20, fill='x')
+        status_text = "Connected" if self.db_manager.is_connected() else "Disconnected"
+        tk.Label(db_frame, text=f"Connection Status: {status_text}",
+                font=('Segoe UI', 10), bg='#f0f0f0').pack(pady=5)
