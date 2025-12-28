@@ -1023,3 +1023,12 @@ class RestaurantManagementSystem:
             content.append(f"Phone: {self.customer_phone.get()}")
         content.append(f"Payment: {self.payment_method.get()}")
         content.append("-" * 50)
+        content.append("ITEMS ORDERED:")
+        content.append("-" * 50)
+        
+        for item_name, var in self.item_vars.items():
+            if var.get():
+                try:
+                    qty = int(self.item_entries[item_name].get() or 1)
+                except (ValueError, TypeError):
+                    continue
