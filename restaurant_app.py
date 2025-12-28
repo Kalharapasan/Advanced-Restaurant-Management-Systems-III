@@ -1257,3 +1257,8 @@ class RestaurantManagementSystem:
         v_scrollbar = ttk.Scrollbar(history_window, orient=tk.VERTICAL, command=tree.yview)
         h_scrollbar = ttk.Scrollbar(history_window, orient=tk.HORIZONTAL, command=tree.xview)
         tree.configure(yscrollcommand=v_scrollbar.set, xscrollcommand=h_scrollbar.set)
+        tree.grid(row=0, column=0, sticky='nsew')
+        v_scrollbar.grid(row=0, column=1, sticky='ns')
+        h_scrollbar.grid(row=1, column=0, sticky='ew')
+        history_window.grid_rowconfigure(0, weight=1)
+        history_window.grid_columnconfigure(0, weight=1)
