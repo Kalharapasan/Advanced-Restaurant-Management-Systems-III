@@ -1039,3 +1039,4 @@ class RestaurantManagementSystem:
                                 break
                 except (ValueError, TypeError):
                     continue
+        content.append("-" * 50)
