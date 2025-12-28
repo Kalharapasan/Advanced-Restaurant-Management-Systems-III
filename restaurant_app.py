@@ -1159,3 +1159,5 @@ class RestaurantManagementSystem:
     def new_order(self):
         self.reset_order()
         self.update_status("New order started")
+    
+    
