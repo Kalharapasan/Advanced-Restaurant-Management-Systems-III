@@ -1307,3 +1307,5 @@ class RestaurantManagementSystem:
     
     def add_menu_item(self):
         messagebox.showinfo("Add Menu Item", "Add menu item feature coming soon!\nThis would open a form to add new menu items.")
+    
+    def refresh_menu(self):
