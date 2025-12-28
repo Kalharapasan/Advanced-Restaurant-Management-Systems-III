@@ -1243,3 +1243,9 @@ class RestaurantManagementSystem:
     
     def show_order_history(self):
         self.create_order_history_window()
+    
+    def create_order_history_window(self):
+        history_window = tk.Toplevel(self.root)
+        history_window.title("📜 Order History")
+        history_window.geometry("1000x600")
+        history_window.configure(bg='#f0f0f0')
