@@ -1275,3 +1275,6 @@ class RestaurantManagementSystem:
                     tree.insert('', tk.END, values=row)
         except Exception as e:
             messagebox.showerror("Database Error", f"Error loading order history: {e}")
+    
+    def show_user_management(self):
+        messagebox.showinfo("User Management", "User management feature coming soon!")
