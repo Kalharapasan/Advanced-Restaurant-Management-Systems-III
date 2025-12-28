@@ -1066,6 +1066,10 @@ class RestaurantManagementSystem:
             if not selected_items:
                 messagebox.showwarning("No Items", "Please select at least one item to save the order")
                 return
+            receipt_ref = self.Receipt_Ref.get()
+            if not receipt_ref:
+                receipt_ref = f"RCP{random.randint(10000, 99999)}{time.strftime('%H%M')}"
+                self.Receipt_Ref.set(receipt_ref)
             
         except Exception as e:
             messagebox.showerror("Save Error", f"Error saving order: {e}")
