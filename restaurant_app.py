@@ -1281,3 +1281,9 @@ class RestaurantManagementSystem:
     
     def show_reports(self):
         self.notebook.select(self.reports_frame)
+    
+    def show_settings(self):
+        settings_window = tk.Toplevel(self.root)
+        settings_window.title("⚙️ Settings")
+        settings_window.geometry("600x400")
+        settings_window.configure(bg='#f0f0f0')
