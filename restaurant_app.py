@@ -1240,3 +1240,6 @@ class RestaurantManagementSystem:
     
     def show_customer_database(self):
         self.notebook.select(self.customer_frame)
+    
+    def show_order_history(self):
+        self.create_order_history_window()
