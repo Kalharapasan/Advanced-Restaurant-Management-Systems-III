@@ -1128,3 +1128,6 @@ class RestaurantManagementSystem:
         except Exception as e:
             messagebox.showerror("Save Error", f"Error saving order: {e}")
             print(f"Save order error: {e}")
+    
+    def reset_order(self):
+        
