@@ -1234,3 +1234,6 @@ class RestaurantManagementSystem:
     
     def show_analytics(self):
         self.notebook.select(self.analytics_frame)
+    
+    def show_menu_management(self):
+        self.notebook.select(self.menu_mgmt_frame)
