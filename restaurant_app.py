@@ -1298,3 +1298,6 @@ class RestaurantManagementSystem:
     
     def backup_database(self):
         messagebox.showinfo("Backup", "Database backup feature coming soon!")
+    
+    def export_orders(self):
+        messagebox.showinfo("Export", "Order export feature coming soon!")
