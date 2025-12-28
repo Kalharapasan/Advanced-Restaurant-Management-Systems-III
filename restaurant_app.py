@@ -1287,3 +1287,5 @@ class RestaurantManagementSystem:
         settings_window.title("⚙️ Settings")
         settings_window.geometry("600x400")
         settings_window.configure(bg='#f0f0f0')
+        tk.Label(settings_window, text="⚙️ Application Settings",
+                font=('Segoe UI', 16, 'bold'), bg='#f0f0f0').pack(pady=20)
