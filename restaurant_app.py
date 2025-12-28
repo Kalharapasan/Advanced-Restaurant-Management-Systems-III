@@ -1322,5 +1322,14 @@ class RestaurantManagementSystem:
                             f"${item.get('price', 0):.2f}",
                             "Yes" if item.get('is_available', True) else "No"
                         ))
+            else:
+                sample_items = [
+                    ("Espresso", "Drinks", "$2.50", "Yes"),
+                    ("Cappuccino", "Drinks", "$3.50", "Yes"),
+                    ("Chocolate Cake", "Cakes", "$4.99", "Yes"),
+                    ("Cheesecake", "Cakes", "$5.99", "No")
+                ]
+                for item in sample_items:
+                    self.menu_tree.insert('', 'end', values=item)
         except Exception as e:
             messagebox.showerror("Error", f"Failed to refresh menu: {e}")
