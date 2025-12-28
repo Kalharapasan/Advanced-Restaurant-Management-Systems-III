@@ -1139,3 +1139,7 @@ class RestaurantManagementSystem:
             var.set("$0.00")
         for var in self.item_vars.values():
             var.set(False)
+        
+        for entry in self.item_entries.values():
+            entry.delete(0, tk.END)
+            entry.insert(0, "1")
