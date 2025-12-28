@@ -1305,4 +1305,5 @@ class RestaurantManagementSystem:
     def import_menu(self):
         messagebox.showinfo("Import", "Menu import feature coming soon!")
     
-    
+    def add_menu_item(self):
+        messagebox.showinfo("Add Menu Item", "Add menu item feature coming soon!\nThis would open a form to add new menu items.")
