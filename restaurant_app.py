@@ -1231,3 +1231,5 @@ class RestaurantManagementSystem:
     def update_status(self, message):
         self.status_label.config(text=message)
         self.root.update_idletasks()
+    
+    
