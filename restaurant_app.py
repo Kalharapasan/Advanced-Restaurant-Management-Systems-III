@@ -1030,5 +1030,12 @@ class RestaurantManagementSystem:
             if var.get():
                 try:
                     qty = int(self.item_entries[item_name].get() or 1)
+                    for category, items in self.menu_items.items():
+                        for item in items:
+                            if item['name'] == item_name:
+                                price = float(item.get('price', 0))
+                                total = price * qty
+                                content.append(f"{item_name:<30} {qty:>3} x ${price:>6.2f} = ${total:>8.2f}")
+                                break
                 except (ValueError, TypeError):
                     continue
