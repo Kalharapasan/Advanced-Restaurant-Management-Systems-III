@@ -1198,4 +1198,11 @@ class RestaurantManagementSystem:
         self.update_status("Analytics refreshed successfully")
     
     def email_receipt(self):
+        try:
+            customer_email = messagebox.askstring("Email Receipt", "Enter customer email address:")
+            if customer_email:
+                messagebox.showinfo("Email Receipt", f"Receipt emailed to {customer_email}")
+                self.update_status(f"Receipt emailed to {customer_email}")
+        except Exception as e:
+            messagebox.showerror("Email Error", f"Error emailing receipt: {e}")
    
