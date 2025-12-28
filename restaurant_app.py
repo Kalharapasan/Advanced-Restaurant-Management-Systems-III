@@ -1134,3 +1134,6 @@ class RestaurantManagementSystem:
         self.customer_phone.set("")
         self.payment_method.set("Cash")
         self.discount_percent.set("0")
+        for var in [self.SubTotal, self.CostofDrinks, self.CostofCakes,
+                   self.ServiceCharge, self.DiscountAmount, self.PaidTax, self.TotalCost]:
+            var.set("$0.00")
