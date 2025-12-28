@@ -1008,4 +1008,12 @@ class RestaurantManagementSystem:
             messagebox.showerror("Receipt Error", f"Error generating receipt: {e}")
     
     def create_receipt_content(self, receipt_ref):
-        
+        content = []
+        content.append("=" * 50)
+        content.append("🍽️ ADVANCED RESTAURANT MANAGEMENT")
+        content.append("     Professional Edition v3.0")
+        content.append("=" * 50)
+        content.append(f"Date: {self.DateofOrder.get()}")
+        content.append(f"Time: {time.strftime('%H:%M:%S')}")
+        content.append(f"Receipt #: {receipt_ref}")
+        content.append("-" * 50)
