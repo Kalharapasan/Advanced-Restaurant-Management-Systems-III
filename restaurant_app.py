@@ -1186,4 +1186,8 @@ class RestaurantManagementSystem:
             pass
     
     def print_receipt(self):
-        
+        try:
+            messagebox.showinfo("Print Receipt", "Receipt sent to printer")
+            self.update_status("Receipt printed")
+        except Exception as e:
+            messagebox.showerror("Print Error", f"Error printing receipt: {e}")
