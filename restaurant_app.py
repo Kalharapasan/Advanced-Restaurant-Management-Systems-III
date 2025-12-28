@@ -1122,6 +1122,8 @@ class RestaurantManagementSystem:
             
             messagebox.showinfo("Order Saved", f"Order saved successfully!\nReceipt #: {receipt_ref}")
             self.update_status(f"Order {receipt_ref} saved to database")
+            if messagebox.askyesno("New Order", "Would you like to start a new order?"):
+                self.reset_order()
             
         except Exception as e:
             messagebox.showerror("Save Error", f"Error saving order: {e}")
