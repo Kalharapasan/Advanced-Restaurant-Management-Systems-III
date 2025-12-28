@@ -1177,3 +1177,10 @@ class RestaurantManagementSystem:
             self.text_Input.set(result)
         except:
             self.text_Input.set("Error")
+    
+    def calc_negate(self):
+        try:
+            current = float(self.text_Input.get())
+            self.text_Input.set(str(-current))
+        except:
+            pass
