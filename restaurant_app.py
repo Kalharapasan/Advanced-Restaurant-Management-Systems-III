@@ -1160,4 +1160,9 @@ class RestaurantManagementSystem:
         self.reset_order()
         self.update_status("New order started")
     
-    
+    def calc_input(self, value):
+        current = self.text_Input.get()
+        if current == "0":
+            self.text_Input.set(value)
+        else:
+            self.text_Input.set(current + value)
