@@ -1262,3 +1262,16 @@ class RestaurantManagementSystem:
         h_scrollbar.grid(row=1, column=0, sticky='ew')
         history_window.grid_rowconfigure(0, weight=1)
         history_window.grid_columnconfigure(0, weight=1)
+        try:
+            if self.db_manager.is_connected():
+                cursor = self.db_manager.get_connection().cursor()
+                cursor.execute("""
+                    SELECT receipt_ref, order_date, order_time, customer_name, 
+                           total_cost, status
+                    FROM orders ORDER BY created_at DESC LIMIT 100
+                """)
+                
+                for row in cursor.fetchall():
+                    tree.insert('', tk.END, values=row)
+        except Exception as e:
+            messagebox.showerror("Database Error", f"Error loading order history: {e}")
