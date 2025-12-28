@@ -1166,3 +1166,6 @@ class RestaurantManagementSystem:
             self.text_Input.set(value)
         else:
             self.text_Input.set(current + value)
+    
+    def calc_clear(self):
+        self.text_Input.set("0")
