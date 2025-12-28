@@ -1040,3 +1040,18 @@ class RestaurantManagementSystem:
                 except (ValueError, TypeError):
                     continue
         content.append("-" * 50)
+        
+        content.append(f"Subtotal:{self.SubTotal.get():>42}")
+        if float(self.discount_percent.get() or 0) > 0:
+            content.append(f"Discount ({self.discount_percent.get()}%):{self.DiscountAmount.get():>35}")
+        content.append(f"Service Charge:{self.ServiceCharge.get():>37}")
+        content.append(f"Tax (15%):{self.PaidTax.get():>41}")
+        content.append("-" * 50)
+        content.append(f"TOTAL:{self.TotalCost.get():>43}")
+        content.append("=" * 50)
+        content.append("")
+        content.append("Thank you for dining with us!")
+        content.append("Please visit us again!")
+        content.append("=" * 50)
+        
+        return "\n".join(content)
