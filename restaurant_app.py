@@ -1205,4 +1205,6 @@ class RestaurantManagementSystem:
                 self.update_status(f"Receipt emailed to {customer_email}")
         except Exception as e:
             messagebox.showerror("Email Error", f"Error emailing receipt: {e}")
-   
+    
+    def update_quick_stats(self):
+        
