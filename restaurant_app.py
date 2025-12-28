@@ -1143,3 +1143,6 @@ class RestaurantManagementSystem:
         for entry in self.item_entries.values():
             entry.delete(0, tk.END)
             entry.insert(0, "1")
+        
+        self.receipt_text.delete('1.0', tk.END)
+        self.Receipt_Ref.set("")
