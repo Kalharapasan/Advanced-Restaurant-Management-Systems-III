@@ -1207,4 +1207,24 @@ class RestaurantManagementSystem:
             messagebox.showerror("Email Error", f"Error emailing receipt: {e}")
     
     def update_quick_stats(self):
+        try:
+            if self.db_manager.is_connected():
+                cursor = self.db_manager.get_connection().cursor()
+                today = time.strftime("%Y-%m-%d")
+                cursor.execute("""
+                    SELECT COUNT(*) as orders, COALESCE(SUM(total_cost), 0) as revenue
+                    FROM orders WHERE DATE(created_at) = %s AND status = 'Completed'
+                """, (today,))
+                
+                result = cursor.fetchone()
+                orders_today = result[0] if result else 0
+                revenue_today = result[1] if result else 0
+                
+                stats_text = f"Today: {orders_today} orders | ${revenue_today:.2f} revenue"
+                self.stats_label.config(text=stats_text)
+            else:
+                self.stats_label.config(text="Database disconnected")
+                
+        except Exception as e:
+            self.stats_label.config(text="Error loading stats")
         
