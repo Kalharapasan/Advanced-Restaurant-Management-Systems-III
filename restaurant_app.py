@@ -1075,7 +1075,16 @@ class RestaurantManagementSystem:
             for item_name, var in self.item_vars.items():
                 if var.get():
                     qty = int(self.item_entries[item_name].get() or 1)
-                    
+                    for category, items in self.menu_items.items():
+                        for item in items:
+                            if item['name'] == item_name:
+                                items_data.append({
+                                    'name': item_name,
+                                    'price': float(item.get('price', 0)),
+                                    'quantity': qty,
+                                    'category': category
+                                })
+                                break
             
         except Exception as e:
             messagebox.showerror("Save Error", f"Error saving order: {e}")
