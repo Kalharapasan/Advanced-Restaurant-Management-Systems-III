@@ -1062,6 +1062,11 @@ class RestaurantManagementSystem:
                 messagebox.showerror("Database Error", "Database not connected")
                 return
             
+            selected_items = [name for name, var in self.item_vars.items() if var.get()]
+            if not selected_items:
+                messagebox.showwarning("No Items", "Please select at least one item to save the order")
+                return
+            
         except Exception as e:
             messagebox.showerror("Save Error", f"Error saving order: {e}")
             print(f"Save order error: {e}")
