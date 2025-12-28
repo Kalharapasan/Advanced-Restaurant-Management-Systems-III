@@ -1184,3 +1184,5 @@ class RestaurantManagementSystem:
             self.text_Input.set(str(-current))
         except:
             pass
+    
+    
