@@ -1232,4 +1232,5 @@ class RestaurantManagementSystem:
         self.status_label.config(text=message)
         self.root.update_idletasks()
     
-    
+    def show_analytics(self):
+        self.notebook.select(self.analytics_frame)
