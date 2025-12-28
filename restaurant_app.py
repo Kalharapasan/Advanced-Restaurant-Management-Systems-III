@@ -1150,3 +1150,8 @@ class RestaurantManagementSystem:
         self.DateofOrder.set(time.strftime("%d/%m/%Y"))
         
         self.update_status("Order form reset")
+    
+    def clear_all(self):
+        result = messagebox.askyesno("Clear All", "This will clear all current data. Continue?")
+        if result:
+            self.reset_order()
