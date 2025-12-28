@@ -1335,3 +1335,7 @@ class RestaurantManagementSystem:
             messagebox.showerror("Error", f"Failed to refresh menu: {e}")
     
     def add_customer(self):
+        add_window = tk.Toplevel(self.root)
+        add_window.title("Add New Customer")
+        add_window.geometry("400x300")
+        add_window.configure(bg='#f0f0f0')
