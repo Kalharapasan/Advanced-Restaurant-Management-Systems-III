@@ -1341,3 +1341,5 @@ class RestaurantManagementSystem:
         add_window.configure(bg='#f0f0f0')
         tk.Label(add_window, text="Add New Customer", 
                 font=('Segoe UI', 14, 'bold'), bg='#f0f0f0').pack(pady=10)
+        form_frame = tk.Frame(add_window, bg='#f0f0f0')
+        form_frame.pack(pady=20, padx=20, fill='both')
