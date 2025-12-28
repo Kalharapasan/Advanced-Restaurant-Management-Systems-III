@@ -1278,3 +1278,6 @@ class RestaurantManagementSystem:
     
     def show_user_management(self):
         messagebox.showinfo("User Management", "User management feature coming soon!")
+    
+    def show_reports(self):
+        self.notebook.select(self.reports_frame)
