@@ -1333,3 +1333,5 @@ class RestaurantManagementSystem:
                     self.menu_tree.insert('', 'end', values=item)
         except Exception as e:
             messagebox.showerror("Error", f"Failed to refresh menu: {e}")
+    
+    def add_customer(self):
