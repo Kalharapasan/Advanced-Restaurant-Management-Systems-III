@@ -1057,4 +1057,11 @@ class RestaurantManagementSystem:
         return "\n".join(content)
 
     def save_order(self):
-        
+        try:
+            if not self.db_manager.is_connected():
+                messagebox.showerror("Database Error", "Database not connected")
+                return
+            
+        except Exception as e:
+            messagebox.showerror("Save Error", f"Error saving order: {e}")
+            print(f"Save order error: {e}")
