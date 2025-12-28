@@ -1289,3 +1289,6 @@ class RestaurantManagementSystem:
         settings_window.configure(bg='#f0f0f0')
         tk.Label(settings_window, text="⚙️ Application Settings",
                 font=('Segoe UI', 16, 'bold'), bg='#f0f0f0').pack(pady=20)
+        db_frame = tk.LabelFrame(settings_window, text="Database Settings",
+                               font=('Segoe UI', 12, 'bold'), bg='#f0f0f0')
+        db_frame.pack(pady=10, padx=20, fill='x')
