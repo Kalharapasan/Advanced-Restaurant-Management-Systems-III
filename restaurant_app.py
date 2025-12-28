@@ -1227,4 +1227,7 @@ class RestaurantManagementSystem:
                 
         except Exception as e:
             self.stats_label.config(text="Error loading stats")
-        
+    
+    def update_status(self, message):
+        self.status_label.config(text=message)
+        self.root.update_idletasks()
