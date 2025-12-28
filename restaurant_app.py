@@ -1295,3 +1295,6 @@ class RestaurantManagementSystem:
         status_text = "Connected" if self.db_manager.is_connected() else "Disconnected"
         tk.Label(db_frame, text=f"Connection Status: {status_text}",
                 font=('Segoe UI', 10), bg='#f0f0f0').pack(pady=5)
+    
+    def backup_database(self):
+        messagebox.showinfo("Backup", "Database backup feature coming soon!")
