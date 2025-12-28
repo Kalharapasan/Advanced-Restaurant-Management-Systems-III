@@ -1055,3 +1055,6 @@ class RestaurantManagementSystem:
         content.append("=" * 50)
         
         return "\n".join(content)
+
+    def save_order(self):
+        
