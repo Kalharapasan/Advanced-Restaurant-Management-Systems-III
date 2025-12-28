@@ -1146,3 +1146,4 @@ class RestaurantManagementSystem:
         
         self.receipt_text.delete('1.0', tk.END)
         self.Receipt_Ref.set("")
+        self.text_Input.set("0")
