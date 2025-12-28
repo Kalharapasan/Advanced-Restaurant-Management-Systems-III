@@ -1191,3 +1191,8 @@ class RestaurantManagementSystem:
             self.update_status("Receipt printed")
         except Exception as e:
             messagebox.showerror("Print Error", f"Error printing receipt: {e}")
+    
+    def refresh_analytics(self):
+        if self.analytics_display:
+            self.analytics_display.refresh_display()
+        self.update_status("Analytics refreshed successfully")
