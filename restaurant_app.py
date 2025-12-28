@@ -1006,3 +1006,6 @@ class RestaurantManagementSystem:
             self.update_status("Receipt generated successfully")
         except Exception as e:
             messagebox.showerror("Receipt Error", f"Error generating receipt: {e}")
+    
+    def create_receipt_content(self, receipt_ref):
+        
