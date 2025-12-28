@@ -1339,3 +1339,5 @@ class RestaurantManagementSystem:
         add_window.title("Add New Customer")
         add_window.geometry("400x300")
         add_window.configure(bg='#f0f0f0')
+        tk.Label(add_window, text="Add New Customer", 
+                font=('Segoe UI', 14, 'bold'), bg='#f0f0f0').pack(pady=10)
