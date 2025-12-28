@@ -1196,3 +1196,6 @@ class RestaurantManagementSystem:
         if self.analytics_display:
             self.analytics_display.refresh_display()
         self.update_status("Analytics refreshed successfully")
+    
+    def email_receipt(self):
+   
