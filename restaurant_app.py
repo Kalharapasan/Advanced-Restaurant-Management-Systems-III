@@ -1310,6 +1310,7 @@ class RestaurantManagementSystem:
     
     def refresh_menu(self):
         try:
-            
+            for item in self.menu_tree.get_children():
+                self.menu_tree.delete(item)
         except Exception as e:
             messagebox.showerror("Error", f"Failed to refresh menu: {e}")
