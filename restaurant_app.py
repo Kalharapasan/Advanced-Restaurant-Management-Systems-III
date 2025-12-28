@@ -1237,3 +1237,6 @@ class RestaurantManagementSystem:
     
     def show_menu_management(self):
         self.notebook.select(self.menu_mgmt_frame)
+    
+    def show_customer_database(self):
+        self.notebook.select(self.customer_frame)
