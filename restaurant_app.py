@@ -1169,3 +1169,11 @@ class RestaurantManagementSystem:
     
     def calc_clear(self):
         self.text_Input.set("0")
+    
+    def calc_equals(self):
+        try:
+            expression = self.text_Input.get()
+            result = str(eval(expression))
+            self.text_Input.set(result)
+        except:
+            self.text_Input.set("Error")
