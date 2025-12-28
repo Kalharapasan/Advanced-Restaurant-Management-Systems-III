@@ -1137,3 +1137,5 @@ class RestaurantManagementSystem:
         for var in [self.SubTotal, self.CostofDrinks, self.CostofCakes,
                    self.ServiceCharge, self.DiscountAmount, self.PaidTax, self.TotalCost]:
             var.set("$0.00")
+        for var in self.item_vars.values():
+            var.set(False)
