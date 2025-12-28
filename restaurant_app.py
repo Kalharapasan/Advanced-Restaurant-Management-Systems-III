@@ -1071,6 +1071,12 @@ class RestaurantManagementSystem:
                 receipt_ref = f"RCP{random.randint(10000, 99999)}{time.strftime('%H%M')}"
                 self.Receipt_Ref.set(receipt_ref)
             
+            items_data = []
+            for item_name, var in self.item_vars.items():
+                if var.get():
+                    qty = int(self.item_entries[item_name].get() or 1)
+                    
+            
         except Exception as e:
             messagebox.showerror("Save Error", f"Error saving order: {e}")
             print(f"Save order error: {e}")
