@@ -1251,3 +1251,6 @@ class RestaurantManagementSystem:
         history_window.configure(bg='#f0f0f0')
         columns = ('Receipt', 'Date', 'Time', 'Customer', 'Total', 'Status')
         tree = ttk.Treeview(history_window, columns=columns, show='headings', height=20)
+        for col in columns:
+            tree.heading(col, text=col)
+            tree.column(col, width=150, anchor='center')
