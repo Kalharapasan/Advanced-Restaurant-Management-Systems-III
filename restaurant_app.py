@@ -1374,3 +1374,10 @@ class RestaurantManagementSystem:
                  bg='#27ae60', fg='white', font=('Segoe UI', 10, 'bold')).pack(side='left', padx=5)
         tk.Button(btn_frame, text="Cancel", command=add_window.destroy,
                  bg='#e74c3c', fg='white', font=('Segoe UI', 10, 'bold')).pack(side='left', padx=5)
+    
+    def search_customers(self):
+        search_term = self.customer_search_var.get()
+        if search_term:
+            messagebox.showinfo("Search", f"Searching for customers matching: {search_term}")
+        else:
+            messagebox.showwarning("Search", "Please enter a search term")
