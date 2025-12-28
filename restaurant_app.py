@@ -1355,3 +1355,22 @@ class RestaurantManagementSystem:
             entry = tk.Entry(form_frame, textvariable=var, font=('Segoe UI', 10), width=25)
             entry.grid(row=i, column=1, padx=5, pady=5)
             entries[label[:-1]] = var
+        btn_frame = tk.Frame(add_window, bg='#f0f0f0')
+        btn_frame.pack(pady=20)
+        
+        def save_customer():
+            name = entries['Name'].get()
+            phone = entries['Phone'].get()
+            email = entries['Email'].get()
+            
+            if name and phone:
+                messagebox.showinfo("Success", f"Customer {name} added successfully!")
+                add_window.destroy()
+                self.refresh_customers()
+            else:
+                messagebox.showwarning("Invalid Input", "Name and Phone are required!")
+        
+        tk.Button(btn_frame, text="Save", command=save_customer,
+                 bg='#27ae60', fg='white', font=('Segoe UI', 10, 'bold')).pack(side='left', padx=5)
+        tk.Button(btn_frame, text="Cancel", command=add_window.destroy,
+                 bg='#e74c3c', fg='white', font=('Segoe UI', 10, 'bold')).pack(side='left', padx=5)
