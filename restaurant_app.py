@@ -1312,5 +1312,15 @@ class RestaurantManagementSystem:
         try:
             for item in self.menu_tree.get_children():
                 self.menu_tree.delete(item)
+            
+            if hasattr(self, 'menu_items') and self.menu_items:
+                for category, items in self.menu_items.items():
+                    for item in items:
+                        self.menu_tree.insert('', 'end', values=(
+                            item.get('name', 'Unknown'),
+                            category.title(),
+                            f"${item.get('price', 0):.2f}",
+                            "Yes" if item.get('is_available', True) else "No"
+                        ))
         except Exception as e:
             messagebox.showerror("Error", f"Failed to refresh menu: {e}")
