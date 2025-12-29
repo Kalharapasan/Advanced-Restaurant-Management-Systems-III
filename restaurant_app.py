@@ -1644,6 +1644,11 @@ LAST UPDATED: """ + time.strftime("%B %Y")
         scrollbar.pack(side='right', fill='y')
     
     def show_about(self):
+        about_window = tk.Toplevel(self.root)
+        about_window.title("ℹ️ About")
+        about_window.geometry("500x400")
+        about_window.configure(bg='#2c3e50')
+        about_window.resizable(False, False)
     
     
 
