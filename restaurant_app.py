@@ -1503,4 +1503,44 @@ Generated: {time.strftime('%Y-%m-%d %H:%M:%S')}
         self.reports_text.insert('1.0', report)
     
     def generate_top_items_report(self):
+        report = f"""
+🏆 TOP SELLING ITEMS REPORT - {time.strftime('%B %Y')}
+{'='*50}
+
+Most Popular Items by Quantity:
+1. Cappuccino - 245 units sold
+2. Espresso - 189 units sold  
+3. Latte - 167 units sold
+4. Americano - 134 units sold
+5. Chocolate Cake - 98 units sold
+
+Highest Revenue Items:
+1. Cappuccino - $2,856.00
+2. Chocolate Cake - $2,124.75
+3. Espresso - $1,925.50
+4. Latte - $1,678.25
+5. Cheesecake - $1,456.50
+
+Fastest Moving Items:
+• Average time to sell: 2.3 hours
+• Cappuccino: 1.8 hours
+• Espresso: 2.1 hours
+• Hot Chocolate: 2.9 hours
+
+Slow Moving Items:
+• Specialty Teas: 8.5 hours
+• Vegan Options: 12.3 hours
+• Seasonal Items: 15.2 hours
+
+Recommendations:
+• Increase Cappuccino stock by 20%
+• Consider promotional pricing for slow-moving items
+• Add more variety to top-performing categories
+
+Generated: {time.strftime('%Y-%m-%d %H:%M:%S')}
+"""
         
+        self.reports_text.delete('1.0', tk.END)
+        self.reports_text.insert('1.0', report)
+    
+    
