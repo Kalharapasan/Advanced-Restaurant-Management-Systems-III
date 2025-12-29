@@ -44,6 +44,10 @@ class RestaurantManagementSystem:
             self.root.destroy()
             return
         self.setup_variables()
+        self.customer_manager = None
+        self.menu_manager = None
+        self.analytics_manager = AnalyticsManager(self.db_manager)
+        self.analytics_display = None
     
     def setup_variables(self):
         self.item_vars = {}
