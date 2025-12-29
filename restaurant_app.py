@@ -1681,5 +1681,8 @@ Database: MySQL
                 self.db_manager.close_connection()
             self.root.destroy()
     
+    def __del__(self):
+        if hasattr(self, 'db_manager') and self.db_manager:
+            self.db_manager.close_connection()
     
 
