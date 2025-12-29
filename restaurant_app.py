@@ -1548,3 +1548,9 @@ Generated: {time.strftime('%Y-%m-%d %H:%M:%S')}
         help_window.title("📖 User Manual")
         help_window.geometry("800x600")
         help_window.configure(bg='#f0f0f0')
+        text_frame = tk.Frame(help_window)
+        text_frame.pack(fill='both', expand=True, padx=10, pady=10)
+        
+        help_text = tk.Text(text_frame, wrap=tk.WORD, font=('Segoe UI', 11), bg='white')
+        scrollbar = tk.Scrollbar(text_frame, command=help_text.yview)
+        help_text.config(yscrollcommand=scrollbar.set)
