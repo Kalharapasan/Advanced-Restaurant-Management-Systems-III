@@ -34,6 +34,8 @@ except ImportError:
 
 class RestaurantManagementSystem:
     def __init__(self, root):
+        self.root = root
+        self.current_user = "Admin"
     
     def setup_variables(self):
         self.item_vars = {}
