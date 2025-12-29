@@ -1381,3 +1381,6 @@ class RestaurantManagementSystem:
             messagebox.showinfo("Search", f"Searching for customers matching: {search_term}")
         else:
             messagebox.showwarning("Search", "Please enter a search term")
+            
+    def on_customer_search(self, event=None):
+        pass
