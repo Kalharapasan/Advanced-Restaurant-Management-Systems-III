@@ -1655,6 +1655,8 @@ LAST UPDATED: """ + time.strftime("%B %Y")
                 bg='#2c3e50', fg='white').pack(pady=20)
         tk.Label(about_window, text="Advanced Restaurant Management System",
                 font=('Segoe UI', 16, 'bold'), bg='#2c3e50', fg='white').pack(pady=5)
+        tk.Label(about_window, text="Professional Edition v3.0",
+                font=('Segoe UI', 12), bg='#2c3e50', fg='#ecf0f1').pack(pady=5)
     
     
 
