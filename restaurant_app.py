@@ -1389,6 +1389,15 @@ class RestaurantManagementSystem:
         try:
             for item in self.customer_tree.get_children():
                 self.customer_tree.delete(item)
+            sample_customers = [
+                ("John Smith", "555-0123", "john@email.com", "15", "$450.75"),
+                ("Sarah Johnson", "555-0456", "sarah@email.com", "8", "$320.50"),
+                ("Mike Wilson", "555-0789", "mike@email.com", "22", "$680.25"),
+                ("Emma Davis", "555-0321", "emma@email.com", "5", "$125.00")
+            ]
+            
+            for customer in sample_customers:
+                self.customer_tree.insert('', 'end', values=customer)
         except Exception as e:
             messagebox.showerror("Error", f"Failed to refresh customers: {e}")
         
