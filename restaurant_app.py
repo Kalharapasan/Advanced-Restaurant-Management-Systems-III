@@ -1384,3 +1384,6 @@ class RestaurantManagementSystem:
             
     def on_customer_search(self, event=None):
         pass
+    
+    def refresh_customers(self):
+        """Refresh customer list"""
