@@ -72,3 +72,11 @@ class AnalyticsManager:
             
             'last_updated': current_time.strftime('%Y-%m-%d %H:%M:%S')
         }
+    
+    def get_card_data(self):
+        return [
+            ("📈 Today's Sales", f"${self.analytics_data['today_sales']:.2f}", "#27ae60"),
+            ("🛒 Total Orders", str(self.analytics_data['today_orders']), "#3498db"),
+            ("👥 Customers", str(self.analytics_data['active_customers']), "#9b59b6"),
+            ("⭐ Avg Rating", str(self.analytics_data['avg_rating']), "#f39c12")
+        ]
