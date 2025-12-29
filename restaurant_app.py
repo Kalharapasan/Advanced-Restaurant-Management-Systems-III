@@ -33,7 +33,7 @@ except ImportError:
     ANALYTICS_AVAILABLE = False
 
 class RestaurantManagementSystem:
-    
+    def __init__(self, root):
     
     def setup_variables(self):
         self.item_vars = {}
