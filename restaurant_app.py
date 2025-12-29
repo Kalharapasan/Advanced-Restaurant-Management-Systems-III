@@ -1386,4 +1386,4 @@ class RestaurantManagementSystem:
         pass
     
     def refresh_customers(self):
-        """Refresh customer list"""
+        
