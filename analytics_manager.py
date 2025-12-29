@@ -80,3 +80,6 @@ class AnalyticsManager:
             ("👥 Customers", str(self.analytics_data['active_customers']), "#9b59b6"),
             ("⭐ Avg Rating", str(self.analytics_data['avg_rating']), "#f39c12")
         ]
+    
+    def get_detailed_report(self):
+        data = self.analytics_data
