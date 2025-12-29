@@ -1651,6 +1651,8 @@ LAST UPDATED: """ + time.strftime("%B %Y")
         about_window.resizable(False, False)
         about_window.transient(self.root)
         about_window.grab_set()
+        tk.Label(about_window, text="🍽️", font=('Segoe UI', 48),
+                bg='#2c3e50', fg='white').pack(pady=20)
     
     
 
