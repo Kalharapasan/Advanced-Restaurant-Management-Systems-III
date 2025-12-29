@@ -1387,7 +1387,8 @@ class RestaurantManagementSystem:
     
     def refresh_customers(self):
         try:
-            
+            for item in self.customer_tree.get_children():
+                self.customer_tree.delete(item)
         except Exception as e:
             messagebox.showerror("Error", f"Failed to refresh customers: {e}")
         
