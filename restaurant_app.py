@@ -1550,10 +1550,10 @@ Generated: {time.strftime('%Y-%m-%d %H:%M:%S')}
         help_window.configure(bg='#f0f0f0')
         text_frame = tk.Frame(help_window)
         text_frame.pack(fill='both', expand=True, padx=10, pady=10)
-        
         help_text = tk.Text(text_frame, wrap=tk.WORD, font=('Segoe UI', 11), bg='white')
         scrollbar = tk.Scrollbar(text_frame, command=help_text.yview)
         help_text.config(yscrollcommand=scrollbar.set)
+        
         help_content = """
 🍽️ ADVANCED RESTAURANT MANAGEMENT SYSTEM - USER MANUAL
 
@@ -1636,9 +1636,12 @@ For technical support and feature requests, contact the system administrator.
 
 VERSION: Professional Edition v3.0
 LAST UPDATED: """ + time.strftime("%B %Y")
-    
-    help_text.insert('1.0', help_content)
-    help_text.config(state='disabled')
         
-    help_text.pack(side='left', fill='both', expand=True)
-    scrollbar.pack(side='right', fill='y')
+        help_text.insert('1.0', help_content)
+        help_text.config(state='disabled')
+        
+        help_text.pack(side='left', fill='both', expand=True)
+        scrollbar.pack(side='right', fill='y')
+    
+    
+
