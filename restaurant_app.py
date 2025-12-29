@@ -1673,5 +1673,13 @@ Database: MySQL
                  font=('Segoe UI', 10, 'bold'), bg='#3498db', fg='white',
                  width=15).pack(pady=20)
     
+    def exit_application(self):
+        result = messagebox.askyesno("Exit Application", 
+                                   "Are you sure you want to exit?")
+        if result:
+            if self.db_manager:
+                self.db_manager.close_connection()
+            self.root.destroy()
+    
     
 
