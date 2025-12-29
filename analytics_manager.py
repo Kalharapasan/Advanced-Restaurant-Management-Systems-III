@@ -185,3 +185,7 @@ System Status: All systems operational ✅
 """
         
         return report
+    
+    
+    def get_hourly_sales(self):
+        hours = [f"{i:02d}:00" for i in range(24)]
