@@ -48,6 +48,9 @@ class RestaurantManagementSystem:
         self.menu_manager = None
         self.analytics_manager = AnalyticsManager(self.db_manager)
         self.analytics_display = None
+        self.setup_styles()
+        self.create_menu_bar()
+        self.setup_ui()
     
     def setup_variables(self):
         self.item_vars = {}
