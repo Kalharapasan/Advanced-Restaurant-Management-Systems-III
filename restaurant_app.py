@@ -1554,3 +1554,85 @@ Generated: {time.strftime('%Y-%m-%d %H:%M:%S')}
         help_text = tk.Text(text_frame, wrap=tk.WORD, font=('Segoe UI', 11), bg='white')
         scrollbar = tk.Scrollbar(text_frame, command=help_text.yview)
         help_text.config(yscrollcommand=scrollbar.set)
+         help_content = """
+🍽️ ADVANCED RESTAURANT MANAGEMENT SYSTEM - USER MANUAL
+
+OVERVIEW
+========
+This professional restaurant management system provides comprehensive tools for managing orders, customers, inventory, and business analytics.
+
+MAIN FEATURES
+=============
+
+1. ORDER MANAGEMENT
+   • Select menu items from categorized tabs
+   • Specify quantities for each item
+   • Apply discounts and calculate totals automatically
+   • Generate professional receipts
+   • Save orders to database with customer information
+
+2. CUSTOMER MANAGEMENT
+   • Store customer information
+   • Track order history
+   • Manage customer preferences
+   • Loyalty program integration
+
+3. MENU MANAGEMENT
+   • Add, edit, and remove menu items
+   • Organize items by categories
+   • Set prices and descriptions
+   • Manage availability status
+
+4. REPORTING & ANALYTICS
+   • Daily, weekly, monthly sales reports
+   • Revenue analysis and trends
+   • Popular items tracking
+   • Customer analytics
+
+5. INVENTORY MANAGEMENT
+   • Track stock levels
+   • Set minimum stock alerts
+   • Supplier information
+   • Purchase order management
+
+GETTING STARTED
+===============
+
+1. ORDER PROCESS:
+   - Enter customer information (optional)
+   - Select items from menu tabs
+   - Specify quantities
+   - Apply discount if applicable
+   - Click "Calculate" to compute totals
+   - Click "Receipt" to preview
+   - Click "Save Order" to complete
+
+2. NAVIGATION:
+   - Use tabs at the top to switch between modules
+   - Menu bar provides quick access to features
+   - Status bar shows connection and system status
+
+3. KEYBOARD SHORTCUTS:
+   - Ctrl+N: New Order
+   - Ctrl+Q: Exit Application
+
+DATABASE SETUP
+===============
+Ensure MySQL is running with the following configuration:
+- Host: localhost
+- Database: restaurant_db
+- User: root
+- Password: (as configured in database_manager.py)
+
+TROUBLESHOOTING
+===============
+- Database Connection Issues: Check MySQL service and credentials
+- Missing Dependencies: Install required Python packages
+- Performance Issues: Regularly backup and optimize database
+
+SUPPORT
+=======
+For technical support and feature requests, contact the system administrator.
+
+VERSION: Professional Edition v3.0
+LAST UPDATED: """ + time.strftime("%B %Y")
