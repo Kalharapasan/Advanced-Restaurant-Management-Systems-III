@@ -17,3 +17,6 @@ class AnalyticsManager:
     
     def load_real_data(self):
         self.generate_sample_data()
+    
+    def generate_sample_data(self):
+        current_time = datetime.now()
