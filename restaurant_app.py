@@ -1501,4 +1501,6 @@ Generated: {time.strftime('%Y-%m-%d %H:%M:%S')}
         
         self.reports_text.delete('1.0', tk.END)
         self.reports_text.insert('1.0', report)
+    
+    def generate_top_items_report(self):
         
