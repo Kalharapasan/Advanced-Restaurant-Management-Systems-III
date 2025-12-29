@@ -194,4 +194,17 @@ System Status: All systems operational ✅
         sales = [self.analytics_data['today_sales'] * pattern for pattern in base_pattern]
         return list(zip(hours, sales))
     
-    
+    def get_top_items(self, limit=10):
+        items = [
+            {'name': 'Cappuccino', 'sales': 18, 'revenue': 45.00},
+            {'name': 'Grilled Chicken', 'sales': 12, 'revenue': 245.50},
+            {'name': 'Caesar Salad', 'sales': 15, 'revenue': 127.50},
+            {'name': 'Pizza Margherita', 'sales': 8, 'revenue': 120.00},
+            {'name': 'Chocolate Cake', 'sales': 6, 'revenue': 33.00},
+            {'name': 'Smoothie Bowl', 'sales': 12, 'revenue': 48.00},
+            {'name': 'Pasta Carbonara', 'sales': 9, 'revenue': 112.50},
+            {'name': 'Green Tea', 'sales': 3, 'revenue': 6.00},
+            {'name': 'Burger Deluxe', 'sales': 7, 'revenue': 91.00},
+            {'name': 'Ice Cream', 'sales': 10, 'revenue': 40.00}
+        ]
+        return items[:limit]
