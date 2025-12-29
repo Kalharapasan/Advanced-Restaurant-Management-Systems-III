@@ -86,3 +86,6 @@ class AnalyticsManager:
         sales_growth = ((data['today_sales'] - data['yesterday_sales']) / data['yesterday_sales']) * 100
         week_growth = ((data['week_sales'] - data['last_week_sales']) / data['last_week_sales']) * 100
         month_growth = ((data['month_sales'] - data['last_month_sales']) / data['last_month_sales']) * 100
+        daily_achievement = (data['today_sales'] / data['daily_target']) * 100
+        weekly_achievement = (data['week_sales'] / data['weekly_target']) * 100
+        monthly_progress = (data['month_sales'] / data['monthly_target']) * 100
