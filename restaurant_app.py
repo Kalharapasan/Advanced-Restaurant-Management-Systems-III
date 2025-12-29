@@ -1436,4 +1436,7 @@ Generated: {time.strftime('%Y-%m-%d %H:%M:%S')}
         
         except Exception as e:
             messagebox.showerror("Error", f"Failed to generate daily report: {e}")
+
+    def generate_weekly_report(self):
+        
         
