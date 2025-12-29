@@ -1544,3 +1544,7 @@ Generated: {time.strftime('%Y-%m-%d %H:%M:%S')}
         self.reports_text.insert('1.0', report)
     
     def show_help(self):
+        help_window = tk.Toplevel(self.root)
+        help_window.title("📖 User Manual")
+        help_window.geometry("800x600")
+        help_window.configure(bg='#f0f0f0')
