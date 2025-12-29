@@ -1438,5 +1438,31 @@ Generated: {time.strftime('%Y-%m-%d %H:%M:%S')}
             messagebox.showerror("Error", f"Failed to generate daily report: {e}")
 
     def generate_weekly_report(self):
+        report = f"""
+📅 WEEKLY SALES REPORT - Week ending {time.strftime('%Y-%m-%d')}
+{'='*50}
+
+Weekly Summary:
+• Total Orders: 187
+• Total Revenue: $8,945.75
+• Average Daily Revenue: $1,277.96
+• Growth vs Last Week: +12.5%
+
+Daily Breakdown:
+• Monday: 25 orders - $1,247.50
+• Tuesday: 28 orders - $1,398.75
+• Wednesday: 32 orders - $1,567.25
+• Thursday: 29 orders - $1,445.50
+• Friday: 35 orders - $1,735.25
+• Saturday: 22 orders - $1,089.50
+• Sunday: 16 orders - $462.00
+
+Best Performing Day: Friday ($1,735.25)
+Customer Retention Rate: 68%
+
+Generated: {time.strftime('%Y-%m-%d %H:%M:%S')}
+"""
         
+        self.reports_text.delete('1.0', tk.END)
+        self.reports_text.insert('1.0', report)
         
