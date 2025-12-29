@@ -1467,5 +1467,38 @@ Generated: {time.strftime('%Y-%m-%d %H:%M:%S')}
         self.reports_text.insert('1.0', report)
     
     def generate_monthly_report(self):
+        report = f"""
+📆 MONTHLY SALES REPORT - {time.strftime('%B %Y')}
+{'='*50}
+
+Monthly Summary:
+• Total Orders: 750
+• Total Revenue: $35,784.50
+• Average Order Value: $47.71
+• Total Customers Served: 425
+• New Customers: 87
+
+Weekly Breakdown:
+• Week 1: 187 orders - $8,945.75
+• Week 2: 195 orders - $9,312.25
+• Week 3: 178 orders - $8,498.50
+• Week 4: 190 orders - $9,028.00
+
+Category Performance:
+• Drinks: 45% of sales - $16,102.03
+• Cakes: 35% of sales - $12,524.58
+• Other: 20% of sales - $7,157.89
+
+Top 5 Items:
+1. Cappuccino - $2,856.00
+2. Espresso - $1,925.50
+3. Chocolate Cake - $2,124.75
+4. Latte - $1,678.25
+5. Cheesecake - $1,456.50
+
+Generated: {time.strftime('%Y-%m-%d %H:%M:%S')}
+"""
         
+        self.reports_text.delete('1.0', tk.END)
+        self.reports_text.insert('1.0', report)
         
