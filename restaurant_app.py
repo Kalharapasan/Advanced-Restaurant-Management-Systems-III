@@ -1643,5 +1643,7 @@ LAST UPDATED: """ + time.strftime("%B %Y")
         help_text.pack(side='left', fill='both', expand=True)
         scrollbar.pack(side='right', fill='y')
     
+    def show_about(self):
+    
     
 
