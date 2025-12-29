@@ -14,3 +14,6 @@ class AnalyticsManager:
         except Exception as e:
             print(f"Error loading analytics data: {e}")
             self.generate_sample_data()
+    
+    def load_real_data(self):
+        self.generate_sample_data()
