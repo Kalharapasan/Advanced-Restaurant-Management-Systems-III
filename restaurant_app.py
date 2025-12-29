@@ -1657,6 +1657,17 @@ LAST UPDATED: """ + time.strftime("%B %Y")
                 font=('Segoe UI', 16, 'bold'), bg='#2c3e50', fg='white').pack(pady=5)
         tk.Label(about_window, text="Professional Edition v3.0",
                 font=('Segoe UI', 12), bg='#2c3e50', fg='#ecf0f1').pack(pady=5)
+        description = """
+A comprehensive restaurant management solution
+featuring order processing, customer management,
+inventory tracking, and business analytics.
+
+Built with Python and Tkinter
+Database: MySQL
+        """
+        tk.Label(about_window, text=description, font=('Segoe UI', 10),
+                bg='#2c3e50', fg='#bdc3c7', justify='center').pack(pady=20)
+        
     
     
 
