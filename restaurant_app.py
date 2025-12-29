@@ -43,6 +43,7 @@ class RestaurantManagementSystem:
                                "Failed to connect to database. Please check your MySQL configuration.")
             self.root.destroy()
             return
+        self.setup_variables()
     
     def setup_variables(self):
         self.item_vars = {}
