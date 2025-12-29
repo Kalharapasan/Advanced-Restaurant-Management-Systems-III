@@ -1386,4 +1386,8 @@ class RestaurantManagementSystem:
         pass
     
     def refresh_customers(self):
+        try:
+            
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to refresh customers: {e}")
         
