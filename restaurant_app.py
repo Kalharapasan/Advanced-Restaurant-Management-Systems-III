@@ -1400,4 +1400,7 @@ class RestaurantManagementSystem:
                 self.customer_tree.insert('', 'end', values=customer)
         except Exception as e:
             messagebox.showerror("Error", f"Failed to refresh customers: {e}")
+    
+    def generate_daily_report(self):
+        
         
