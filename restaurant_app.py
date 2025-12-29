@@ -1653,6 +1653,8 @@ LAST UPDATED: """ + time.strftime("%B %Y")
         about_window.grab_set()
         tk.Label(about_window, text="🍽️", font=('Segoe UI', 48),
                 bg='#2c3e50', fg='white').pack(pady=20)
+        tk.Label(about_window, text="Advanced Restaurant Management System",
+                font=('Segoe UI', 16, 'bold'), bg='#2c3e50', fg='white').pack(pady=5)
     
     
 
