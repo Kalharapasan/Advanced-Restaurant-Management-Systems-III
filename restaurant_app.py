@@ -1649,6 +1649,8 @@ LAST UPDATED: """ + time.strftime("%B %Y")
         about_window.geometry("500x400")
         about_window.configure(bg='#2c3e50')
         about_window.resizable(False, False)
+        about_window.transient(self.root)
+        about_window.grab_set()
     
     
 
