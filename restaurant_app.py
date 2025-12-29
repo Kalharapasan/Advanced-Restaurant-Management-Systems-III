@@ -1402,5 +1402,8 @@ class RestaurantManagementSystem:
             messagebox.showerror("Error", f"Failed to refresh customers: {e}")
     
     def generate_daily_report(self):
+        try:
         
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to generate daily report: {e}")
         
