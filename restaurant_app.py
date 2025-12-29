@@ -51,6 +51,7 @@ class RestaurantManagementSystem:
         self.setup_styles()
         self.create_menu_bar()
         self.setup_ui()
+        self.load_menu_from_database()
     
     def setup_variables(self):
         self.item_vars = {}
