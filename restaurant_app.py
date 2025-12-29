@@ -36,6 +36,13 @@ class RestaurantManagementSystem:
     def __init__(self, root):
         self.root = root
         self.current_user = "Admin"
+        self.db_manager = DatabaseManager()
+        
+        if not self.db_manager.is_connected():
+            messagebox.showerror("Database Error", 
+                               "Failed to connect to database. Please check your MySQL configuration.")
+            self.root.destroy()
+            return
     
     def setup_variables(self):
         self.item_vars = {}
