@@ -1667,7 +1667,8 @@ Database: MySQL
         """
         tk.Label(about_window, text=description, font=('Segoe UI', 10),
                 bg='#2c3e50', fg='#bdc3c7', justify='center').pack(pady=20)
-        
+        tk.Label(about_window, text="© 2024 Restaurant Management Solutions",
+                font=('Segoe UI', 9), bg='#2c3e50', fg='#95a5a6').pack(pady=10)
     
     
 
