@@ -189,3 +189,9 @@ System Status: All systems operational ✅
     
     def get_hourly_sales(self):
         hours = [f"{i:02d}:00" for i in range(24)]
+        base_pattern = [0.1, 0.1, 0.1, 0.1, 0.1, 0.2, 0.3, 0.5, 0.7, 0.8, 0.9, 1.0,
+                       1.2, 0.9, 0.6, 0.4, 0.5, 0.8, 1.1, 1.0, 0.7, 0.5, 0.3, 0.2]
+        sales = [self.analytics_data['today_sales'] * pattern for pattern in base_pattern]
+        return list(zip(hours, sales))
+    
+    
