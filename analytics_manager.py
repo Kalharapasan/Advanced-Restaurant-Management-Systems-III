@@ -278,3 +278,7 @@ class AnalyticsDisplay:
     def create_control_buttons(self):
         button_frame = tk.Frame(self.parent_frame, bg='#f0f0f0')
         button_frame.pack(fill='x', padx=20, pady=10)
+        refresh_btn = tk.Button(button_frame, text="🔄 Refresh Analytics",
+                              font=('Segoe UI', 10, 'bold'), bg='#3498db', fg='white',
+                              command=self.refresh_display)
+        refresh_btn.pack(side='left', padx=5)
