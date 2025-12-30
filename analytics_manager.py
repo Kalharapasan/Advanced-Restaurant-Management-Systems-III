@@ -264,3 +264,5 @@ class AnalyticsDisplay:
                            bg='#ffffff', fg='#2c3e50',
                            wrap=tk.WORD, relief=tk.SOLID, bd=1,
                            height=25, width=100)
+        stats_scrollbar = tk.Scrollbar(text_frame, command=stats_text.yview)
+        stats_text.config(yscrollcommand=stats_scrollbar.set)
