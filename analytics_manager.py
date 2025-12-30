@@ -299,3 +299,7 @@ class AnalyticsDisplay:
         self.widgets['status_label'] = status_label
     
     def refresh_display(self):
+        try:
+            
+        except Exception as e:
+            print(f"Error refreshing analytics: {e}")
