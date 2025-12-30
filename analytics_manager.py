@@ -315,3 +315,5 @@ class AnalyticsDisplay:
             self.widgets['status_label'].config(text=f"Status: Updated {time.strftime('%H:%M:%S')}")
         except Exception as e:
             print(f"Error refreshing analytics: {e}")
+    
+    def toggle_auto_refresh(self):
