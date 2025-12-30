@@ -301,5 +301,7 @@ class AnalyticsDisplay:
     def refresh_display(self):
         try:
             self.analytics_manager.refresh_data()
+            card_data = self.analytics_manager.get_card_data()
+            cards_frame = self.widgets['cards_frame']
         except Exception as e:
             print(f"Error refreshing analytics: {e}")
