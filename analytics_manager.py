@@ -210,3 +210,7 @@ System Status: All systems operational ✅
         return items[:limit]
     
     def update_data(self):
+        self.analytics_data['today_sales'] += random.uniform(-5, 15)
+        self.analytics_data['today_orders'] += random.randint(0, 1)
+        self.analytics_data['active_customers'] += random.randint(-1, 2)
+        self.analytics_data['last_updated'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
