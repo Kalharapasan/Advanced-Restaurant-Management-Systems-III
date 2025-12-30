@@ -214,3 +214,6 @@ System Status: All systems operational ✅
         self.analytics_data['today_orders'] += random.randint(0, 1)
         self.analytics_data['active_customers'] += random.randint(-1, 2)
         self.analytics_data['last_updated'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        self.analytics_data['today_sales'] = max(1000, self.analytics_data['today_sales'])
+        self.analytics_data['today_orders'] = max(15, min(50, self.analytics_data['today_orders']))
+        self.analytics_data['active_customers'] = max(10, min(30, self.analytics_data['active_customers']))
