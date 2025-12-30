@@ -260,3 +260,7 @@ class AnalyticsDisplay:
         report_frame.pack(fill='both', expand=True, padx=20, pady=(10, 20))
         text_frame = tk.Frame(report_frame, bg='#f0f0f0')
         text_frame.pack(fill='both', expand=True, padx=5, pady=5)
+        stats_text = tk.Text(text_frame, font=('Courier New', 9),
+                           bg='#ffffff', fg='#2c3e50',
+                           wrap=tk.WORD, relief=tk.SOLID, bd=1,
+                           height=25, width=100)
