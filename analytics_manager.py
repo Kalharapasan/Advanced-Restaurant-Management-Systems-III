@@ -235,3 +235,5 @@ class AnalyticsDisplay:
         children = self.parent_frame.winfo_children()
         for child in children[1:]:  
             child.destroy()
+    
+    def create_analytics_cards(self):
