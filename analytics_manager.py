@@ -229,3 +229,4 @@ class AnalyticsDisplay:
         self.clear_frame()
         self.create_analytics_cards()
         self.create_detailed_report()
+        self.create_control_buttons()
