@@ -274,3 +274,5 @@ class AnalyticsDisplay:
         
         self.widgets['stats_text'] = stats_text
         self.widgets['report_frame'] = report_frame
+    
+    def create_control_buttons(self):
