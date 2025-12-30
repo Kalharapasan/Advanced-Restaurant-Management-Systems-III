@@ -224,6 +224,11 @@ System Status: All systems operational ✅
         self.analytics_data['active_customers'] = max(10, min(30, self.analytics_data['active_customers']))
 
 class AnalyticsDisplay:
+    def __init__(self, parent_frame, analytics_manager):
+        self.parent_frame = parent_frame
+        self.analytics_manager = analytics_manager
+        self.widgets = {}
+        self.create_display()
     
     def create_display(self):
         self.clear_frame()
