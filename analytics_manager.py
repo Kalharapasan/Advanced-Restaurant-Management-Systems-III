@@ -208,3 +208,5 @@ System Status: All systems operational ✅
             {'name': 'Ice Cream', 'sales': 10, 'revenue': 40.00}
         ]
         return items[:limit]
+    
+    def update_data(self):
