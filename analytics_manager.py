@@ -325,3 +325,15 @@ class AnalyticsDisplay:
             btn.config(text="⏰ Auto Refresh: ON", bg='#27ae60')
     
     def export_report(self):
+        try:
+            report_content = self.analytics_manager.get_detailed_report()
+            filename = f"analytics_report_{time.strftime('%Y%m%d_%H%M%S')}.txt"
+            
+            with open(filename, 'w', encoding='utf-8') as f:
+                f.write(report_content)
+            
+            self.widgets['status_label'].config(text=f"Report exported: {filename}")
+            
+        except Exception as e:
+            print(f"Error exporting report: {e}")
+            self.widgets['status_label'].config(text="Export failed")
