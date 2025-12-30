@@ -282,3 +282,7 @@ class AnalyticsDisplay:
                               font=('Segoe UI', 10, 'bold'), bg='#3498db', fg='white',
                               command=self.refresh_display)
         refresh_btn.pack(side='left', padx=5)
+        auto_refresh_btn = tk.Button(button_frame, text="⏰ Auto Refresh: ON",
+                                   font=('Segoe UI', 10, 'bold'), bg='#27ae60', fg='white',
+                                   command=self.toggle_auto_refresh)
+        auto_refresh_btn.pack(side='left', padx=5)
