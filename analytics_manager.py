@@ -244,19 +244,15 @@ class AnalyticsDisplay:
     def create_analytics_cards(self):
         cards_frame = tk.Frame(self.parent_frame, bg='#f0f0f0')
         cards_frame.pack(fill='x', padx=20, pady=10)
-        
         card_data = self.analytics_manager.get_card_data()
-        
         for i, (title, value, color) in enumerate(card_data):
             card = tk.Frame(cards_frame, bg=color, relief=tk.RAISED, bd=3)
             card.grid(row=0, column=i, padx=10, pady=10, sticky='ew', ipadx=20, ipady=15)
             cards_frame.grid_columnconfigure(i, weight=1)
-            
             tk.Label(card, text=title, font=('Segoe UI', 11, 'bold'),
                     bg=color, fg='white').pack(pady=(10,5))
             tk.Label(card, text=value, font=('Segoe UI', 24, 'bold'),
                     bg=color, fg='white').pack(pady=(0,10))
-        
         self.widgets['cards_frame'] = cards_frame
     
     def create_detailed_report(self):
@@ -276,7 +272,6 @@ class AnalyticsDisplay:
         report_content = self.analytics_manager.get_detailed_report()
         stats_text.insert('1.0', report_content)
         stats_text.config(state='disabled')
-        
         self.widgets['stats_text'] = stats_text
         self.widgets['report_frame'] = report_frame
     
@@ -333,10 +328,8 @@ class AnalyticsDisplay:
         try:
             report_content = self.analytics_manager.get_detailed_report()
             filename = f"analytics_report_{time.strftime('%Y%m%d_%H%M%S')}.txt"
-            
             with open(filename, 'w', encoding='utf-8') as f:
                 f.write(report_content)
-            
             self.widgets['status_label'].config(text=f"Report exported: {filename}")
             
         except Exception as e:
