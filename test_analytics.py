@@ -10,3 +10,6 @@ def test_analytics_manager():
     report = analytics_manager.get_detailed_report()
     print("\n📋 Report Preview (first 500 characters):")
     print(report[:500] + "...")
+    hourly_sales = analytics_manager.get_hourly_sales()
+    print(f"\n⏰ Hourly Sales Data Points: {len(hourly_sales)}")
+    print(f"Sample: {hourly_sales[:3]}")
