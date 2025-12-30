@@ -300,6 +300,6 @@ class AnalyticsDisplay:
     
     def refresh_display(self):
         try:
-            
+            self.analytics_manager.refresh_data()
         except Exception as e:
             print(f"Error refreshing analytics: {e}")
