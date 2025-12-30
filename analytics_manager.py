@@ -253,3 +253,6 @@ class AnalyticsDisplay:
                     bg=color, fg='white').pack(pady=(0,10))
         
         self.widgets['cards_frame'] = cards_frame
+    
+    def create_detailed_report(self):
+        
