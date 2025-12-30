@@ -255,4 +255,6 @@ class AnalyticsDisplay:
         self.widgets['cards_frame'] = cards_frame
     
     def create_detailed_report(self):
-        
+        report_frame = tk.LabelFrame(self.parent_frame, text="📊 Live Dashboard",
+                                   font=('Segoe UI', 14, 'bold'), bg='#f0f0f0')
+        report_frame.pack(fill='both', expand=True, padx=20, pady=(10, 20))
