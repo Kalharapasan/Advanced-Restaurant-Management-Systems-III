@@ -312,5 +312,6 @@ class AnalyticsDisplay:
             stats_text.delete('1.0', tk.END)
             stats_text.insert('1.0', self.analytics_manager.get_detailed_report())
             stats_text.config(state='disabled')
+            self.widgets['status_label'].config(text=f"Status: Updated {time.strftime('%H:%M:%S')}")
         except Exception as e:
             print(f"Error refreshing analytics: {e}")
