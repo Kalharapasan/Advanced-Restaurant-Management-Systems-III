@@ -290,3 +290,10 @@ class AnalyticsDisplay:
                              font=('Segoe UI', 10, 'bold'), bg='#e74c3c', fg='white',
                              command=self.export_report)
         export_btn.pack(side='left', padx=5)
+        status_label = tk.Label(button_frame, text="Status: Live",
+                               font=('Segoe UI', 10), bg='#f0f0f0', fg='#27ae60')
+        status_label.pack(side='right', padx=10)
+        
+        self.widgets['refresh_btn'] = refresh_btn
+        self.widgets['auto_refresh_btn'] = auto_refresh_btn
+        self.widgets['status_label'] = status_label
