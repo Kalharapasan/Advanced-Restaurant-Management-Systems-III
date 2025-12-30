@@ -232,3 +232,6 @@ class AnalyticsDisplay:
         self.create_control_buttons()
     
     def clear_frame(self):
+        children = self.parent_frame.winfo_children()
+        for child in children[1:]:  
+            child.destroy()
