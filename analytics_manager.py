@@ -268,3 +268,9 @@ class AnalyticsDisplay:
         stats_text.config(yscrollcommand=stats_scrollbar.set)
         stats_text.pack(side='left', fill='both', expand=True)
         stats_scrollbar.pack(side='right', fill='y')
+        report_content = self.analytics_manager.get_detailed_report()
+        stats_text.insert('1.0', report_content)
+        stats_text.config(state='disabled')
+        
+        self.widgets['stats_text'] = stats_text
+        self.widgets['report_frame'] = report_frame
