@@ -323,3 +323,5 @@ class AnalyticsDisplay:
             btn.config(text="⏰ Auto Refresh: OFF", bg='#e74c3c')
         else:
             btn.config(text="⏰ Auto Refresh: ON", bg='#27ae60')
+    
+    def export_report(self):
