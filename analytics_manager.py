@@ -307,5 +307,10 @@ class AnalyticsDisplay:
                 card = cards_frame.grid_slaves(row=0, column=i)[0]
                 value_label = card.pack_slaves()[1]  
                 value_label.config(text=value)
+            stats_text = self.widgets['stats_text']
+            stats_text.config(state='normal')
+            stats_text.delete('1.0', tk.END)
+            stats_text.insert('1.0', self.analytics_manager.get_detailed_report())
+            stats_text.config(state='disabled')
         except Exception as e:
             print(f"Error refreshing analytics: {e}")
