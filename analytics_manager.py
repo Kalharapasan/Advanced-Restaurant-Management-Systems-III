@@ -222,3 +222,7 @@ System Status: All systems operational ✅
         self.analytics_data['today_sales'] = max(1000, self.analytics_data['today_sales'])
         self.analytics_data['today_orders'] = max(15, min(50, self.analytics_data['today_orders']))
         self.analytics_data['active_customers'] = max(10, min(30, self.analytics_data['active_customers']))
+
+class AnalyticsDisplay:
+    
+    
