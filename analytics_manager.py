@@ -286,3 +286,7 @@ class AnalyticsDisplay:
                                    font=('Segoe UI', 10, 'bold'), bg='#27ae60', fg='white',
                                    command=self.toggle_auto_refresh)
         auto_refresh_btn.pack(side='left', padx=5)
+        export_btn = tk.Button(button_frame, text="📊 Export Report",
+                             font=('Segoe UI', 10, 'bold'), bg='#e74c3c', fg='white',
+                             command=self.export_report)
+        export_btn.pack(side='left', padx=5)
