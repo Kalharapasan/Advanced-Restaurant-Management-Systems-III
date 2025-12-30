@@ -303,5 +303,9 @@ class AnalyticsDisplay:
             self.analytics_manager.refresh_data()
             card_data = self.analytics_manager.get_card_data()
             cards_frame = self.widgets['cards_frame']
+            for i, (title, value, color) in enumerate(card_data):
+                card = cards_frame.grid_slaves(row=0, column=i)[0]
+                value_label = card.pack_slaves()[1]  
+                value_label.config(text=value)
         except Exception as e:
             print(f"Error refreshing analytics: {e}")
