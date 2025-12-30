@@ -266,3 +266,5 @@ class AnalyticsDisplay:
                            height=25, width=100)
         stats_scrollbar = tk.Scrollbar(text_frame, command=stats_text.yview)
         stats_text.config(yscrollcommand=stats_scrollbar.set)
+        stats_text.pack(side='left', fill='both', expand=True)
+        stats_scrollbar.pack(side='right', fill='y')
