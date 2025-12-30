@@ -7,3 +7,6 @@ def test_analytics_manager():
     print("\n📊 Analytics Cards:")
     for title, value, color in card_data:
         print(f"  {title}: {value} (Color: {color})")
+    report = analytics_manager.get_detailed_report()
+    print("\n📋 Report Preview (first 500 characters):")
+    print(report[:500] + "...")
