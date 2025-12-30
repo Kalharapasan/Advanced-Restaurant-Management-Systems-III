@@ -317,3 +317,9 @@ class AnalyticsDisplay:
             print(f"Error refreshing analytics: {e}")
     
     def toggle_auto_refresh(self):
+        btn = self.widgets['auto_refresh_btn']
+        current_text = btn.cget('text')
+        if "ON" in current_text:
+            btn.config(text="⏰ Auto Refresh: OFF", bg='#e74c3c')
+        else:
+            btn.config(text="⏰ Auto Refresh: ON", bg='#27ae60')
