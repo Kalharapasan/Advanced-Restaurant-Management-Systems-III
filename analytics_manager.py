@@ -297,3 +297,5 @@ class AnalyticsDisplay:
         self.widgets['refresh_btn'] = refresh_btn
         self.widgets['auto_refresh_btn'] = auto_refresh_btn
         self.widgets['status_label'] = status_label
+    
+    def refresh_display(self):
