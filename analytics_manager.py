@@ -237,3 +237,19 @@ class AnalyticsDisplay:
             child.destroy()
     
     def create_analytics_cards(self):
+        cards_frame = tk.Frame(self.parent_frame, bg='#f0f0f0')
+        cards_frame.pack(fill='x', padx=20, pady=10)
+        
+        card_data = self.analytics_manager.get_card_data()
+        
+        for i, (title, value, color) in enumerate(card_data):
+            card = tk.Frame(cards_frame, bg=color, relief=tk.RAISED, bd=3)
+            card.grid(row=0, column=i, padx=10, pady=10, sticky='ew', ipadx=20, ipady=15)
+            cards_frame.grid_columnconfigure(i, weight=1)
+            
+            tk.Label(card, text=title, font=('Segoe UI', 11, 'bold'),
+                    bg=color, fg='white').pack(pady=(10,5))
+            tk.Label(card, text=value, font=('Segoe UI', 24, 'bold'),
+                    bg=color, fg='white').pack(pady=(0,10))
+        
+        self.widgets['cards_frame'] = cards_frame
