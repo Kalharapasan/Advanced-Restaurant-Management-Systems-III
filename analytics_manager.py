@@ -227,3 +227,4 @@ class AnalyticsDisplay:
     
     def create_display(self):
         self.clear_frame()
+        self.create_analytics_cards()
