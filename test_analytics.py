@@ -19,3 +19,6 @@ def test_analytics_manager():
         print(f"  {item['name']}: {item['sales']} sales, ${item['revenue']:.2f} revenue")
     
     print("\n✅ Analytics Manager test completed successfully!")
+
+if __name__ == "__main__":
+    test_analytics_manager()
