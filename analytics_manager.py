@@ -5,6 +5,11 @@ import random
 from datetime import datetime, timedelta
 
 class AnalyticsManager:
+    def __init__(self, db_manager=None):
+        self.db_manager = db_manager
+        self.analytics_data = {}
+        self.refresh_data()
+        
     def refresh_data(self):
         try:
             if self.db_manager:
