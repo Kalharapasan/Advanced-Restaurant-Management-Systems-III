@@ -13,3 +13,9 @@ def test_analytics_manager():
     hourly_sales = analytics_manager.get_hourly_sales()
     print(f"\n⏰ Hourly Sales Data Points: {len(hourly_sales)}")
     print(f"Sample: {hourly_sales[:3]}")
+    top_items = analytics_manager.get_top_items(5)
+    print(f"\n🏆 Top 5 Items:")
+    for item in top_items:
+        print(f"  {item['name']}: {item['sales']} sales, ${item['revenue']:.2f} revenue")
+    
+    print("\n✅ Analytics Manager test completed successfully!")
