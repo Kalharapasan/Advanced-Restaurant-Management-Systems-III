@@ -276,3 +276,5 @@ class AnalyticsDisplay:
         self.widgets['report_frame'] = report_frame
     
     def create_control_buttons(self):
+        button_frame = tk.Frame(self.parent_frame, bg='#f0f0f0')
+        button_frame.pack(fill='x', padx=20, pady=10)
