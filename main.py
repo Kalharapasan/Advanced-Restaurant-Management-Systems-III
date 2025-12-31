@@ -3,3 +3,5 @@ import sys
 import tkinter as tk
 from tkinter import messagebox
 import traceback
+
+def check_dependencies():
