@@ -56,3 +56,7 @@ def show_dependency_error(missing_modules):
     root.mainloop()
     
 def main():
+    missing_modules = check_dependencies()
+    if missing_modules:
+        show_dependency_error(missing_modules)
+        return
