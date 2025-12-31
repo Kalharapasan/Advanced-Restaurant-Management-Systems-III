@@ -67,3 +67,7 @@ def main():
         root.iconname("Restaurant POS")
         app = RestaurantManagementSystem(root)
         root.mainloop()
+    except ImportError as e:
+        messagebox.showerror("Import Error", 
+                           f"Failed to import application modules: {e}\n\n"
+                           "Make sure all Python files are in the same directory.")
