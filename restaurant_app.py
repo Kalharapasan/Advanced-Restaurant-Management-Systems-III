@@ -735,17 +735,63 @@ class RestaurantManagementSystem:
         tk.Label(self.history_frame, text="📜 Order History",
                 font=('Segoe UI', 18, 'bold'), bg='#f0f0f0').pack(pady=20)
         
+        # Controls frame
+        controls_frame = tk.Frame(self.history_frame, bg='#f0f0f0')
+        controls_frame.pack(fill='x', padx=20, pady=(0,10))
+        
+        # Date filters
+        date_frame = tk.Frame(controls_frame, bg='#f0f0f0')
+        date_frame.pack(side='left')
+        tk.Label(date_frame, text="From:", font=('Segoe UI', 10), bg='#f0f0f0').pack(side='left', padx=(0,5))
+        self.history_from_date = DateEntry(date_frame, width=12, background='darkblue', foreground='white', borderwidth=2)
+        self.history_from_date.pack(side='left', padx=(0,10))
+        # Set default from date to 30 days ago
+        from datetime import datetime, timedelta
+        self.history_from_date.set_date(datetime.now() - timedelta(days=30))
+        tk.Label(date_frame, text="To:", font=('Segoe UI', 10), bg='#f0f0f0').pack(side='left', padx=(0,5))
+        self.history_to_date = DateEntry(date_frame, width=12, background='darkblue', foreground='white', borderwidth=2)
+        self.history_to_date.pack(side='left', padx=(0,10))
+        # Set default to date to today
+        self.history_to_date.set_date(datetime.now())
+        
+        # Search
+        search_frame = tk.Frame(controls_frame, bg='#f0f0f0')
+        search_frame.pack(side='left', padx=(20,0))
+        tk.Label(search_frame, text="Search:", font=('Segoe UI', 10), bg='#f0f0f0').pack(side='left', padx=(0,5))
+        self.history_search_var = tk.StringVar()
+        self.history_search_entry = tk.Entry(search_frame, textvariable=self.history_search_var, width=20)
+        self.history_search_entry.pack(side='left', padx=(0,10))
+        
+        # Buttons
+        btn_frame = tk.Frame(controls_frame, bg='#f0f0f0')
+        btn_frame.pack(side='right')
+        tk.Button(btn_frame, text="🔍 Filter", command=self.filter_history,
+                 font=('Segoe UI', 10, 'bold'), bg='#3498db', fg='white').pack(side='left', padx=(0,5))
+        tk.Button(btn_frame, text="🔄 Refresh", command=self.refresh_history,
+                 font=('Segoe UI', 10, 'bold'), bg='#27ae60', fg='white').pack(side='left', padx=(0,5))
+        tk.Button(btn_frame, text="📄 View Details", command=self.view_order_details,
+                 font=('Segoe UI', 10, 'bold'), bg='#9b59b6', fg='white').pack(side='left')
+        
+        # Treeview
         columns = ('Receipt', 'Date', 'Time', 'Customer', 'Total', 'Status')
-        tree = ttk.Treeview(self.history_frame, columns=columns, show='headings', height=20)
+        self.history_tree = ttk.Treeview(self.history_frame, columns=columns, show='headings', height=15)
         for col in columns:
-            tree.heading(col, text=col)
-            tree.column(col, width=150, anchor='center')
-        v_scrollbar = ttk.Scrollbar(self.history_frame, orient=tk.VERTICAL, command=tree.yview)
-        h_scrollbar = ttk.Scrollbar(self.history_frame, orient=tk.HORIZONTAL, command=tree.xview)
-        tree.configure(yscrollcommand=v_scrollbar.set, xscrollcommand=h_scrollbar.set)
-        tree.pack(fill='both', expand=True, padx=20, pady=(0,20))
+            self.history_tree.heading(col, text=col)
+            self.history_tree.column(col, width=150, anchor='center')
+        v_scrollbar = ttk.Scrollbar(self.history_frame, orient=tk.VERTICAL, command=self.history_tree.yview)
+        h_scrollbar = ttk.Scrollbar(self.history_frame, orient=tk.HORIZONTAL, command=self.history_tree.xview)
+        self.history_tree.configure(yscrollcommand=v_scrollbar.set, xscrollcommand=h_scrollbar.set)
+        self.history_tree.pack(fill='both', expand=True, padx=20, pady=(0,20))
         v_scrollbar.pack(side='right', fill='y')
         h_scrollbar.pack(side='bottom', fill='x')
+        
+        # Load initial data
+        self.refresh_history()
+    
+    def refresh_history(self):
+        # Clear existing items
+        for item in self.history_tree.get_children():
+            self.history_tree.delete(item)
         
         try:
             if self.db_manager.is_connected():
@@ -757,9 +803,142 @@ class RestaurantManagementSystem:
                 """)
                 
                 for row in cursor.fetchall():
-                    tree.insert('', tk.END, values=row)
+                    self.history_tree.insert('', tk.END, values=row)
         except Exception as e:
             messagebox.showerror("Database Error", f"Error loading order history: {e}")
+    
+    def filter_history(self):
+        # Clear existing items
+        for item in self.history_tree.get_children():
+            self.history_tree.delete(item)
+        
+        try:
+            if self.db_manager.is_connected():
+                cursor = self.db_manager.get_connection().cursor()
+                
+                # Build query with filters
+                query = """
+                    SELECT receipt_ref, order_date, order_time, customer_name, 
+                           total_cost, status
+                    FROM orders WHERE 1=1
+                """
+                params = []
+                
+                # Date filters
+                from_date = self.history_from_date.get_date()
+                to_date = self.history_to_date.get_date()
+                if from_date:
+                    query += " AND order_date >= %s"
+                    params.append(from_date)
+                if to_date:
+                    query += " AND order_date <= %s"
+                    params.append(to_date)
+                
+                # Search filter
+                search_term = self.history_search_var.get().strip()
+                if search_term:
+                    query += " AND (customer_name LIKE %s OR receipt_ref LIKE %s)"
+                    params.extend([f"%{search_term}%", f"%{search_term}%"])
+                
+                query += " ORDER BY created_at DESC"
+                
+                cursor.execute(query, params)
+                
+                for row in cursor.fetchall():
+                    self.history_tree.insert('', tk.END, values=row)
+        except Exception as e:
+            messagebox.showerror("Database Error", f"Error filtering order history: {e}")
+    
+    def view_order_details(self):
+        selected = self.history_tree.selection()
+        if not selected:
+            messagebox.showwarning("No Selection", "Please select an order to view details.")
+            return
+        
+        receipt_ref = self.history_tree.item(selected[0])['values'][0]
+        
+        try:
+            if self.db_manager.is_connected():
+                cursor = self.db_manager.get_connection().cursor()
+                cursor.execute("""
+                    SELECT items, customer_name, customer_phone, customer_email,
+                           total_cost, tax_amount, service_charge, discount_amount,
+                           payment_method, order_date, order_time
+                    FROM orders WHERE receipt_ref = %s
+                """, (receipt_ref,))
+                
+                result = cursor.fetchone()
+                if result:
+                    items, customer, phone, email, total, tax, service, discount, payment, date, time = result
+                    
+                    # Create details window
+                    details_window = tk.Toplevel(self.root)
+                    details_window.title(f"Order Details - {receipt_ref}")
+                    details_window.geometry("600x500")
+                    details_window.configure(bg='#f0f0f0')
+                    
+                    tk.Label(details_window, text=f"📄 Order Details - {receipt_ref}",
+                            font=('Segoe UI', 16, 'bold'), bg='#f0f0f0').pack(pady=10)
+                    
+                    # Customer info
+                    customer_frame = tk.LabelFrame(details_window, text="Customer Information",
+                                                 font=('Segoe UI', 12, 'bold'), bg='#f0f0f0')
+                    customer_frame.pack(fill='x', padx=20, pady=5)
+                    tk.Label(customer_frame, text=f"Name: {customer}", font=('Segoe UI', 10), bg='#f0f0f0').pack(anchor='w', padx=10)
+                    tk.Label(customer_frame, text=f"Phone: {phone}", font=('Segoe UI', 10), bg='#f0f0f0').pack(anchor='w', padx=10)
+                    tk.Label(customer_frame, text=f"Email: {email}", font=('Segoe UI', 10), bg='#f0f0f0').pack(anchor='w', padx=10)
+                    
+                    # Order info
+                    order_frame = tk.LabelFrame(details_window, text="Order Information",
+                                              font=('Segoe UI', 12, 'bold'), bg='#f0f0f0')
+                    order_frame.pack(fill='x', padx=20, pady=5)
+                    tk.Label(order_frame, text=f"Date: {date} {time}", font=('Segoe UI', 10), bg='#f0f0f0').pack(anchor='w', padx=10)
+                    tk.Label(order_frame, text=f"Payment: {payment}", font=('Segoe UI', 10), bg='#f0f0f0').pack(anchor='w', padx=10)
+                    
+                    # Items
+                    items_frame = tk.LabelFrame(details_window, text="Items Ordered",
+                                              font=('Segoe UI', 12, 'bold'), bg='#f0f0f0')
+                    items_frame.pack(fill='both', expand=True, padx=20, pady=5)
+                    
+                    items_text = tk.Text(items_frame, height=10, font=('Courier New', 9), bg='#ffffff')
+                    items_scrollbar = tk.Scrollbar(items_frame, command=items_text.yview)
+                    items_text.configure(yscrollcommand=items_scrollbar.set)
+                    items_text.pack(side='left', fill='both', expand=True)
+                    items_scrollbar.pack(side='right', fill='y')
+                    
+                    # Parse and display items
+                    try:
+                        items_dict = json.loads(items)
+                        items_text.insert('1.0', "Item\t\tQuantity\tPrice\tTotal\n")
+                        items_text.insert('end', "-"*50 + "\n")
+                        for item_name, item_data in items_dict.items():
+                            qty = item_data.get('quantity', 0)
+                            price = item_data.get('price', 0)
+                            total = qty * price
+                            items_text.insert('end', f"{item_name}\t{qty}\t${price:.2f}\t${total:.2f}\n")
+                    except:
+                        items_text.insert('1.0', "Error parsing items data")
+                    
+                    items_text.config(state='disabled')
+                    
+                    # Totals
+                    totals_frame = tk.Frame(details_window, bg='#f0f0f0')
+                    totals_frame.pack(fill='x', padx=20, pady=5)
+                    tk.Label(totals_frame, text=f"Subtotal: ${(total - tax - service + discount):.2f}", 
+                            font=('Segoe UI', 10, 'bold'), bg='#f0f0f0').pack(side='left')
+                    tk.Label(totals_frame, text=f"Discount: ${discount:.2f}", 
+                            font=('Segoe UI', 10, 'bold'), bg='#f0f0f0').pack(side='left', padx=(20,0))
+                    tk.Label(totals_frame, text=f"Service: ${service:.2f}", 
+                            font=('Segoe UI', 10, 'bold'), bg='#f0f0f0').pack(side='left', padx=(20,0))
+                    tk.Label(totals_frame, text=f"Tax: ${tax:.2f}", 
+                            font=('Segoe UI', 10, 'bold'), bg='#f0f0f0').pack(side='left', padx=(20,0))
+                    tk.Label(totals_frame, text=f"Total: ${total:.2f}", 
+                            font=('Segoe UI', 12, 'bold'), fg='#27ae60', bg='#f0f0f0').pack(side='right')
+                    
+                else:
+                    messagebox.showerror("Not Found", "Order details not found.")
+        except Exception as e:
+            messagebox.showerror("Database Error", f"Error loading order details: {e}")
     
     def setup_reports_content(self):
         tk.Label(self.reports_frame, text="📈 Business Reports & Insights",
