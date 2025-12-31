@@ -41,6 +41,7 @@ class RestaurantManagementSystem:
     MIN_DISCOUNT_PERCENT = 0.0  # Minimum discount
     
     def __init__(self, root):
+        print("Starting Restaurant Management System...")
         self.root = root
         self.current_user = "Admin"
         self.db_manager = DatabaseManager()
