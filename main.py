@@ -63,3 +63,7 @@ def main():
 
     try:
         from restaurant_app import RestaurantManagementSystem
+        root = tk.Tk()
+        root.iconname("Restaurant POS")
+        app = RestaurantManagementSystem(root)
+        root.mainloop()
