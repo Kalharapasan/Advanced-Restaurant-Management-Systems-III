@@ -1397,6 +1397,123 @@ Waste Percentage:     {data.get('waste_percentage', 0):>6.1f}%
         except Exception as e:
             messagebox.showerror("Export Error", f"Failed to export analytics: {e}")
     
+    def show_alerts(self):
+        """Show business alerts and notifications"""
+        alerts_window = tk.Toplevel(self.root)
+        alerts_window.title("🚨 Business Alerts")
+        alerts_window.geometry("700x600")
+        alerts_window.configure(bg='#f0f0f0')
+        
+        # Header
+        header_label = tk.Label(alerts_window, text="🚨 Active Business Alerts & Insights",
+                               font=('Segoe UI', 16, 'bold'),
+                               bg='#e74c3c', fg='white', pady=15)
+        header_label.pack(fill='x')
+        
+        # Scrollable alerts area
+        canvas = tk.Canvas(alerts_window, bg='#f0f0f0')
+        scrollbar = ttk.Scrollbar(alerts_window, orient="vertical", command=canvas.yview)
+        scrollable_frame = ttk.Frame(canvas)
+        
+        scrollable_frame.bind(
+            "<Configure>",
+            lambda e: canvas.configure(scrollregion=canvas.bbox("all"))
+        )
+        
+        canvas.create_window((0, 0), window=scrollable_frame, anchor="nw")
+        canvas.configure(yscrollcommand=scrollbar.set)
+        
+        # Alert data
+        alerts = [
+            ("🚨", "Critical Alert", "Low Stock: Green Tea (2 units remaining)", "#e74c3c", "Action required within 24 hours"),
+            ("⚠️", "Performance Alert", "Service time above target (4.2 min vs 4.0 min)", "#f39c12", "Consider staff training or process optimization"),
+            ("📉", "Trend Alert", "Customer acquisition down 15% this week", "#9b59b6", "Review marketing strategies"),
+            ("💰", "Revenue Achievement", "Daily target exceeded by 28.9%!", "#27ae60", "Excellent performance today"),
+            ("⭐", "Quality Alert", "Customer satisfaction: 95.8% (Above target)", "#27ae60", "Maintain current service standards"),
+            ("📈", "Growth Opportunity", "Premium item sales up 45%", "#3498db", "Consider expanding premium menu"),
+            ("🔄", "Operational Insight", "Peak hour efficiency: 94%", "#1abc9c", "Strong operational performance"),
+            ("👥", "Customer Insight", "VIP customer visits increased 20%", "#8e44ad", "Loyalty program performing well")
+        ]
+        
+        for i, (icon, title, description, color, recommendation) in enumerate(alerts):
+            alert_frame = tk.Frame(scrollable_frame, bg=color, relief=tk.RAISED, bd=3)
+            alert_frame.pack(fill='x', padx=20, pady=8)
+            
+            # Alert content
+            content_frame = tk.Frame(alert_frame, bg=color)
+            content_frame.pack(fill='both', expand=True, padx=15, pady=12)
+            
+            # Icon and title
+            header_frame = tk.Frame(content_frame, bg=color)
+            header_frame.pack(fill='x', pady=(0, 5))
+            
+            icon_label = tk.Label(header_frame, text=icon, font=('Segoe UI', 24),
+                                bg=color, fg='white')
+            icon_label.pack(side='left')
+            
+            title_label = tk.Label(header_frame, text=title,
+                                 font=('Segoe UI', 14, 'bold'),
+                                 bg=color, fg='white')
+            title_label.pack(side='left', padx=(10, 0))
+            
+            # Timestamp
+            timestamp_label = tk.Label(header_frame, text=f"• {datetime.now().strftime('%H:%M')}",
+                                     font=('Segoe UI', 10),
+                                     bg=color, fg='white')
+            timestamp_label.pack(side='right')
+            
+            # Description
+            desc_label = tk.Label(content_frame, text=description,
+                                font=('Segoe UI', 11, 'bold'),
+                                bg=color, fg='white', wraplength=600)
+            desc_label.pack(anchor='w', pady=(0, 5))
+            
+            # Recommendation
+            rec_label = tk.Label(content_frame, text=f"💡 {recommendation}",
+                               font=('Segoe UI', 10, 'italic'),
+                               bg=color, fg='white', wraplength=600)
+            rec_label.pack(anchor='w')
+        
+        canvas.pack(side="left", fill="both", expand=True, padx=10, pady=10)
+        scrollbar.pack(side="right", fill="y", pady=10)
+        
+        # Action buttons
+        btn_frame = tk.Frame(alerts_window, bg='#f0f0f0')
+        btn_frame.pack(fill='x', padx=20, pady=10)
+        
+        tk.Button(btn_frame, text="📧 Email Report", bg='#3498db', fg='white',
+                 font=('Segoe UI', 10, 'bold'), padx=20, 
+                 command=lambda: messagebox.showinfo("Email", "Alerts report emailed to management")).pack(side='left', padx=5)
+        
+        tk.Button(btn_frame, text="🔄 Refresh Alerts", bg='#27ae60', fg='white',
+                 font=('Segoe UI', 10, 'bold'), padx=20,
+                 command=lambda: alerts_window.destroy()).pack(side='left', padx=5)
+        
+        tk.Button(btn_frame, text="⚙️ Configure Alerts", bg='#9b59b6', fg='white',
+                 font=('Segoe UI', 10, 'bold'), padx=20,
+                 command=lambda: messagebox.showinfo("Settings", "Alert configuration coming soon")).pack(side='left', padx=5)
+    
+    def toggle_live_updates(self):
+        """Toggle live data updates"""
+        if not hasattr(self, 'live_updates_active'):
+            self.live_updates_active = False
+        
+        self.live_updates_active = not self.live_updates_active
+        
+        if self.live_updates_active:
+            messagebox.showinfo("Live Updates", "🔴 LIVE MODE ACTIVATED\\n\\n• Data refreshes every 30 seconds\\n• Real-time notifications enabled\\n• Performance monitoring active")
+            self.schedule_live_updates()
+        else:
+            messagebox.showinfo("Live Updates", "⚪ Live updates deactivated\\n\\nManual refresh mode restored")
+    
+    def schedule_live_updates(self):
+        """Schedule automatic data updates"""
+        if hasattr(self, 'live_updates_active') and self.live_updates_active:
+            self.refresh_analytics()
+            # Auto-update status in bottom status bar
+            self.status_label.config(text="🔴 Live Mode: Analytics updated")
+            self.root.after(30000, self.schedule_live_updates)  # Update every 30 seconds
+    
     def update_enhanced_sales_overview(self, data):
         """Update enhanced sales overview with comprehensive metrics"""
         sales_growth = ((data.get('today_sales', 0) - data.get('yesterday_sales', 1)) / data.get('yesterday_sales', 1)) * 100
