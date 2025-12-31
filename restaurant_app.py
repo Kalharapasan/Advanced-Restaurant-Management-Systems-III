@@ -849,8 +849,470 @@ class RestaurantManagementSystem:
         self.reports_text.pack(side='left', fill='both', expand=True)
         reports_scrollbar.pack(side='right', fill='y')
     
+    def setup_enhanced_analytics_content(self):
+        """Enhanced analytics dashboard with comprehensive features"""
+        # Main container with scrollable canvas
+        main_canvas = tk.Canvas(self.analytics_frame, bg='#f0f0f0')
+        main_scrollbar = ttk.Scrollbar(self.analytics_frame, orient="vertical", command=main_canvas.yview)
+        scrollable_frame = ttk.Frame(main_canvas)
+        
+        scrollable_frame.bind(
+            "<Configure>",
+            lambda e: main_canvas.configure(scrollregion=main_canvas.bbox("all"))
+        )
+        
+        main_canvas.create_window((0, 0), window=scrollable_frame, anchor="nw")
+        main_canvas.configure(yscrollcommand=main_scrollbar.set)
+        
+        main_canvas.pack(side="left", fill="both", expand=True)
+        main_scrollbar.pack(side="right", fill="y")
+        
+        # Header Section
+        header_frame = tk.Frame(scrollable_frame, bg='#2c3e50', height=80)
+        header_frame.pack(fill='x', padx=10, pady=5)
+        header_frame.pack_propagate(False)
+        
+        # Title and controls
+        title_label = tk.Label(header_frame, text="🏪 Advanced Analytics Dashboard",
+                              font=('Segoe UI', 18, 'bold'),
+                              bg='#2c3e50', fg='white')
+        title_label.pack(side='left', padx=20, pady=15)
+        
+        # Control buttons
+        controls_frame = tk.Frame(header_frame, bg='#2c3e50')
+        controls_frame.pack(side='right', padx=20, pady=15)
+        
+        refresh_btn = tk.Button(controls_frame, text="🔄 Refresh",
+                               font=('Segoe UI', 10, 'bold'),
+                               bg='#3498db', fg='white', relief=tk.FLAT,
+                               padx=15, pady=8, command=self.refresh_analytics)
+        refresh_btn.pack(side='left', padx=5)
+        
+        export_btn = tk.Button(controls_frame, text="📊 Export",
+                              font=('Segoe UI', 10, 'bold'),
+                              bg='#27ae60', fg='white', relief=tk.FLAT,
+                              padx=15, pady=8, command=self.export_analytics)
+        export_btn.pack(side='left', padx=5)
+        
+        # Date Filter Frame
+        filter_frame = tk.Frame(scrollable_frame, bg='#ecf0f1', relief=tk.RIDGE, bd=1)
+        filter_frame.pack(fill='x', padx=10, pady=5)
+        
+        tk.Label(filter_frame, text="📅 Date Filter:",
+                font=('Segoe UI', 11, 'bold'),
+                bg='#ecf0f1').pack(side='left', padx=15, pady=8)
+        
+        # Date filter buttons
+        filter_buttons_frame = tk.Frame(filter_frame, bg='#ecf0f1')
+        filter_buttons_frame.pack(side='left', padx=10, pady=8)
+        
+        self.date_filter = tk.StringVar(value="today")
+        date_filters = [("Today", "today"), ("Week", "week"), ("Month", "month"), ("Year", "year")]
+        
+        for text, value in date_filters:
+            btn = tk.Radiobutton(filter_buttons_frame, text=text, variable=self.date_filter,
+                               value=value, font=('Segoe UI', 9), bg='#ecf0f1',
+                               command=self.update_analytics_filter)
+            btn.pack(side='left', padx=5)
+        
+        # Last updated info
+        self.last_updated_label = tk.Label(filter_frame, text="Last updated: Loading...",
+                                          font=('Segoe UI', 9, 'italic'),
+                                          bg='#ecf0f1', fg='#7f8c8d')
+        self.last_updated_label.pack(side='right', padx=15, pady=8)
+        
+        # Key Metrics Cards Row
+        metrics_frame = tk.Frame(scrollable_frame, bg='#f0f0f0')
+        metrics_frame.pack(fill='x', padx=10, pady=5)
+        
+        self.create_metric_cards(metrics_frame)
+        
+        # Content Area with Notebook for different sections
+        content_notebook = ttk.Notebook(scrollable_frame)
+        content_notebook.pack(fill='both', expand=True, padx=10, pady=5)
+        
+        # Sales Performance Tab
+        sales_frame = ttk.Frame(content_notebook)
+        content_notebook.add(sales_frame, text="💰 Sales Performance")
+        self.setup_sales_performance_tab(sales_frame)
+        
+        # Customer Analytics Tab
+        customer_frame = ttk.Frame(content_notebook)
+        content_notebook.add(customer_frame, text="👥 Customer Analytics")
+        self.setup_customer_analytics_tab(customer_frame)
+        
+        # Menu Analytics Tab
+        menu_frame = ttk.Frame(content_notebook)
+        content_notebook.add(menu_frame, text="🍽️ Menu Analytics")
+        self.setup_menu_analytics_tab(menu_frame)
+        
+        # Operational Metrics Tab
+        operations_frame = ttk.Frame(content_notebook)
+        content_notebook.add(operations_frame, text="⚙️ Operations")
+        self.setup_operations_analytics_tab(operations_frame)
+        
+        # Load initial data
+        self.load_analytics_data()
+    
+    def create_metric_cards(self, parent):
+        """Create key metric cards"""
+        self.metric_cards = {}
+        
+        metrics = [
+            ("sales", "💰 Today's Revenue", "$0.00", "#27ae60"),
+            ("orders", "🛒 Total Orders", "0", "#3498db"),
+            ("customers", "👥 Active Customers", "0", "#9b59b6"),
+            ("rating", "⭐ Average Rating", "0.0", "#f39c12"),
+            ("profit", "📈 Profit Margin", "0%", "#e67e22"),
+            ("efficiency", "⚡ Efficiency", "0%", "#1abc9c")
+        ]
+        
+        for i, (key, title, value, color) in enumerate(metrics):
+            card_frame = tk.Frame(parent, bg=color, relief=tk.RAISED, bd=2)
+            card_frame.grid(row=0, column=i, sticky='nsew', padx=5, pady=5)
+            parent.grid_columnconfigure(i, weight=1)
+            
+            title_label = tk.Label(card_frame, text=title,
+                                 font=('Segoe UI', 10, 'bold'),
+                                 bg=color, fg='white')
+            title_label.pack(pady=(10, 5))
+            
+            value_label = tk.Label(card_frame, text=value,
+                                 font=('Segoe UI', 20, 'bold'),
+                                 bg=color, fg='white')
+            value_label.pack(pady=(0, 10))
+            
+            self.metric_cards[key] = value_label
+    
+    def setup_sales_performance_tab(self, parent):
+        """Setup sales performance analytics"""
+        # Sales Overview
+        overview_frame = tk.LabelFrame(parent, text="📊 Sales Overview",
+                                     font=('Segoe UI', 12, 'bold'))
+        overview_frame.pack(fill='x', padx=10, pady=5)
+        
+        self.sales_overview_text = tk.Text(overview_frame, height=8, font=('Consolas', 10),
+                                         bg='#f8f9fa', relief=tk.FLAT)
+        self.sales_overview_text.pack(fill='x', padx=10, pady=10)
+        
+        # Sales Trends
+        trends_frame = tk.LabelFrame(parent, text="📈 Sales Trends",
+                                   font=('Segoe UI', 12, 'bold'))
+        trends_frame.pack(fill='both', expand=True, padx=10, pady=5)
+        
+        # Placeholder for chart (would integrate with matplotlib)
+        chart_placeholder = tk.Label(trends_frame, 
+                                    text="📊 Sales Chart Visualization\\n(Matplotlib integration recommended)",
+                                    font=('Segoe UI', 14), bg='#ecf0f1', fg='#7f8c8d',
+                                    relief=tk.RIDGE, bd=1)
+        chart_placeholder.pack(fill='both', expand=True, padx=10, pady=10)
+    
+    def setup_customer_analytics_tab(self, parent):
+        """Setup customer analytics"""
+        # Customer Stats
+        stats_frame = tk.LabelFrame(parent, text="👥 Customer Statistics",
+                                  font=('Segoe UI', 12, 'bold'))
+        stats_frame.pack(fill='x', padx=10, pady=5)
+        
+        self.customer_stats_text = tk.Text(stats_frame, height=6, font=('Consolas', 10),
+                                         bg='#f8f9fa', relief=tk.FLAT)
+        self.customer_stats_text.pack(fill='x', padx=10, pady=10)
+        
+        # Customer Behavior
+        behavior_frame = tk.LabelFrame(parent, text="📊 Customer Behavior Analysis",
+                                     font=('Segoe UI', 12, 'bold'))
+        behavior_frame.pack(fill='both', expand=True, padx=10, pady=5)
+        
+        self.customer_behavior_text = tk.Text(behavior_frame, height=8, font=('Consolas', 10),
+                                            bg='#f8f9fa', relief=tk.FLAT)
+        self.customer_behavior_text.pack(fill='both', expand=True, padx=10, pady=10)
+    
+    def setup_menu_analytics_tab(self, parent):
+        """Setup menu analytics"""
+        # Top Performers
+        performers_frame = tk.LabelFrame(parent, text="🏆 Top Performing Items",
+                                       font=('Segoe UI', 12, 'bold'))
+        performers_frame.pack(fill='x', padx=10, pady=5)
+        
+        self.menu_performers_text = tk.Text(performers_frame, height=6, font=('Consolas', 10),
+                                          bg='#f8f9fa', relief=tk.FLAT)
+        self.menu_performers_text.pack(fill='x', padx=10, pady=10)
+        
+        # Menu Analysis
+        analysis_frame = tk.LabelFrame(parent, text="📊 Menu Performance Analysis",
+                                     font=('Segoe UI', 12, 'bold'))
+        analysis_frame.pack(fill='both', expand=True, padx=10, pady=5)
+        
+        self.menu_analysis_text = tk.Text(analysis_frame, height=8, font=('Consolas', 10),
+                                        bg='#f8f9fa', relief=tk.FLAT)
+        self.menu_analysis_text.pack(fill='both', expand=True, padx=10, pady=10)
+    
+    def setup_operations_analytics_tab(self, parent):
+        """Setup operational metrics"""
+        # Performance Metrics
+        metrics_frame = tk.LabelFrame(parent, text="⚡ Performance Metrics",
+                                    font=('Segoe UI', 12, 'bold'))
+        metrics_frame.pack(fill='x', padx=10, pady=5)
+        
+        self.operations_metrics_text = tk.Text(metrics_frame, height=6, font=('Consolas', 10),
+                                             bg='#f8f9fa', relief=tk.FLAT)
+        self.operations_metrics_text.pack(fill='x', padx=10, pady=10)
+        
+        # Quality & Efficiency
+        quality_frame = tk.LabelFrame(parent, text="🎯 Quality & Efficiency Analysis",
+                                    font=('Segoe UI', 12, 'bold'))
+        quality_frame.pack(fill='both', expand=True, padx=10, pady=5)
+        
+        self.quality_analysis_text = tk.Text(quality_frame, height=8, font=('Consolas', 10),
+                                           bg='#f8f9fa', relief=tk.FLAT)
+        self.quality_analysis_text.pack(fill='both', expand=True, padx=10, pady=10)
+    
+    def load_analytics_data(self):
+        """Load and display analytics data"""
+        try:
+            # Initialize analytics manager if not already done
+            if not hasattr(self, 'analytics_manager') or not self.analytics_manager:
+                self.analytics_manager = AnalyticsManager(self.db_manager)
+            
+            # Refresh data
+            self.analytics_manager.refresh_data()
+            data = self.analytics_manager.analytics_data
+            
+            # Update metric cards
+            self.metric_cards['sales'].config(text=f"${data.get('today_sales', 0):.2f}")
+            self.metric_cards['orders'].config(text=str(data.get('today_orders', 0)))
+            self.metric_cards['customers'].config(text=str(data.get('active_customers', 0)))
+            self.metric_cards['rating'].config(text=str(data.get('avg_rating', 0)))
+            profit_margin = ((data.get('today_sales', 0) - data.get('today_sales', 0) * 0.6) / data.get('today_sales', 1)) * 100
+            self.metric_cards['profit'].config(text=f"{profit_margin:.1f}%")
+            self.metric_cards['efficiency'].config(text=f"{data.get('staff_efficiency', 0)}%")
+            
+            # Update detailed analytics
+            self.update_sales_overview(data)
+            self.update_customer_analytics(data)
+            self.update_menu_analytics(data)
+            self.update_operations_analytics(data)
+            
+            # Update last updated time
+            self.last_updated_label.config(text=f"Last updated: {data.get('last_updated', 'Unknown')}")
+            
+        except Exception as e:
+            print(f"Error loading analytics: {e}")
+    
+    def update_sales_overview(self, data):
+        """Update sales overview text"""
+        sales_growth = ((data.get('today_sales', 0) - data.get('yesterday_sales', 1)) / data.get('yesterday_sales', 1)) * 100
+        week_growth = ((data.get('week_sales', 0) - data.get('last_week_sales', 1)) / data.get('last_week_sales', 1)) * 100
+        
+        overview_text = f"""
+📊 SALES PERFORMANCE OVERVIEW
+{'=' * 50}
+
+💰 Revenue Metrics:
+   Today's Revenue:      ${data.get('today_sales', 0):>10.2f}
+   Yesterday:           ${data.get('yesterday_sales', 0):>10.2f} ({sales_growth:+.1f}%)
+   This Week:           ${data.get('week_sales', 0):>10.2f}
+   Last Week:           ${data.get('last_week_sales', 0):>10.2f} ({week_growth:+.1f}%)
+   This Month:          ${data.get('month_sales', 0):>10.2f}
+
+📈 Order Metrics:
+   Total Orders Today:   {data.get('today_orders', 0):>10}
+   Average Order Value:  ${data.get('avg_order_value', 0):>10.2f}
+   Peak Hour:           {data.get('peak_hour', 'N/A'):>10}
+   Peak Orders:         {data.get('peak_orders', 0):>10}
+
+🎯 Target Achievement:
+   Daily Target:        ${data.get('daily_target', 0):>10.2f}
+   Achievement:         {(data.get('today_sales', 0)/data.get('daily_target', 1)*100):>9.1f}%
+   Weekly Target:       ${data.get('weekly_target', 0):>10.2f}
+   Progress:            {(data.get('week_sales', 0)/data.get('weekly_target', 1)*100):>9.1f}%
+"""
+        self.sales_overview_text.delete(1.0, tk.END)
+        self.sales_overview_text.insert(1.0, overview_text)
+    
+    def update_customer_analytics(self, data):
+        """Update customer analytics text"""
+        customer_text = f"""
+👥 CUSTOMER STATISTICS
+{'=' * 30}
+
+Active Customers:     {data.get('active_customers', 0):>5}
+New Customers:        {data.get('new_customers', 0):>5}
+Retention Rate:       {data.get('retention_rate', 0):>4}%
+VIP Customers:        {data.get('vip_customers', 0):>5}
+Avg Visit Frequency:  {data.get('avg_visit_frequency', 0):>5.1f}
+"""
+        
+        behavior_text = f"""
+📊 CUSTOMER BEHAVIOR ANALYSIS
+{'=' * 40}
+
+🌟 Customer Satisfaction:
+   Average Rating:       {data.get('avg_rating', 0)}/5.0
+   Reviews Today:        {data.get('reviews_today', 0)}
+   Positive Reviews:     {data.get('positive_reviews', 0)} ({data.get('positive_reviews', 0)/max(data.get('reviews_today', 1), 1)*100:.1f}%)
+   Neutral Reviews:      {data.get('neutral_reviews', 0)}
+   Complaints:           {data.get('complaints', 0)}
+   Recommendation Rate:  {data.get('recommendation_rate', 0)}%
+
+💳 Payment Preferences:
+   Card Payments:        {data.get('payment_methods', {}).get('card', 0)}%
+   Cash Payments:        {data.get('payment_methods', {}).get('cash', 0)}%
+   Mobile Payments:      {data.get('payment_methods', {}).get('mobile', 0)}%
+
+👑 New Customers Today:
+"""
+        for i, customer in enumerate(data.get('new_customer_names', []), 1):
+            behavior_text += f"   {i}. {customer}\\n"
+        
+        self.customer_stats_text.delete(1.0, tk.END)
+        self.customer_stats_text.insert(1.0, customer_text)
+        
+        self.customer_behavior_text.delete(1.0, tk.END)
+        self.customer_behavior_text.insert(1.0, behavior_text)
+    
+    def update_menu_analytics(self, data):
+        """Update menu analytics text"""
+        performers_text = f"""
+🏆 TOP PERFORMING ITEMS
+{'=' * 30}
+
+📈 By Units Sold:
+   {data.get('top_seller', {}).get('name', 'N/A'):.<20} {data.get('top_seller', {}).get('units', 0):>3} units
+
+💰 By Revenue:
+   {data.get('revenue_leader', {}).get('name', 'N/A'):.<20} ${data.get('revenue_leader', {}).get('revenue', 0):.2f}
+
+💎 Most Profitable:
+   {data.get('most_profitable', {}).get('name', 'N/A'):.<20} {data.get('most_profitable', {}).get('margin', 0)}% margin
+"""
+        
+        analysis_text = f"""
+📊 DETAILED MENU PERFORMANCE
+{'=' * 35}
+
+⚠️ Stock Alerts:
+   Low Stock Item:       {data.get('low_stock', {}).get('name', 'N/A')}
+   Units Remaining:      {data.get('low_stock', {}).get('units', 0)}
+
+🆕 New Item Performance:
+   Item Name:            {data.get('new_item', {}).get('name', 'N/A')}
+   Orders Today:         {data.get('new_item', {}).get('orders', 0)}
+
+📈 Menu Optimization Insights:
+   • Focus on promoting high-margin items
+   • Consider bundling popular items
+   • Monitor low-stock items for reordering
+   • Analyze customer feedback for new items
+   • Track seasonal preferences and trends
+
+💡 Recommendations:
+   • Create combo deals with top sellers
+   • Optimize pricing for profit margin
+   • Consider removing low-performing items
+   • Introduce variations of popular dishes
+"""
+        
+        self.menu_performers_text.delete(1.0, tk.END)
+        self.menu_performers_text.insert(1.0, performers_text)
+        
+        self.menu_analysis_text.delete(1.0, tk.END)
+        self.menu_analysis_text.insert(1.0, analysis_text)
+    
+    def update_operations_analytics(self, data):
+        """Update operations analytics text"""
+        metrics_text = f"""
+⚡ OPERATIONAL PERFORMANCE
+{'=' * 30}
+
+Service Time:         {data.get('avg_service_time', 0):>6.1f} min
+Table Turnover:       {data.get('table_turnover', 0):>6.1f}x
+Staff Efficiency:     {data.get('staff_efficiency', 0):>6}%
+Kitchen Accuracy:     {data.get('kitchen_accuracy', 0):>6.1f}%
+Waste Percentage:     {data.get('waste_percentage', 0):>6.1f}%
+"""
+        
+        quality_text = f"""
+🎯 QUALITY & EFFICIENCY ANALYSIS
+{'=' * 40}
+
+📊 Service Quality Metrics:
+   Average Service Time:  {data.get('avg_service_time', 0):.1f} minutes
+   Target Service Time:   4.0 minutes
+   Performance:          {'✅ Good' if data.get('avg_service_time', 0) <= 4.0 else '⚠️ Needs Improvement'}
+
+🍽️ Kitchen Performance:
+   Order Accuracy:       {data.get('kitchen_accuracy', 0):.1f}%
+   Target Accuracy:      95.0%
+   Performance:          {'✅ Excellent' if data.get('kitchen_accuracy', 0) >= 95 else '⚠️ Needs Improvement'}
+
+💼 Staff Efficiency:
+   Current Efficiency:   {data.get('staff_efficiency', 0)}%
+   Target Efficiency:    90%
+   Performance:          {'✅ Great' if data.get('staff_efficiency', 0) >= 90 else '⚠️ Needs Improvement'}
+
+♻️ Waste Management:
+   Current Waste:        {data.get('waste_percentage', 0):.1f}%
+   Target Waste:         <3.0%
+   Performance:          {'✅ Good' if data.get('waste_percentage', 0) <= 3.0 else '⚠️ High Waste'}
+
+🔄 Table Management:
+   Turnover Rate:        {data.get('table_turnover', 0):.1f}x per day
+   Target Turnover:      3.0x per day
+   Performance:          {'✅ Good' if data.get('table_turnover', 0) >= 2.5 else '📈 Can Improve'}
+
+📈 Key Performance Indicators:
+   • Reduce service time to under 4 minutes
+   • Maintain accuracy above 95%
+   • Keep waste percentage below 3%
+   • Improve table turnover for higher revenue
+   • Monitor staff performance and training needs
+"""
+        
+        self.operations_metrics_text.delete(1.0, tk.END)
+        self.operations_metrics_text.insert(1.0, metrics_text)
+        
+        self.quality_analysis_text.delete(1.0, tk.END)
+        self.quality_analysis_text.insert(1.0, quality_text)
+    
+    def refresh_analytics(self):
+        """Refresh all analytics data"""
+        self.load_analytics_data()
+    
+    def update_analytics_filter(self):
+        """Update analytics based on selected date filter"""
+        # This would modify the analytics data based on selected time period
+        self.load_analytics_data()
+    
+    def export_analytics(self):
+        """Export analytics to file"""
+        from tkinter import filedialog, messagebox
+        try:
+            filename = filedialog.asksaveasfilename(
+                defaultextension=".txt",
+                filetypes=[("Text files", "*.txt"), ("CSV files", "*.csv"), ("All files", "*.*")]
+            )
+            if filename:
+                with open(filename, 'w') as f:
+                    f.write("RESTAURANT ANALYTICS EXPORT\\n")
+                    f.write("=" * 50 + "\\n")
+                    f.write(f"Export Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\\n\\n")
+                    
+                    # Add analytics data
+                    data = self.analytics_manager.analytics_data
+                    f.write(f"Today's Sales: ${data.get('today_sales', 0):.2f}\\n")
+                    f.write(f"Total Orders: {data.get('today_orders', 0)}\\n")
+                    f.write(f"Active Customers: {data.get('active_customers', 0)}\\n")
+                    f.write(f"Average Rating: {data.get('avg_rating', 0)}\\n")
+                    # Add more data as needed
+                    
+                messagebox.showinfo("Export Successful", f"Analytics exported to {filename}")
+        except Exception as e:
+            messagebox.showerror("Export Error", f"Failed to export analytics: {e}")
+    
     def setup_analytics_content(self):
-        self.analytics_display = AnalyticsDisplay(self.analytics_frame, self.analytics_manager)
+        """Legacy method - now redirects to enhanced version"""
+        self.setup_enhanced_analytics_content()
     
     def setup_status_bar(self):
         self.status_frame = tk.Frame(self.root, bg='#34495e', height=30)
