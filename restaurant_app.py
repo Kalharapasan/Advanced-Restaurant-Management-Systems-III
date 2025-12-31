@@ -656,6 +656,9 @@ class RestaurantManagementSystem:
                     f"${customer['total_spent']:.2f}"
                 ))
     
+    def on_discount_change(self, event=None):
+        self.calculate_total()
+    
     def search_customers(self):
         search_term = tk.simpledialog.askstring("Search Customers", "Enter name, phone, or email:")
         if search_term:
@@ -782,10 +785,28 @@ class RestaurantManagementSystem:
             menu_data = self.db_manager.get_all_menu_items()
             self.menu_items = {}
             for item in menu_data:
-                category = item.get('category', 'other')
+                item_dict = {
+                    'id': item[0],
+                    'name': item[1],
+                    'category': item[2],
+                    'price': item[3],
+                    'cost_price': item[4],
+                    'description': item[5],
+                    'ingredients': item[6],
+                    'allergens': item[7],
+                    'preparation_time': item[8],
+                    'is_vegetarian': item[9],
+                    'is_vegan': item[10],
+                    'is_gluten_free': item[11],
+                    'spice_level': item[12],
+                    'available': item[13],
+                    'is_active': item[14],
+                    'popularity_score': item[15]
+                }
+                category = item_dict['category']
                 if category not in self.menu_items:
                     self.menu_items[category] = []
-                self.menu_items[category].append(item)
+                self.menu_items[category].append(item_dict)
             if not self.menu_items:
                 self.load_sample_menu()
                 return
