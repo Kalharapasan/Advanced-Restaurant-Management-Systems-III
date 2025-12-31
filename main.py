@@ -68,12 +68,13 @@ def main():
         app = RestaurantManagementSystem(root)
         root.mainloop()
     except ImportError as e:
-        print(f"Failed to import application modules: {e}\n\n"
-              "Make sure all Python files are in the same directory.")
+        messagebox.showerror("Import Error", 
+                           f"Failed to import application modules: {e}\n\n"
+                           "Make sure all Python files are in the same directory.")
     
     except Exception as e:
         error_msg = f"Application Error: {str(e)}\n\nTraceback:\n{traceback.format_exc()}"
-        print(error_msg)
+        messagebox.showerror("Application Error", error_msg)
         sys.exit(1)
 
 if __name__ == "__main__":
