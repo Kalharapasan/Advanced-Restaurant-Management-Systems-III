@@ -1006,7 +1006,12 @@ class RestaurantManagementSystem:
         self.create_analytics_summary_cards()
 
         # Analytics display (charts and graphs)
-        self.analytics_display = AnalyticsDisplay(self.analytics_frame, self.analytics_manager)
+        try:
+            self.analytics_display = AnalyticsDisplay(self.analytics_frame, self.analytics_manager)
+        except Exception as e:
+            print(f"Error creating analytics display: {e}")
+            tk.Label(self.analytics_frame, text=f"Analytics charts unavailable: {e}",
+                    font=('Segoe UI', 12), bg='#f0f0f0', fg='red').pack(pady=20)
 
         # Load initial data
         self.refresh_analytics()
