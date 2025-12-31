@@ -33,6 +33,12 @@ except ImportError:
     ANALYTICS_AVAILABLE = False
 
 class RestaurantManagementSystem:
+    # Business Logic Configuration
+    TAX_RATE = 0.15  # 15% tax
+    SERVICE_CHARGE_RATE = 0.10  # 10% service charge
+    MAX_DISCOUNT_PERCENT = 100.0  # Maximum allowed discount
+    MIN_DISCOUNT_PERCENT = 0.0  # Minimum discount
+    
     def __init__(self, root):
         self.root = root
         self.current_user = "Admin"
@@ -180,6 +186,7 @@ class RestaurantManagementSystem:
         self.create_menu_management_tab()
         self.create_customer_management_tab()
         self.create_reports_tab()
+        self.create_history_tab()
     
     def create_order_tab(self):
         self.order_frame = tk.Frame(self.notebook, bg='#f0f0f0')
@@ -719,6 +726,41 @@ class RestaurantManagementSystem:
         self.notebook.add(self.reports_frame, text="📈 Reports")
         self.setup_reports_content()
     
+    def create_history_tab(self):
+        self.history_frame = tk.Frame(self.notebook, bg='#f0f0f0')
+        self.notebook.add(self.history_frame, text="📜 Order History")
+        self.setup_history_content()
+    
+    def setup_history_content(self):
+        tk.Label(self.history_frame, text="📜 Order History",
+                font=('Segoe UI', 18, 'bold'), bg='#f0f0f0').pack(pady=20)
+        
+        columns = ('Receipt', 'Date', 'Time', 'Customer', 'Total', 'Status')
+        tree = ttk.Treeview(self.history_frame, columns=columns, show='headings', height=20)
+        for col in columns:
+            tree.heading(col, text=col)
+            tree.column(col, width=150, anchor='center')
+        v_scrollbar = ttk.Scrollbar(self.history_frame, orient=tk.VERTICAL, command=tree.yview)
+        h_scrollbar = ttk.Scrollbar(self.history_frame, orient=tk.HORIZONTAL, command=tree.xview)
+        tree.configure(yscrollcommand=v_scrollbar.set, xscrollcommand=h_scrollbar.set)
+        tree.pack(fill='both', expand=True, padx=20, pady=(0,20))
+        v_scrollbar.pack(side='right', fill='y')
+        h_scrollbar.pack(side='bottom', fill='x')
+        
+        try:
+            if self.db_manager.is_connected():
+                cursor = self.db_manager.get_connection().cursor()
+                cursor.execute("""
+                    SELECT receipt_ref, order_date, order_time, customer_name, 
+                           total_cost, status
+                    FROM orders ORDER BY created_at DESC
+                """)
+                
+                for row in cursor.fetchall():
+                    tree.insert('', tk.END, values=row)
+        except Exception as e:
+            messagebox.showerror("Database Error", f"Error loading order history: {e}")
+    
     def setup_reports_content(self):
         tk.Label(self.reports_frame, text="📈 Business Reports & Insights",
                 font=('Segoe UI', 18, 'bold'), bg='#f0f0f0').pack(pady=20)
@@ -974,34 +1016,95 @@ class RestaurantManagementSystem:
             self.update_status(f"Removed {item_name} from order")
 
     def calculate_total(self):
+        """Calculate order totals with improved business logic and validation"""
         try:
+            # Initialize category costs
             subtotal = 0.0
             cost_of_drinks = 0.0
             cost_of_cakes = 0.0
+            cost_of_food = 0.0
+            cost_of_desserts = 0.0
+            
+            # Track if any items are selected
+            has_items = False
+            
+            # Calculate item totals by category
             for item_name, var in self.item_vars.items():
-                if var.get():  
+                if var.get():
+                    has_items = True
                     try:
-                        qty = int(self.item_entries[item_name].get() or 1)
+                        qty_str = self.item_entries[item_name].get().strip()
+                        qty = int(qty_str) if qty_str else 1
+                        
+                        # Validate quantity
+                        if qty <= 0:
+                            messagebox.showwarning("Invalid Quantity", 
+                                f"Quantity for {item_name} must be positive. Using 1.")
+                            qty = 1
+                            self.item_entries[item_name].delete(0, tk.END)
+                            self.item_entries[item_name].insert(0, "1")
+                        
+                        # Find item in menu and calculate cost
                         for category, items in self.menu_items.items():
                             for item in items:
                                 if item['name'] == item_name:
                                     price = float(item.get('price', 0))
-                                    item_total = price * qty
+                                    item_total = round(price * qty, 2)
                                     subtotal += item_total
+                                    
+                                    # Track by category
                                     if category == 'drinks':
                                         cost_of_drinks += item_total
                                     elif category == 'cakes':
                                         cost_of_cakes += item_total
+                                    elif category == 'food':
+                                        cost_of_food += item_total
+                                    elif category == 'desserts':
+                                        cost_of_desserts += item_total
                                     break
                                     
-                    except (ValueError, TypeError):
+                    except (ValueError, TypeError) as e:
+                        messagebox.showwarning("Invalid Input", 
+                            f"Invalid quantity for {item_name}. Using 1.")
+                        self.item_entries[item_name].delete(0, tk.END)
+                        self.item_entries[item_name].insert(0, "1")
                         continue
-            discount_percent = float(self.discount_percent.get() or 0)
-            discount_amount = subtotal * (discount_percent / 100)
-            service_charge = subtotal * 0.10
-            subtotal_after_discount = subtotal - discount_amount
-            tax = subtotal_after_discount * 0.15
-            total = subtotal_after_discount + service_charge + tax
+            
+            # Validate discount percentage
+            try:
+                discount_percent = float(self.discount_percent.get() or 0)
+                if discount_percent < self.MIN_DISCOUNT_PERCENT:
+                    discount_percent = self.MIN_DISCOUNT_PERCENT
+                    self.discount_percent.set(str(self.MIN_DISCOUNT_PERCENT))
+                    messagebox.showwarning("Invalid Discount", 
+                        f"Discount cannot be negative. Set to {self.MIN_DISCOUNT_PERCENT}%")
+                elif discount_percent > self.MAX_DISCOUNT_PERCENT:
+                    discount_percent = self.MAX_DISCOUNT_PERCENT
+                    self.discount_percent.set(str(self.MAX_DISCOUNT_PERCENT))
+                    messagebox.showwarning("Invalid Discount", 
+                        f"Discount cannot exceed {self.MAX_DISCOUNT_PERCENT}%. Set to {self.MAX_DISCOUNT_PERCENT}%")
+            except ValueError:
+                discount_percent = 0
+                self.discount_percent.set("0")
+                messagebox.showwarning("Invalid Discount", 
+                    "Invalid discount value. Set to 0%")
+            
+            # Calculate discount amount
+            discount_amount = round(subtotal * (discount_percent / 100), 2)
+            
+            # Calculate subtotal after discount
+            subtotal_after_discount = round(subtotal - discount_amount, 2)
+            
+            # Service charge applied to subtotal after discount
+            service_charge = round(subtotal_after_discount * self.SERVICE_CHARGE_RATE, 2)
+            
+            # Tax applied to subtotal after discount (before service charge)
+            tax = round(subtotal_after_discount * self.TAX_RATE, 2)
+            
+            # Calculate final total
+            total = round(subtotal_after_discount + service_charge + tax, 2)
+            
+            # Update all display variables
             self.SubTotal.set(f"${subtotal:.2f}")
             self.CostofDrinks.set(f"${cost_of_drinks:.2f}")
             self.CostofCakes.set(f"${cost_of_cakes:.2f}")
@@ -1010,13 +1113,37 @@ class RestaurantManagementSystem:
             self.PaidTax.set(f"${tax:.2f}")
             self.TotalCost.set(f"${total:.2f}")
             
-            self.update_status("Order totals calculated successfully")
+            # Update status with calculation summary
+            if has_items:
+                status_msg = f"Calculated: Subtotal ${subtotal:.2f}"
+                if discount_percent > 0:
+                    status_msg += f" | Discount {discount_percent}% (-${discount_amount:.2f})"
+                status_msg += f" | Total ${total:.2f}"
+                self.update_status(status_msg)
+            else:
+                self.update_status("No items selected for calculation")
+                
         except Exception as e:
-            messagebox.showerror("Calculation Error", f"Error calculating totals: {e}")
+            messagebox.showerror("Calculation Error", 
+                f"Error calculating totals: {str(e)}\n\nPlease check your inputs and try again.")
+            print(f"Calculation error details: {e}")
     
     def on_discount_change(self, event=None):
+        """Called when discount percentage changes to update the total"""
         try:
-            self.calculate_total()
+            # Validate discount input on the fly
+            discount_str = self.discount_percent.get().strip()
+            if discount_str and discount_str != '-' and discount_str != '.':
+                try:
+                    discount_val = float(discount_str)
+                    # Only recalculate if discount is within valid range
+                    if self.MIN_DISCOUNT_PERCENT <= discount_val <= self.MAX_DISCOUNT_PERCENT:
+                        self.calculate_total()
+                except ValueError:
+                    pass  # Invalid input, wait for user to finish typing
+            elif not discount_str:
+                self.discount_percent.set("0")
+                self.calculate_total()
         except Exception as e:
             print(f"Error in on_discount_change: {e}")
             
@@ -1267,40 +1394,9 @@ class RestaurantManagementSystem:
         self.notebook.select(self.customer_frame)
     
     def show_order_history(self):
-        self.create_order_history_window()
+        self.notebook.select(self.history_frame)
     
-    def create_order_history_window(self):
-        history_window = tk.Toplevel(self.root)
-        history_window.title("📜 Order History")
-        history_window.geometry("1000x600")
-        history_window.configure(bg='#f0f0f0')
-        columns = ('Receipt', 'Date', 'Time', 'Customer', 'Total', 'Status')
-        tree = ttk.Treeview(history_window, columns=columns, show='headings', height=20)
-        for col in columns:
-            tree.heading(col, text=col)
-            tree.column(col, width=150, anchor='center')
-        v_scrollbar = ttk.Scrollbar(history_window, orient=tk.VERTICAL, command=tree.yview)
-        h_scrollbar = ttk.Scrollbar(history_window, orient=tk.HORIZONTAL, command=tree.xview)
-        tree.configure(yscrollcommand=v_scrollbar.set, xscrollcommand=h_scrollbar.set)
-        tree.grid(row=0, column=0, sticky='nsew')
-        v_scrollbar.grid(row=0, column=1, sticky='ns')
-        h_scrollbar.grid(row=1, column=0, sticky='ew')
-        history_window.grid_rowconfigure(0, weight=1)
-        history_window.grid_columnconfigure(0, weight=1)
-        try:
-            if self.db_manager.is_connected():
-                cursor = self.db_manager.get_connection().cursor()
-                cursor.execute("""
-                    SELECT receipt_ref, order_date, order_time, customer_name, 
-                           total_cost, status
-                    FROM orders ORDER BY created_at DESC LIMIT 100
-                """)
-                
-                for row in cursor.fetchall():
-                    tree.insert('', tk.END, values=row)
-        except Exception as e:
-            messagebox.showerror("Database Error", f"Error loading order history: {e}")
-    
+
     def show_user_management(self):
         messagebox.showinfo("User Management", "User management feature coming soon!")
     
@@ -1310,16 +1406,135 @@ class RestaurantManagementSystem:
     def show_settings(self):
         settings_window = tk.Toplevel(self.root)
         settings_window.title("⚙️ Settings")
-        settings_window.geometry("600x400")
+        settings_window.geometry("700x600")
         settings_window.configure(bg='#f0f0f0')
+        
         tk.Label(settings_window, text="⚙️ Application Settings",
                 font=('Segoe UI', 16, 'bold'), bg='#f0f0f0').pack(pady=20)
+        
+        # Database Settings
         db_frame = tk.LabelFrame(settings_window, text="Database Settings",
                                font=('Segoe UI', 12, 'bold'), bg='#f0f0f0')
         db_frame.pack(pady=10, padx=20, fill='x')
-        status_text = "Connected" if self.db_manager.is_connected() else "Disconnected"
+        
+        status_text = "Connected ✓" if self.db_manager.is_connected() else "Disconnected ✗"
+        status_color = "#27ae60" if self.db_manager.is_connected() else "#e74c3c"
         tk.Label(db_frame, text=f"Connection Status: {status_text}",
-                font=('Segoe UI', 10), bg='#f0f0f0').pack(pady=5)
+                font=('Segoe UI', 10, 'bold'), bg='#f0f0f0', fg=status_color).pack(pady=5)
+        
+        # Business Logic Settings
+        business_frame = tk.LabelFrame(settings_window, text="💼 Business Logic Settings",
+                                      font=('Segoe UI', 12, 'bold'), bg='#f0f0f0')
+        business_frame.pack(pady=10, padx=20, fill='x')
+        
+        # Tax Rate Setting
+        tax_frame = tk.Frame(business_frame, bg='#f0f0f0')
+        tax_frame.pack(fill='x', pady=5, padx=10)
+        tk.Label(tax_frame, text="Tax Rate (%):  ", 
+                font=('Segoe UI', 10), bg='#f0f0f0').pack(side='left')
+        tax_var = tk.StringVar(value=str(self.TAX_RATE * 100))
+        tax_entry = tk.Entry(tax_frame, textvariable=tax_var, width=10, font=('Segoe UI', 10))
+        tax_entry.pack(side='left', padx=5)
+        tk.Label(tax_frame, text=f"(Current: {self.TAX_RATE * 100}%)", 
+                font=('Segoe UI', 9), bg='#f0f0f0', fg='#7f8c8d').pack(side='left')
+        
+        # Service Charge Setting
+        service_frame = tk.Frame(business_frame, bg='#f0f0f0')
+        service_frame.pack(fill='x', pady=5, padx=10)
+        tk.Label(service_frame, text="Service Charge (%):  ", 
+                font=('Segoe UI', 10), bg='#f0f0f0').pack(side='left')
+        service_var = tk.StringVar(value=str(self.SERVICE_CHARGE_RATE * 100))
+        service_entry = tk.Entry(service_frame, textvariable=service_var, width=10, font=('Segoe UI', 10))
+        service_entry.pack(side='left', padx=5)
+        tk.Label(service_frame, text=f"(Current: {self.SERVICE_CHARGE_RATE * 100}%)", 
+                font=('Segoe UI', 9), bg='#f0f0f0', fg='#7f8c8d').pack(side='left')
+        
+        # Max Discount Setting
+        discount_frame = tk.Frame(business_frame, bg='#f0f0f0')
+        discount_frame.pack(fill='x', pady=5, padx=10)
+        tk.Label(discount_frame, text="Max Discount (%):  ", 
+                font=('Segoe UI', 10), bg='#f0f0f0').pack(side='left')
+        discount_var = tk.StringVar(value=str(self.MAX_DISCOUNT_PERCENT))
+        discount_entry = tk.Entry(discount_frame, textvariable=discount_var, width=10, font=('Segoe UI', 10))
+        discount_entry.pack(side='left', padx=5)
+        tk.Label(discount_frame, text=f"(Current: {self.MAX_DISCOUNT_PERCENT}%)", 
+                font=('Segoe UI', 9), bg='#f0f0f0', fg='#7f8c8d').pack(side='left')
+        
+        # Info label
+        info_label = tk.Label(business_frame, 
+                             text="⚠️ Changes will take effect for new calculations",
+                             font=('Segoe UI', 9, 'italic'), bg='#f0f0f0', fg='#e67e22')
+        info_label.pack(pady=10)
+        
+        # Save button
+        def save_business_settings():
+            try:
+                new_tax = float(tax_var.get()) / 100
+                new_service = float(service_var.get()) / 100
+                new_max_discount = float(discount_var.get())
+                
+                if new_tax < 0 or new_tax > 1:
+                    messagebox.showerror("Invalid Input", "Tax rate must be between 0% and 100%")
+                    return
+                if new_service < 0 or new_service > 1:
+                    messagebox.showerror("Invalid Input", "Service charge must be between 0% and 100%")
+                    return
+                if new_max_discount < 0 or new_max_discount > 100:
+                    messagebox.showerror("Invalid Input", "Max discount must be between 0% and 100%")
+                    return
+                
+                self.TAX_RATE = new_tax
+                self.SERVICE_CHARGE_RATE = new_service
+                self.MAX_DISCOUNT_PERCENT = new_max_discount
+                
+                messagebox.showinfo("Settings Saved", 
+                    f"Business settings updated successfully!\n\n"
+                    f"Tax Rate: {self.TAX_RATE * 100}%\n"
+                    f"Service Charge: {self.SERVICE_CHARGE_RATE * 100}%\n"
+                    f"Max Discount: {self.MAX_DISCOUNT_PERCENT}%")
+                
+                # Recalculate if there's an active order
+                if any(var.get() for var in self.item_vars.values()):
+                    self.calculate_total()
+                    self.update_status("Business settings updated - order recalculated")
+                
+                settings_window.destroy()
+            except ValueError:
+                messagebox.showerror("Invalid Input", "Please enter valid numeric values")
+        
+        save_btn = tk.Button(business_frame, text="💾 Save Business Settings",
+                           command=save_business_settings,
+                           font=('Segoe UI', 10, 'bold'),
+                           bg='#27ae60', fg='white',
+                           relief=tk.RAISED, bd=2, padx=20, pady=5)
+        save_btn.pack(pady=10)
+        
+        # Display Settings Info
+        info_frame = tk.LabelFrame(settings_window, text="📊 Current Configuration",
+                                 font=('Segoe UI', 12, 'bold'), bg='#f0f0f0')
+        info_frame.pack(pady=10, padx=20, fill='both', expand=True)
+        
+        config_text = tk.Text(info_frame, height=8, width=60, 
+                             font=('Consolas', 9), bg='#f8f9fa')
+        config_text.pack(pady=10, padx=10, fill='both', expand=True)
+        
+        config_info = f"""Current Business Configuration:
+{'='*60}
+• Tax Rate: {self.TAX_RATE * 100}% (applied to subtotal after discount)
+• Service Charge: {self.SERVICE_CHARGE_RATE * 100}% (applied to subtotal after discount)
+• Maximum Discount: {self.MAX_DISCOUNT_PERCENT}%
+• Minimum Discount: {self.MIN_DISCOUNT_PERCENT}%
+
+Calculation Order:
+1. Subtotal = Sum of all item prices × quantities
+2. Discount = Subtotal × (Discount % ÷ 100)
+3. Subtotal After Discount = Subtotal - Discount
+4. Service Charge = Subtotal After Discount × {self.SERVICE_CHARGE_RATE * 100}%
+5. Tax = Subtotal After Discount × {self.TAX_RATE * 100}%
+6. Total = Subtotal After Discount + Service Charge + Tax
+"""
+        config_text.insert('1.0', config_info)
+        config_text.config(state='disabled')
     
     def backup_database(self):
         messagebox.showinfo("Backup", "Database backup feature coming soon!")
