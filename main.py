@@ -54,3 +54,5 @@ def show_dependency_error(missing_modules):
     install_btn.pack(pady=10)
     
     root.mainloop()
+    
+def main():
