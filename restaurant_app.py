@@ -1006,7 +1006,7 @@ class RestaurantManagementSystem:
         self.create_analytics_summary_cards()
 
         # Analytics display (charts and graphs)
-        # self.analytics_display = AnalyticsDisplay(self.analytics_frame, self.analytics_manager)
+        self.analytics_display = AnalyticsDisplay(self.analytics_frame, self.analytics_manager)
 
         # Load initial data
         self.refresh_analytics()
