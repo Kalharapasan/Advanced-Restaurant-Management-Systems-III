@@ -1,9 +1,8 @@
 import tkinter as tk
 from tkinter import ttk, messagebox, simpledialog
 import time
-from datetime import datetime, timedelta
+import datetime
 import json
-import csv
 import random
 import os
 import sys
@@ -34,12 +33,6 @@ except ImportError:
     ANALYTICS_AVAILABLE = False
 
 class RestaurantManagementSystem:
-    # Business Logic Configuration
-    TAX_RATE = 0.15  # 15% tax
-    SERVICE_CHARGE_RATE = 0.10  # 10% service charge
-    MAX_DISCOUNT_PERCENT = 100.0  # Maximum allowed discount
-    MIN_DISCOUNT_PERCENT = 0.0  # Minimum discount
-    
     def __init__(self, root):
         self.root = root
         self.current_user = "Admin"
@@ -148,7 +141,6 @@ class RestaurantManagementSystem:
         self.setup_title_frame()
         self.setup_main_content()
         self.setup_status_bar()
-        self.refresh_analytics()
     
     def setup_title_frame(self):
         title_frame = tk.Frame(self.root, bg='#2c3e50', height=80)
@@ -188,7 +180,6 @@ class RestaurantManagementSystem:
         self.create_menu_management_tab()
         self.create_customer_management_tab()
         self.create_reports_tab()
-        self.create_history_tab()
     
     def create_order_tab(self):
         self.order_frame = tk.Frame(self.notebook, bg='#f0f0f0')
@@ -728,220 +719,6 @@ class RestaurantManagementSystem:
         self.notebook.add(self.reports_frame, text="📈 Reports")
         self.setup_reports_content()
     
-    def create_history_tab(self):
-        self.history_frame = tk.Frame(self.notebook, bg='#f0f0f0')
-        self.notebook.add(self.history_frame, text="📜 Order History")
-        self.setup_history_content()
-    
-    def setup_history_content(self):
-        tk.Label(self.history_frame, text="📜 Order History",
-                font=('Segoe UI', 18, 'bold'), bg='#f0f0f0').pack(pady=20)
-        
-        # Controls frame
-        controls_frame = tk.Frame(self.history_frame, bg='#f0f0f0')
-        controls_frame.pack(fill='x', padx=20, pady=(0,10))
-        
-        # Date filters
-        date_frame = tk.Frame(controls_frame, bg='#f0f0f0')
-        date_frame.pack(side='left')
-        tk.Label(date_frame, text="From:", font=('Segoe UI', 10), bg='#f0f0f0').pack(side='left', padx=(0,5))
-        self.history_from_date = DateEntry(date_frame, width=12, background='darkblue', foreground='white', borderwidth=2)
-        self.history_from_date.pack(side='left', padx=(0,10))
-        # Set default from date to 30 days ago
-        from datetime import datetime, timedelta
-        self.history_from_date.set_date(datetime.now() - timedelta(days=30))
-        tk.Label(date_frame, text="To:", font=('Segoe UI', 10), bg='#f0f0f0').pack(side='left', padx=(0,5))
-        self.history_to_date = DateEntry(date_frame, width=12, background='darkblue', foreground='white', borderwidth=2)
-        self.history_to_date.pack(side='left', padx=(0,10))
-        # Set default to date to today
-        self.history_to_date.set_date(datetime.now())
-        
-        # Search
-        search_frame = tk.Frame(controls_frame, bg='#f0f0f0')
-        search_frame.pack(side='left', padx=(20,0))
-        tk.Label(search_frame, text="Search:", font=('Segoe UI', 10), bg='#f0f0f0').pack(side='left', padx=(0,5))
-        self.history_search_var = tk.StringVar()
-        self.history_search_entry = tk.Entry(search_frame, textvariable=self.history_search_var, width=20)
-        self.history_search_entry.pack(side='left', padx=(0,10))
-        
-        # Buttons
-        btn_frame = tk.Frame(controls_frame, bg='#f0f0f0')
-        btn_frame.pack(side='right')
-        tk.Button(btn_frame, text="🔍 Filter", command=self.filter_history,
-                 font=('Segoe UI', 10, 'bold'), bg='#3498db', fg='white').pack(side='left', padx=(0,5))
-        tk.Button(btn_frame, text="🔄 Refresh", command=self.refresh_history,
-                 font=('Segoe UI', 10, 'bold'), bg='#27ae60', fg='white').pack(side='left', padx=(0,5))
-        tk.Button(btn_frame, text="📄 View Details", command=self.view_order_details,
-                 font=('Segoe UI', 10, 'bold'), bg='#9b59b6', fg='white').pack(side='left')
-        
-        # Treeview
-        columns = ('Receipt', 'Date', 'Time', 'Customer', 'Total', 'Status')
-        self.history_tree = ttk.Treeview(self.history_frame, columns=columns, show='headings', height=15)
-        for col in columns:
-            self.history_tree.heading(col, text=col)
-            self.history_tree.column(col, width=150, anchor='center')
-        v_scrollbar = ttk.Scrollbar(self.history_frame, orient=tk.VERTICAL, command=self.history_tree.yview)
-        h_scrollbar = ttk.Scrollbar(self.history_frame, orient=tk.HORIZONTAL, command=self.history_tree.xview)
-        self.history_tree.configure(yscrollcommand=v_scrollbar.set, xscrollcommand=h_scrollbar.set)
-        self.history_tree.pack(fill='both', expand=True, padx=20, pady=(0,20))
-        v_scrollbar.pack(side='right', fill='y')
-        h_scrollbar.pack(side='bottom', fill='x')
-        
-        # Load initial data
-        self.refresh_history()
-    
-    def refresh_history(self):
-        # Clear existing items
-        for item in self.history_tree.get_children():
-            self.history_tree.delete(item)
-        
-        try:
-            if self.db_manager.is_connected():
-                cursor = self.db_manager.get_connection().cursor()
-                cursor.execute("""
-                    SELECT receipt_ref, order_date, order_time, customer_name, 
-                           total_cost, status
-                    FROM orders ORDER BY created_at DESC
-                """)
-                
-                for row in cursor.fetchall():
-                    self.history_tree.insert('', tk.END, values=row)
-        except Exception as e:
-            messagebox.showerror("Database Error", f"Error loading order history: {e}")
-    
-    def filter_history(self):
-        # Clear existing items
-        for item in self.history_tree.get_children():
-            self.history_tree.delete(item)
-        
-        try:
-            if self.db_manager.is_connected():
-                cursor = self.db_manager.get_connection().cursor()
-                
-                # Build query with filters
-                query = """
-                    SELECT receipt_ref, order_date, order_time, customer_name, 
-                           total_cost, status
-                    FROM orders WHERE 1=1
-                """
-                params = []
-                
-                # Date filters
-                from_date = self.history_from_date.get_date()
-                to_date = self.history_to_date.get_date()
-                if from_date:
-                    query += " AND order_date >= %s"
-                    params.append(from_date)
-                if to_date:
-                    query += " AND order_date <= %s"
-                    params.append(to_date)
-                
-                # Search filter
-                search_term = self.history_search_var.get().strip()
-                if search_term:
-                    query += " AND (customer_name LIKE %s OR receipt_ref LIKE %s)"
-                    params.extend([f"%{search_term}%", f"%{search_term}%"])
-                
-                query += " ORDER BY created_at DESC"
-                
-                cursor.execute(query, params)
-                
-                for row in cursor.fetchall():
-                    self.history_tree.insert('', tk.END, values=row)
-        except Exception as e:
-            messagebox.showerror("Database Error", f"Error filtering order history: {e}")
-    
-    def view_order_details(self):
-        selected = self.history_tree.selection()
-        if not selected:
-            messagebox.showwarning("No Selection", "Please select an order to view details.")
-            return
-        
-        receipt_ref = self.history_tree.item(selected[0])['values'][0]
-        
-        try:
-            if self.db_manager.is_connected():
-                cursor = self.db_manager.get_connection().cursor()
-                cursor.execute("""
-                    SELECT items, customer_name, customer_phone, customer_email,
-                           total_cost, tax_amount, service_charge, discount_amount,
-                           payment_method, order_date, order_time
-                    FROM orders WHERE receipt_ref = %s
-                """, (receipt_ref,))
-                
-                result = cursor.fetchone()
-                if result:
-                    items, customer, phone, email, total, tax, service, discount, payment, date, time = result
-                    
-                    # Create details window
-                    details_window = tk.Toplevel(self.root)
-                    details_window.title(f"Order Details - {receipt_ref}")
-                    details_window.geometry("600x500")
-                    details_window.configure(bg='#f0f0f0')
-                    
-                    tk.Label(details_window, text=f"📄 Order Details - {receipt_ref}",
-                            font=('Segoe UI', 16, 'bold'), bg='#f0f0f0').pack(pady=10)
-                    
-                    # Customer info
-                    customer_frame = tk.LabelFrame(details_window, text="Customer Information",
-                                                 font=('Segoe UI', 12, 'bold'), bg='#f0f0f0')
-                    customer_frame.pack(fill='x', padx=20, pady=5)
-                    tk.Label(customer_frame, text=f"Name: {customer}", font=('Segoe UI', 10), bg='#f0f0f0').pack(anchor='w', padx=10)
-                    tk.Label(customer_frame, text=f"Phone: {phone}", font=('Segoe UI', 10), bg='#f0f0f0').pack(anchor='w', padx=10)
-                    tk.Label(customer_frame, text=f"Email: {email}", font=('Segoe UI', 10), bg='#f0f0f0').pack(anchor='w', padx=10)
-                    
-                    # Order info
-                    order_frame = tk.LabelFrame(details_window, text="Order Information",
-                                              font=('Segoe UI', 12, 'bold'), bg='#f0f0f0')
-                    order_frame.pack(fill='x', padx=20, pady=5)
-                    tk.Label(order_frame, text=f"Date: {date} {time}", font=('Segoe UI', 10), bg='#f0f0f0').pack(anchor='w', padx=10)
-                    tk.Label(order_frame, text=f"Payment: {payment}", font=('Segoe UI', 10), bg='#f0f0f0').pack(anchor='w', padx=10)
-                    
-                    # Items
-                    items_frame = tk.LabelFrame(details_window, text="Items Ordered",
-                                              font=('Segoe UI', 12, 'bold'), bg='#f0f0f0')
-                    items_frame.pack(fill='both', expand=True, padx=20, pady=5)
-                    
-                    items_text = tk.Text(items_frame, height=10, font=('Courier New', 9), bg='#ffffff')
-                    items_scrollbar = tk.Scrollbar(items_frame, command=items_text.yview)
-                    items_text.configure(yscrollcommand=items_scrollbar.set)
-                    items_text.pack(side='left', fill='both', expand=True)
-                    items_scrollbar.pack(side='right', fill='y')
-                    
-                    # Parse and display items
-                    try:
-                        items_dict = json.loads(items)
-                        items_text.insert('1.0', "Item\t\tQuantity\tPrice\tTotal\n")
-                        items_text.insert('end', "-"*50 + "\n")
-                        for item_name, item_data in items_dict.items():
-                            qty = item_data.get('quantity', 0)
-                            price = item_data.get('price', 0)
-                            total = qty * price
-                            items_text.insert('end', f"{item_name}\t{qty}\t${price:.2f}\t${total:.2f}\n")
-                    except:
-                        items_text.insert('1.0', "Error parsing items data")
-                    
-                    items_text.config(state='disabled')
-                    
-                    # Totals
-                    totals_frame = tk.Frame(details_window, bg='#f0f0f0')
-                    totals_frame.pack(fill='x', padx=20, pady=5)
-                    tk.Label(totals_frame, text=f"Subtotal: ${(total - tax - service + discount):.2f}", 
-                            font=('Segoe UI', 10, 'bold'), bg='#f0f0f0').pack(side='left')
-                    tk.Label(totals_frame, text=f"Discount: ${discount:.2f}", 
-                            font=('Segoe UI', 10, 'bold'), bg='#f0f0f0').pack(side='left', padx=(20,0))
-                    tk.Label(totals_frame, text=f"Service: ${service:.2f}", 
-                            font=('Segoe UI', 10, 'bold'), bg='#f0f0f0').pack(side='left', padx=(20,0))
-                    tk.Label(totals_frame, text=f"Tax: ${tax:.2f}", 
-                            font=('Segoe UI', 10, 'bold'), bg='#f0f0f0').pack(side='left', padx=(20,0))
-                    tk.Label(totals_frame, text=f"Total: ${total:.2f}", 
-                            font=('Segoe UI', 12, 'bold'), fg='#27ae60', bg='#f0f0f0').pack(side='right')
-                    
-                else:
-                    messagebox.showerror("Not Found", "Order details not found.")
-        except Exception as e:
-            messagebox.showerror("Database Error", f"Error loading order details: {e}")
-    
     def setup_reports_content(self):
         tk.Label(self.reports_frame, text="📈 Business Reports & Insights",
                 font=('Segoe UI', 18, 'bold'), bg='#f0f0f0').pack(pady=20)
@@ -975,267 +752,7 @@ class RestaurantManagementSystem:
         reports_scrollbar.pack(side='right', fill='y')
     
     def setup_analytics_content(self):
-        # Title
-        tk.Label(self.analytics_frame, text="📊 Sales Analytics Dashboard",
-                font=('Segoe UI', 18, 'bold'), bg='#f0f0f0').pack(pady=20)
-
-        # Controls and summary container
-        self.analytics_controls_frame = tk.Frame(self.analytics_frame, bg='#f0f0f0')
-        self.analytics_controls_frame.pack(fill='x', padx=20, pady=(0,10))
-
-        # Date range selector
-        date_frame = tk.Frame(self.analytics_controls_frame, bg='#f0f0f0')
-        date_frame.pack(side='left')
-        tk.Label(date_frame, text="Period:", font=('Segoe UI', 10), bg='#f0f0f0').pack(side='left', padx=(0,5))
-        self.analytics_period = tk.StringVar(value="30")
-        period_combo = ttk.Combobox(date_frame, textvariable=self.analytics_period,
-                                   values=["7", "30", "90", "365"], state="readonly", width=8)
-        period_combo.pack(side='left', padx=(0,10))
-        tk.Label(date_frame, text="days", font=('Segoe UI', 10), bg='#f0f0f0').pack(side='left')
-
-        # Buttons
-        btn_frame = tk.Frame(self.analytics_controls_frame, bg='#f0f0f0')
-        btn_frame.pack(side='right')
-        tk.Button(btn_frame, text="🔄 Refresh", command=self.refresh_analytics,
-                 font=('Segoe UI', 10, 'bold'), bg='#27ae60', fg='white').pack(side='left', padx=(0,5))
-        tk.Button(btn_frame, text="📊 Generate Report", command=self.generate_analytics_report,
-                 font=('Segoe UI', 10, 'bold'), bg='#3498db', fg='white').pack(side='left', padx=(0,5))
-        tk.Button(btn_frame, text="📈 Export Data", command=self.export_analytics_data,
-                 font=('Segoe UI', 10, 'bold'), bg='#9b59b6', fg='white').pack(side='left')
-
-        # Summary cards
-        self.create_analytics_summary_cards()
-
-        # Analytics display (charts and graphs)
-        try:
-            self.analytics_display = AnalyticsDisplay(self.analytics_frame, self.analytics_manager)
-        except Exception as e:
-            print(f"Error creating analytics display: {e}")
-            tk.Label(self.analytics_frame, text=f"Analytics charts unavailable: {e}",
-                    font=('Segoe UI', 12), bg='#f0f0f0', fg='red').pack(pady=20)
-
-        # Load initial data - called after status bar is set up
-        self.summary_cards = {}
-        card_data = [
-            ("Today's Sales", "$0.00", '#27ae60', "today_sales"),
-            ("Today's Orders", "0", '#3498db', "today_orders"),
-            ("This Week", "$0.00", '#e67e22', "week_sales"),
-            ("This Month", "$0.00", '#9b59b6', "month_sales"),
-            ("Total Revenue", "$0.00", '#1abc9c', "total_revenue"),
-            ("Avg Order Value", "$0.00", '#f39c12', "avg_order")
-        ]
-
-        for i, (title, value, color, key) in enumerate(card_data):
-            card = tk.Frame(cards_frame, bg=color, relief=tk.RAISED, bd=2)
-            card.grid(row=i//3, column=i%3, padx=5, pady=5, sticky='ew')
-            cards_frame.grid_columnconfigure(i%3, weight=1)
-
-            tk.Label(card, text=title, font=('Segoe UI', 10, 'bold'),
-                    bg=color, fg='white').pack(pady=(10,5))
-            value_label = tk.Label(card, text=value, font=('Segoe UI', 16, 'bold'),
-                                  bg=color, fg='white')
-            value_label.pack(pady=(0,10))
-            self.summary_cards[key] = value_label
-
-    def refresh_analytics(self):
-        try:
-            if self.db_manager.is_connected():
-                cursor = self.db_manager.get_connection().cursor()
-                days = int(self.analytics_period.get())
-
-                # Today's sales and orders
-                today = datetime.now().date()
-                cursor.execute("""
-                    SELECT COUNT(*), COALESCE(SUM(total_cost), 0)
-                    FROM orders
-                    WHERE DATE(order_date) = %s AND status = 'Completed'
-                """, (today,))
-                today_orders, today_sales = cursor.fetchone()
-
-                # Week sales (last 7 days)
-                week_start = today - timedelta(days=7)
-                cursor.execute("""
-                    SELECT COALESCE(SUM(total_cost), 0)
-                    FROM orders
-                    WHERE order_date >= %s AND status = 'Completed'
-                """, (week_start,))
-                week_sales = cursor.fetchone()[0]
-
-                # Month sales (last 30 days)
-                month_start = today - timedelta(days=30)
-                cursor.execute("""
-                    SELECT COALESCE(SUM(total_cost), 0)
-                    FROM orders
-                    WHERE order_date >= %s AND status = 'Completed'
-                """, (month_start,))
-                month_sales = cursor.fetchone()[0]
-
-                # Total revenue
-                cursor.execute("""
-                    SELECT COALESCE(SUM(total_cost), 0)
-                    FROM orders
-                    WHERE status = 'Completed'
-                """)
-                total_revenue = cursor.fetchone()[0]
-
-                # Average order value
-                cursor.execute("""
-                    SELECT AVG(total_cost)
-                    FROM orders
-                    WHERE status = 'Completed'
-                """)
-                avg_order = cursor.fetchone()[0] or 0
-
-                # Update summary cards
-                self.summary_cards['today_sales'].config(text=f"${today_sales:.2f}")
-                self.summary_cards['today_orders'].config(text=str(today_orders))
-                self.summary_cards['week_sales'].config(text=f"${week_sales:.2f}")
-                self.summary_cards['month_sales'].config(text=f"${month_sales:.2f}")
-                self.summary_cards['total_revenue'].config(text=f"${total_revenue:.2f}")
-                self.summary_cards['avg_order'].config(text=f"${avg_order:.2f}")
-
-                # Refresh the analytics display
-                if hasattr(self.analytics_manager, 'refresh_data'):
-                    self.analytics_manager.refresh_data()
-
-                self.update_status("Analytics refreshed successfully")
-
-        except Exception as e:
-            messagebox.showerror("Database Error", f"Error refreshing analytics: {e}")
-
-    def generate_analytics_report(self):
-        try:
-            if self.db_manager.is_connected():
-                cursor = self.db_manager.get_connection().cursor()
-                days = int(self.analytics_period.get())
-
-                # Generate comprehensive report
-                report = f"Analytics Report - Last {days} Days\n"
-                report += "="*50 + "\n\n"
-
-                # Sales by day
-                start_date = datetime.now().date() - timedelta(days=days)
-                cursor.execute("""
-                    SELECT DATE(order_date), COUNT(*), SUM(total_cost)
-                    FROM orders
-                    WHERE order_date >= %s AND status = 'Completed'
-                    GROUP BY DATE(order_date)
-                    ORDER BY DATE(order_date)
-                """, (start_date,))
-
-                report += "Daily Sales Summary:\n"
-                report += "Date\t\tOrders\tSales\n"
-                report += "-"*30 + "\n"
-
-                for date, orders, sales in cursor.fetchall():
-                    report += f"{date}\t{orders}\t${sales:.2f}\n"
-
-                # Top selling items
-                cursor.execute("""
-                    SELECT JSON_EXTRACT(items, '$[*].name') as item_names,
-                           JSON_EXTRACT(items, '$[*].quantity') as quantities
-                    FROM orders
-                    WHERE order_date >= %s AND status = 'Completed'
-                """, (start_date,))
-
-                item_sales = {}
-                for item_names, quantities in cursor.fetchall():
-                    if item_names and quantities:
-                        try:
-                            names = json.loads(item_names)
-                            qtys = json.loads(quantities)
-                            for name, qty in zip(names, qtys):
-                                item_sales[name] = item_sales.get(name, 0) + qty
-                        except:
-                            continue
-
-                report += "\nTop Selling Items:\n"
-                report += "Item\t\t\tQuantity Sold\n"
-                report += "-"*30 + "\n"
-
-                for item, qty in sorted(item_sales.items(), key=lambda x: x[1], reverse=True)[:10]:
-                    report += f"{item[:20]:<20}\t{qty}\n"
-
-                # Show report in a new window
-                report_window = tk.Toplevel(self.root)
-                report_window.title("Analytics Report")
-                report_window.geometry("700x600")
-                report_window.configure(bg='#f0f0f0')
-
-                tk.Label(report_window, text="📊 Analytics Report",
-                        font=('Segoe UI', 16, 'bold'), bg='#f0f0f0').pack(pady=10)
-
-                text_frame = tk.Frame(report_window)
-                text_frame.pack(fill='both', expand=True, padx=20, pady=10)
-
-                report_text = tk.Text(text_frame, font=('Courier New', 10), bg='#ffffff')
-                scrollbar = tk.Scrollbar(text_frame, command=report_text.yview)
-                report_text.configure(yscrollcommand=scrollbar.set)
-
-                report_text.pack(side='left', fill='both', expand=True)
-                scrollbar.pack(side='right', fill='y')
-
-                report_text.insert('1.0', report)
-                report_text.config(state='disabled')
-
-                # Export button
-                tk.Button(report_window, text="💾 Export to File",
-                         command=lambda: self.save_report_to_file(report),
-                         font=('Segoe UI', 10, 'bold'), bg='#27ae60', fg='white').pack(pady=10)
-
-        except Exception as e:
-            messagebox.showerror("Error", f"Failed to generate report: {e}")
-
-    def export_analytics_data(self):
-        try:
-            from tkinter import filedialog
-            file_path = filedialog.asksaveasfilename(
-                defaultextension=".csv",
-                filetypes=[("CSV files", "*.csv"), ("All files", "*.*")]
-            )
-
-            if file_path:
-                if self.db_manager.is_connected():
-                    cursor = self.db_manager.get_connection().cursor()
-                    days = int(self.analytics_period.get())
-                    start_date = datetime.now().date() - timedelta(days=days)
-
-                    cursor.execute("""
-                        SELECT receipt_ref, order_date, order_time, customer_name,
-                               total_cost, status, payment_method
-                        FROM orders
-                        WHERE order_date >= %s
-                        ORDER BY order_date DESC
-                    """, (start_date,))
-
-                    import csv
-                    with open(file_path, 'w', newline='', encoding='utf-8') as csvfile:
-                        writer = csv.writer(csvfile)
-                        writer.writerow(['Receipt', 'Date', 'Time', 'Customer', 'Total', 'Status', 'Payment'])
-
-                        for row in cursor.fetchall():
-                            writer.writerow(row)
-
-                    messagebox.showinfo("Export Complete", f"Data exported to {file_path}")
-
-        except Exception as e:
-            messagebox.showerror("Export Error", f"Failed to export data: {e}")
-
-    def save_report_to_file(self, report_content):
-        try:
-            from tkinter import filedialog
-            file_path = filedialog.asksaveasfilename(
-                defaultextension=".txt",
-                filetypes=[("Text files", "*.txt"), ("All files", "*.*")]
-            )
-
-            if file_path:
-                with open(file_path, 'w', encoding='utf-8') as f:
-                    f.write(report_content)
-                messagebox.showinfo("Saved", f"Report saved to {file_path}")
-
-        except Exception as e:
-            messagebox.showerror("Save Error", f"Failed to save report: {e}")
+        self.analytics_display = AnalyticsDisplay(self.analytics_frame, self.analytics_manager)
     
     def setup_status_bar(self):
         self.status_frame = tk.Frame(self.root, bg='#34495e', height=30)
@@ -1457,95 +974,34 @@ class RestaurantManagementSystem:
             self.update_status(f"Removed {item_name} from order")
 
     def calculate_total(self):
-        """Calculate order totals with improved business logic and validation"""
         try:
-            # Initialize category costs
             subtotal = 0.0
             cost_of_drinks = 0.0
             cost_of_cakes = 0.0
-            cost_of_food = 0.0
-            cost_of_desserts = 0.0
-            
-            # Track if any items are selected
-            has_items = False
-            
-            # Calculate item totals by category
             for item_name, var in self.item_vars.items():
-                if var.get():
-                    has_items = True
+                if var.get():  
                     try:
-                        qty_str = self.item_entries[item_name].get().strip()
-                        qty = int(qty_str) if qty_str else 1
-                        
-                        # Validate quantity
-                        if qty <= 0:
-                            messagebox.showwarning("Invalid Quantity", 
-                                f"Quantity for {item_name} must be positive. Using 1.")
-                            qty = 1
-                            self.item_entries[item_name].delete(0, tk.END)
-                            self.item_entries[item_name].insert(0, "1")
-                        
-                        # Find item in menu and calculate cost
+                        qty = int(self.item_entries[item_name].get() or 1)
                         for category, items in self.menu_items.items():
                             for item in items:
                                 if item['name'] == item_name:
                                     price = float(item.get('price', 0))
-                                    item_total = round(price * qty, 2)
+                                    item_total = price * qty
                                     subtotal += item_total
-                                    
-                                    # Track by category
                                     if category == 'drinks':
                                         cost_of_drinks += item_total
                                     elif category == 'cakes':
                                         cost_of_cakes += item_total
-                                    elif category == 'food':
-                                        cost_of_food += item_total
-                                    elif category == 'desserts':
-                                        cost_of_desserts += item_total
                                     break
                                     
-                    except (ValueError, TypeError) as e:
-                        messagebox.showwarning("Invalid Input", 
-                            f"Invalid quantity for {item_name}. Using 1.")
-                        self.item_entries[item_name].delete(0, tk.END)
-                        self.item_entries[item_name].insert(0, "1")
+                    except (ValueError, TypeError):
                         continue
-            
-            # Validate discount percentage
-            try:
-                discount_percent = float(self.discount_percent.get() or 0)
-                if discount_percent < self.MIN_DISCOUNT_PERCENT:
-                    discount_percent = self.MIN_DISCOUNT_PERCENT
-                    self.discount_percent.set(str(self.MIN_DISCOUNT_PERCENT))
-                    messagebox.showwarning("Invalid Discount", 
-                        f"Discount cannot be negative. Set to {self.MIN_DISCOUNT_PERCENT}%")
-                elif discount_percent > self.MAX_DISCOUNT_PERCENT:
-                    discount_percent = self.MAX_DISCOUNT_PERCENT
-                    self.discount_percent.set(str(self.MAX_DISCOUNT_PERCENT))
-                    messagebox.showwarning("Invalid Discount", 
-                        f"Discount cannot exceed {self.MAX_DISCOUNT_PERCENT}%. Set to {self.MAX_DISCOUNT_PERCENT}%")
-            except ValueError:
-                discount_percent = 0
-                self.discount_percent.set("0")
-                messagebox.showwarning("Invalid Discount", 
-                    "Invalid discount value. Set to 0%")
-            
-            # Calculate discount amount
-            discount_amount = round(subtotal * (discount_percent / 100), 2)
-            
-            # Calculate subtotal after discount
-            subtotal_after_discount = round(subtotal - discount_amount, 2)
-            
-            # Service charge applied to subtotal after discount
-            service_charge = round(subtotal_after_discount * self.SERVICE_CHARGE_RATE, 2)
-            
-            # Tax applied to subtotal after discount (before service charge)
-            tax = round(subtotal_after_discount * self.TAX_RATE, 2)
-            
-            # Calculate final total
-            total = round(subtotal_after_discount + service_charge + tax, 2)
-            
-            # Update all display variables
+            discount_percent = float(self.discount_percent.get() or 0)
+            discount_amount = subtotal * (discount_percent / 100)
+            service_charge = subtotal * 0.10
+            subtotal_after_discount = subtotal - discount_amount
+            tax = subtotal_after_discount * 0.15
+            total = subtotal_after_discount + service_charge + tax
             self.SubTotal.set(f"${subtotal:.2f}")
             self.CostofDrinks.set(f"${cost_of_drinks:.2f}")
             self.CostofCakes.set(f"${cost_of_cakes:.2f}")
@@ -1554,39 +1010,9 @@ class RestaurantManagementSystem:
             self.PaidTax.set(f"${tax:.2f}")
             self.TotalCost.set(f"${total:.2f}")
             
-            # Update status with calculation summary
-            if has_items:
-                status_msg = f"Calculated: Subtotal ${subtotal:.2f}"
-                if discount_percent > 0:
-                    status_msg += f" | Discount {discount_percent}% (-${discount_amount:.2f})"
-                status_msg += f" | Total ${total:.2f}"
-                self.update_status(status_msg)
-            else:
-                self.update_status("No items selected for calculation")
-                
+            self.update_status("Order totals calculated successfully")
         except Exception as e:
-            messagebox.showerror("Calculation Error", 
-                f"Error calculating totals: {str(e)}\n\nPlease check your inputs and try again.")
-            print(f"Calculation error details: {e}")
-    
-    def on_discount_change(self, event=None):
-        """Called when discount percentage changes to update the total"""
-        try:
-            # Validate discount input on the fly
-            discount_str = self.discount_percent.get().strip()
-            if discount_str and discount_str != '-' and discount_str != '.':
-                try:
-                    discount_val = float(discount_str)
-                    # Only recalculate if discount is within valid range
-                    if self.MIN_DISCOUNT_PERCENT <= discount_val <= self.MAX_DISCOUNT_PERCENT:
-                        self.calculate_total()
-                except ValueError:
-                    pass  # Invalid input, wait for user to finish typing
-            elif not discount_str:
-                self.discount_percent.set("0")
-                self.calculate_total()
-        except Exception as e:
-            print(f"Error in on_discount_change: {e}")
+            messagebox.showerror("Calculation Error", f"Error calculating totals: {e}")
             
     def generate_receipt(self):
         try:
@@ -1835,9 +1261,40 @@ class RestaurantManagementSystem:
         self.notebook.select(self.customer_frame)
     
     def show_order_history(self):
-        self.notebook.select(self.history_frame)
+        self.create_order_history_window()
     
-
+    def create_order_history_window(self):
+        history_window = tk.Toplevel(self.root)
+        history_window.title("📜 Order History")
+        history_window.geometry("1000x600")
+        history_window.configure(bg='#f0f0f0')
+        columns = ('Receipt', 'Date', 'Time', 'Customer', 'Total', 'Status')
+        tree = ttk.Treeview(history_window, columns=columns, show='headings', height=20)
+        for col in columns:
+            tree.heading(col, text=col)
+            tree.column(col, width=150, anchor='center')
+        v_scrollbar = ttk.Scrollbar(history_window, orient=tk.VERTICAL, command=tree.yview)
+        h_scrollbar = ttk.Scrollbar(history_window, orient=tk.HORIZONTAL, command=tree.xview)
+        tree.configure(yscrollcommand=v_scrollbar.set, xscrollcommand=h_scrollbar.set)
+        tree.grid(row=0, column=0, sticky='nsew')
+        v_scrollbar.grid(row=0, column=1, sticky='ns')
+        h_scrollbar.grid(row=1, column=0, sticky='ew')
+        history_window.grid_rowconfigure(0, weight=1)
+        history_window.grid_columnconfigure(0, weight=1)
+        try:
+            if self.db_manager.is_connected():
+                cursor = self.db_manager.get_connection().cursor()
+                cursor.execute("""
+                    SELECT receipt_ref, order_date, order_time, customer_name, 
+                           total_cost, status
+                    FROM orders ORDER BY created_at DESC LIMIT 100
+                """)
+                
+                for row in cursor.fetchall():
+                    tree.insert('', tk.END, values=row)
+        except Exception as e:
+            messagebox.showerror("Database Error", f"Error loading order history: {e}")
+    
     def show_user_management(self):
         messagebox.showinfo("User Management", "User management feature coming soon!")
     
@@ -1847,135 +1304,16 @@ class RestaurantManagementSystem:
     def show_settings(self):
         settings_window = tk.Toplevel(self.root)
         settings_window.title("⚙️ Settings")
-        settings_window.geometry("700x600")
+        settings_window.geometry("600x400")
         settings_window.configure(bg='#f0f0f0')
-        
         tk.Label(settings_window, text="⚙️ Application Settings",
                 font=('Segoe UI', 16, 'bold'), bg='#f0f0f0').pack(pady=20)
-        
-        # Database Settings
         db_frame = tk.LabelFrame(settings_window, text="Database Settings",
                                font=('Segoe UI', 12, 'bold'), bg='#f0f0f0')
         db_frame.pack(pady=10, padx=20, fill='x')
-        
-        status_text = "Connected ✓" if self.db_manager.is_connected() else "Disconnected ✗"
-        status_color = "#27ae60" if self.db_manager.is_connected() else "#e74c3c"
+        status_text = "Connected" if self.db_manager.is_connected() else "Disconnected"
         tk.Label(db_frame, text=f"Connection Status: {status_text}",
-                font=('Segoe UI', 10, 'bold'), bg='#f0f0f0', fg=status_color).pack(pady=5)
-        
-        # Business Logic Settings
-        business_frame = tk.LabelFrame(settings_window, text="💼 Business Logic Settings",
-                                      font=('Segoe UI', 12, 'bold'), bg='#f0f0f0')
-        business_frame.pack(pady=10, padx=20, fill='x')
-        
-        # Tax Rate Setting
-        tax_frame = tk.Frame(business_frame, bg='#f0f0f0')
-        tax_frame.pack(fill='x', pady=5, padx=10)
-        tk.Label(tax_frame, text="Tax Rate (%):  ", 
-                font=('Segoe UI', 10), bg='#f0f0f0').pack(side='left')
-        tax_var = tk.StringVar(value=str(self.TAX_RATE * 100))
-        tax_entry = tk.Entry(tax_frame, textvariable=tax_var, width=10, font=('Segoe UI', 10))
-        tax_entry.pack(side='left', padx=5)
-        tk.Label(tax_frame, text=f"(Current: {self.TAX_RATE * 100}%)", 
-                font=('Segoe UI', 9), bg='#f0f0f0', fg='#7f8c8d').pack(side='left')
-        
-        # Service Charge Setting
-        service_frame = tk.Frame(business_frame, bg='#f0f0f0')
-        service_frame.pack(fill='x', pady=5, padx=10)
-        tk.Label(service_frame, text="Service Charge (%):  ", 
-                font=('Segoe UI', 10), bg='#f0f0f0').pack(side='left')
-        service_var = tk.StringVar(value=str(self.SERVICE_CHARGE_RATE * 100))
-        service_entry = tk.Entry(service_frame, textvariable=service_var, width=10, font=('Segoe UI', 10))
-        service_entry.pack(side='left', padx=5)
-        tk.Label(service_frame, text=f"(Current: {self.SERVICE_CHARGE_RATE * 100}%)", 
-                font=('Segoe UI', 9), bg='#f0f0f0', fg='#7f8c8d').pack(side='left')
-        
-        # Max Discount Setting
-        discount_frame = tk.Frame(business_frame, bg='#f0f0f0')
-        discount_frame.pack(fill='x', pady=5, padx=10)
-        tk.Label(discount_frame, text="Max Discount (%):  ", 
-                font=('Segoe UI', 10), bg='#f0f0f0').pack(side='left')
-        discount_var = tk.StringVar(value=str(self.MAX_DISCOUNT_PERCENT))
-        discount_entry = tk.Entry(discount_frame, textvariable=discount_var, width=10, font=('Segoe UI', 10))
-        discount_entry.pack(side='left', padx=5)
-        tk.Label(discount_frame, text=f"(Current: {self.MAX_DISCOUNT_PERCENT}%)", 
-                font=('Segoe UI', 9), bg='#f0f0f0', fg='#7f8c8d').pack(side='left')
-        
-        # Info label
-        info_label = tk.Label(business_frame, 
-                             text="⚠️ Changes will take effect for new calculations",
-                             font=('Segoe UI', 9, 'italic'), bg='#f0f0f0', fg='#e67e22')
-        info_label.pack(pady=10)
-        
-        # Save button
-        def save_business_settings():
-            try:
-                new_tax = float(tax_var.get()) / 100
-                new_service = float(service_var.get()) / 100
-                new_max_discount = float(discount_var.get())
-                
-                if new_tax < 0 or new_tax > 1:
-                    messagebox.showerror("Invalid Input", "Tax rate must be between 0% and 100%")
-                    return
-                if new_service < 0 or new_service > 1:
-                    messagebox.showerror("Invalid Input", "Service charge must be between 0% and 100%")
-                    return
-                if new_max_discount < 0 or new_max_discount > 100:
-                    messagebox.showerror("Invalid Input", "Max discount must be between 0% and 100%")
-                    return
-                
-                self.TAX_RATE = new_tax
-                self.SERVICE_CHARGE_RATE = new_service
-                self.MAX_DISCOUNT_PERCENT = new_max_discount
-                
-                messagebox.showinfo("Settings Saved", 
-                    f"Business settings updated successfully!\n\n"
-                    f"Tax Rate: {self.TAX_RATE * 100}%\n"
-                    f"Service Charge: {self.SERVICE_CHARGE_RATE * 100}%\n"
-                    f"Max Discount: {self.MAX_DISCOUNT_PERCENT}%")
-                
-                # Recalculate if there's an active order
-                if any(var.get() for var in self.item_vars.values()):
-                    self.calculate_total()
-                    self.update_status("Business settings updated - order recalculated")
-                
-                settings_window.destroy()
-            except ValueError:
-                messagebox.showerror("Invalid Input", "Please enter valid numeric values")
-        
-        save_btn = tk.Button(business_frame, text="💾 Save Business Settings",
-                           command=save_business_settings,
-                           font=('Segoe UI', 10, 'bold'),
-                           bg='#27ae60', fg='white',
-                           relief=tk.RAISED, bd=2, padx=20, pady=5)
-        save_btn.pack(pady=10)
-        
-        # Display Settings Info
-        info_frame = tk.LabelFrame(settings_window, text="📊 Current Configuration",
-                                 font=('Segoe UI', 12, 'bold'), bg='#f0f0f0')
-        info_frame.pack(pady=10, padx=20, fill='both', expand=True)
-        
-        config_text = tk.Text(info_frame, height=8, width=60, 
-                             font=('Consolas', 9), bg='#f8f9fa')
-        config_text.pack(pady=10, padx=10, fill='both', expand=True)
-        
-        config_info = f"""Current Business Configuration:
-{'='*60}
-• Tax Rate: {self.TAX_RATE * 100}% (applied to subtotal after discount)
-• Service Charge: {self.SERVICE_CHARGE_RATE * 100}% (applied to subtotal after discount)
-• Maximum Discount: {self.MAX_DISCOUNT_PERCENT}%
-• Minimum Discount: {self.MIN_DISCOUNT_PERCENT}%
-
-Calculation Order:
-1. Subtotal = Sum of all item prices × quantities
-2. Discount = Subtotal × (Discount % ÷ 100)
-3. Subtotal After Discount = Subtotal - Discount
-4. Service Charge = Subtotal After Discount × {self.SERVICE_CHARGE_RATE * 100}%
-5. Tax = Subtotal After Discount × {self.TAX_RATE * 100}%
-6. Total = Subtotal After Discount + Service Charge + Tax
-"""
-        config_text.insert('1.0', config_info)
-        config_text.config(state='disabled')
+                font=('Segoe UI', 10), bg='#f0f0f0').pack(pady=5)
     
     def backup_database(self):
         messagebox.showinfo("Backup", "Database backup feature coming soon!")
