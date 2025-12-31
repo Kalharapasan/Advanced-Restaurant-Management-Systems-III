@@ -978,12 +978,12 @@ class RestaurantManagementSystem:
         tk.Label(self.analytics_frame, text="📊 Sales Analytics Dashboard",
                 font=('Segoe UI', 18, 'bold'), bg='#f0f0f0').pack(pady=20)
 
-        # Controls frame
-        controls_frame = tk.Frame(self.analytics_frame, bg='#f0f0f0')
-        controls_frame.pack(fill='x', padx=20, pady=(0,10))
+        # Controls and summary container
+        self.analytics_controls_frame = tk.Frame(self.analytics_frame, bg='#f0f0f0')
+        self.analytics_controls_frame.pack(fill='x', padx=20, pady=(0,10))
 
         # Date range selector
-        date_frame = tk.Frame(controls_frame, bg='#f0f0f0')
+        date_frame = tk.Frame(self.analytics_controls_frame, bg='#f0f0f0')
         date_frame.pack(side='left')
         tk.Label(date_frame, text="Period:", font=('Segoe UI', 10), bg='#f0f0f0').pack(side='left', padx=(0,5))
         self.analytics_period = tk.StringVar(value="30")
@@ -993,7 +993,7 @@ class RestaurantManagementSystem:
         tk.Label(date_frame, text="days", font=('Segoe UI', 10), bg='#f0f0f0').pack(side='left')
 
         # Buttons
-        btn_frame = tk.Frame(controls_frame, bg='#f0f0f0')
+        btn_frame = tk.Frame(self.analytics_controls_frame, bg='#f0f0f0')
         btn_frame.pack(side='right')
         tk.Button(btn_frame, text="🔄 Refresh", command=self.refresh_analytics,
                  font=('Segoe UI', 10, 'bold'), bg='#27ae60', fg='white').pack(side='left', padx=(0,5))
@@ -1013,8 +1013,8 @@ class RestaurantManagementSystem:
     
     def create_analytics_summary_cards(self):
         # Summary cards frame
-        cards_frame = tk.Frame(self.analytics_frame, bg='#f0f0f0')
-        cards_frame.pack(fill='x', padx=20, pady=(0,20))
+        cards_frame = tk.Frame(self.analytics_controls_frame, bg='#f0f0f0')
+        cards_frame.pack(fill='x', pady=(0,10))
 
         # Create summary cards
         self.summary_cards = {}
