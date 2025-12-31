@@ -973,7 +973,42 @@ class RestaurantManagementSystem:
         reports_scrollbar.pack(side='right', fill='y')
     
     def setup_analytics_content(self):
+        # Title
+        tk.Label(self.analytics_frame, text="📊 Sales Analytics Dashboard",
+                font=('Segoe UI', 18, 'bold'), bg='#f0f0f0').pack(pady=20)
+
+        # Controls frame
+        controls_frame = tk.Frame(self.analytics_frame, bg='#f0f0f0')
+        controls_frame.pack(fill='x', padx=20, pady=(0,10))
+
+        # Date range selector
+        date_frame = tk.Frame(controls_frame, bg='#f0f0f0')
+        date_frame.pack(side='left')
+        tk.Label(date_frame, text="Period:", font=('Segoe UI', 10), bg='#f0f0f0').pack(side='left', padx=(0,5))
+        self.analytics_period = tk.StringVar(value="30")
+        period_combo = ttk.Combobox(date_frame, textvariable=self.analytics_period,
+                                   values=["7", "30", "90", "365"], state="readonly", width=8)
+        period_combo.pack(side='left', padx=(0,10))
+        tk.Label(date_frame, text="days", font=('Segoe UI', 10), bg='#f0f0f0').pack(side='left')
+
+        # Buttons
+        btn_frame = tk.Frame(controls_frame, bg='#f0f0f0')
+        btn_frame.pack(side='right')
+        tk.Button(btn_frame, text="🔄 Refresh", command=self.refresh_analytics,
+                 font=('Segoe UI', 10, 'bold'), bg='#27ae60', fg='white').pack(side='left', padx=(0,5))
+        tk.Button(btn_frame, text="📊 Generate Report", command=self.generate_analytics_report,
+                 font=('Segoe UI', 10, 'bold'), bg='#3498db', fg='white').pack(side='left', padx=(0,5))
+        tk.Button(btn_frame, text="📈 Export Data", command=self.export_analytics_data,
+                 font=('Segoe UI', 10, 'bold'), bg='#9b59b6', fg='white').pack(side='left')
+
+        # Summary cards
+        self.create_analytics_summary_cards()
+
+        # Analytics display (charts and graphs)
         self.analytics_display = AnalyticsDisplay(self.analytics_frame, self.analytics_manager)
+
+        # Load initial data
+        self.refresh_analytics()
     
     def setup_status_bar(self):
         self.status_frame = tk.Frame(self.root, bg='#34495e', height=30)
