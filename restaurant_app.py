@@ -1013,6 +1013,12 @@ class RestaurantManagementSystem:
             self.update_status("Order totals calculated successfully")
         except Exception as e:
             messagebox.showerror("Calculation Error", f"Error calculating totals: {e}")
+    
+    def on_discount_change(self, event=None):
+        try:
+            self.calculate_total()
+        except Exception as e:
+            print(f"Error in on_discount_change: {e}")
             
     def generate_receipt(self):
         try:
