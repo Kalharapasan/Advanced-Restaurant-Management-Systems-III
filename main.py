@@ -28,3 +28,6 @@ def check_dependencies():
         missing_modules.append("Pillow")
     
     return missing_modules
+
+def show_dependency_error(missing_modules):
+    
