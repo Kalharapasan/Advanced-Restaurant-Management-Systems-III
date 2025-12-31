@@ -60,3 +60,6 @@ def main():
     if missing_modules:
         show_dependency_error(missing_modules)
         return
+
+    try:
+        from restaurant_app import RestaurantManagementSystem
