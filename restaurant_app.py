@@ -176,6 +176,7 @@ class RestaurantManagementSystem:
         self.notebook = ttk.Notebook(self.root)
         self.notebook.grid(row=1, column=0, sticky="nsew", padx=10, pady=10)
         self.create_order_tab()
+        self.create_order_history_tab()
         self.create_analytics_tab()
         self.create_menu_management_tab()
         self.create_customer_management_tab()
@@ -194,6 +195,102 @@ class RestaurantManagementSystem:
         
         self.setup_order_left_panel(left_panel)
         self.setup_order_right_panel(right_panel)
+        
+    def create_order_history_tab(self):
+        self.order_history_frame = tk.Frame(self.notebook, bg='#f0f0f0')
+        self.notebook.add(self.order_history_frame, text="📜 Order History")
+        
+        # Create main container
+        main_container = tk.Frame(self.order_history_frame, bg='#f0f0f0')
+        main_container.pack(fill='both', expand=True, padx=10, pady=10)
+        
+        # Title and controls frame
+        title_frame = tk.Frame(main_container, bg='#34495e', relief=tk.RIDGE, bd=2)
+        title_frame.pack(fill='x', pady=(0, 10))
+        
+        title_label = tk.Label(title_frame, text="📜 Order History",
+                              font=('Segoe UI', 16, 'bold'),
+                              bg='#34495e', fg='white')
+        title_label.pack(side='left', padx=20, pady=10)
+        
+        # Controls frame
+        controls_frame = tk.Frame(title_frame, bg='#34495e')
+        controls_frame.pack(side='right', padx=20, pady=10)
+        
+        refresh_btn = tk.Button(controls_frame, text="🔄 Refresh",
+                               font=('Segoe UI', 10, 'bold'),
+                               bg='#3498db', fg='white',
+                               relief=tk.FLAT, padx=15, pady=5,
+                               command=self.refresh_order_history)
+        refresh_btn.pack(side='right', padx=5)
+        
+        # Search frame
+        search_frame = tk.Frame(main_container, bg='#ecf0f1', relief=tk.RIDGE, bd=1)
+        search_frame.pack(fill='x', pady=(0, 10))
+        
+        search_label = tk.Label(search_frame, text="Search:",
+                               font=('Segoe UI', 10, 'bold'),
+                               bg='#ecf0f1')
+        search_label.pack(side='left', padx=10, pady=5)
+        
+        self.search_var = tk.StringVar()
+        search_entry = tk.Entry(search_frame, textvariable=self.search_var,
+                               font=('Segoe UI', 10), width=30)
+        search_entry.pack(side='left', padx=5, pady=5)
+        search_entry.bind('<KeyRelease>', self.filter_order_history)
+        
+        # Treeview frame
+        tree_frame = tk.Frame(main_container, bg='#f0f0f0')
+        tree_frame.pack(fill='both', expand=True)
+        
+        # Configure treeview
+        columns = ('Receipt', 'Date', 'Time', 'Customer', 'Items', 'Total', 'Status')
+        self.history_tree = ttk.Treeview(tree_frame, columns=columns, show='headings', height=20)
+        
+        # Configure column headings and widths
+        column_widths = {'Receipt': 120, 'Date': 100, 'Time': 80, 'Customer': 150, 'Items': 80, 'Total': 100, 'Status': 100}
+        for col in columns:
+            self.history_tree.heading(col, text=col, command=lambda c=col: self.sort_history_column(c))
+            self.history_tree.column(col, width=column_widths.get(col, 100), anchor='center')
+        
+        # Scrollbars
+        v_scrollbar = ttk.Scrollbar(tree_frame, orient=tk.VERTICAL, command=self.history_tree.yview)
+        h_scrollbar = ttk.Scrollbar(tree_frame, orient=tk.HORIZONTAL, command=self.history_tree.xview)
+        self.history_tree.configure(yscrollcommand=v_scrollbar.set, xscrollcommand=h_scrollbar.set)
+        
+        # Grid layout
+        self.history_tree.grid(row=0, column=0, sticky='nsew')
+        v_scrollbar.grid(row=0, column=1, sticky='ns')
+        h_scrollbar.grid(row=1, column=0, sticky='ew')
+        
+        tree_frame.grid_rowconfigure(0, weight=1)
+        tree_frame.grid_columnconfigure(0, weight=1)
+        
+        # Context menu
+        self.history_context_menu = tk.Menu(self.root, tearoff=0)
+        self.history_context_menu.add_command(label="View Details", command=self.view_order_details)
+        self.history_context_menu.add_separator()
+        self.history_context_menu.add_command(label="Print Receipt", command=self.print_receipt)
+        
+        self.history_tree.bind('<Button-3>', self.show_history_context_menu)
+        self.history_tree.bind('<Double-1>', self.view_order_details)
+        
+        # Status frame
+        status_frame = tk.Frame(main_container, bg='#ecf0f1', relief=tk.RIDGE, bd=1)
+        status_frame.pack(fill='x', pady=(10, 0))
+        
+        self.history_status_label = tk.Label(status_frame, text="Ready",
+                                            font=('Segoe UI', 9),
+                                            bg='#ecf0f1', fg='#2c3e50')
+        self.history_status_label.pack(side='left', padx=10, pady=5)
+        
+        self.history_count_label = tk.Label(status_frame, text="",
+                                           font=('Segoe UI', 9),
+                                           bg='#ecf0f1', fg='#2c3e50')
+        self.history_count_label.pack(side='right', padx=10, pady=5)
+        
+        # Load initial data
+        self.load_order_history()
         
     def setup_order_left_panel(self, parent):
         parent.grid_rowconfigure(1, weight=1)
@@ -1282,39 +1379,253 @@ class RestaurantManagementSystem:
         self.notebook.select(self.customer_frame)
     
     def show_order_history(self):
-        self.create_order_history_window()
+        self.notebook.select(self.order_history_frame)
+        self.refresh_order_history()
     
-    def create_order_history_window(self):
-        history_window = tk.Toplevel(self.root)
-        history_window.title("📜 Order History")
-        history_window.geometry("1000x600")
-        history_window.configure(bg='#f0f0f0')
-        columns = ('Receipt', 'Date', 'Time', 'Customer', 'Total', 'Status')
-        tree = ttk.Treeview(history_window, columns=columns, show='headings', height=20)
-        for col in columns:
-            tree.heading(col, text=col)
-            tree.column(col, width=150, anchor='center')
-        v_scrollbar = ttk.Scrollbar(history_window, orient=tk.VERTICAL, command=tree.yview)
-        h_scrollbar = ttk.Scrollbar(history_window, orient=tk.HORIZONTAL, command=tree.xview)
-        tree.configure(yscrollcommand=v_scrollbar.set, xscrollcommand=h_scrollbar.set)
-        tree.grid(row=0, column=0, sticky='nsew')
-        v_scrollbar.grid(row=0, column=1, sticky='ns')
-        h_scrollbar.grid(row=1, column=0, sticky='ew')
-        history_window.grid_rowconfigure(0, weight=1)
-        history_window.grid_columnconfigure(0, weight=1)
+    def load_order_history(self):
+        """Load order history data into the treeview"""
+        try:
+            # Clear existing data
+            for item in self.history_tree.get_children():
+                self.history_tree.delete(item)
+            
+            if self.db_manager.is_connected():
+                cursor = self.db_manager.get_connection().cursor()
+                cursor.execute("""
+                    SELECT o.receipt_ref, o.order_date, o.order_time, o.customer_name,
+                           COUNT(oi.id) as item_count, o.total_cost, o.status
+                    FROM orders o
+                    LEFT JOIN order_items oi ON o.id = oi.order_id
+                    GROUP BY o.id
+                    ORDER BY o.created_at DESC LIMIT 200
+                """)
+                
+                orders = cursor.fetchall()
+                for order in orders:
+                    receipt_ref, order_date, order_time, customer_name, item_count, total_cost, status = order
+                    
+                    # Format the data
+                    formatted_date = order_date.strftime('%Y-%m-%d') if order_date else 'N/A'
+                    formatted_time = str(order_time) if order_time else 'N/A'
+                    formatted_total = f"${total_cost:.2f}" if total_cost else "$0.00"
+                    
+                    self.history_tree.insert('', tk.END, values=(
+                        receipt_ref or 'N/A',
+                        formatted_date,
+                        formatted_time,
+                        customer_name or 'Guest',
+                        f"{item_count} items",
+                        formatted_total,
+                        status or 'Unknown'
+                    ))
+                
+                # Update status
+                self.history_status_label.config(text="Order history loaded successfully")
+                self.history_count_label.config(text=f"Total orders: {len(orders)}")
+                
+        except Exception as e:
+            messagebox.showerror("Database Error", f"Error loading order history: {e}")
+            self.history_status_label.config(text="Error loading order history")
+    
+    def refresh_order_history(self):
+        """Refresh the order history data"""
+        self.history_status_label.config(text="Refreshing...")
+        self.root.after(100, self.load_order_history)
+    
+    def filter_order_history(self, event=None):
+        """Filter order history based on search term"""
+        search_term = self.search_var.get().lower()
+        
+        # If search is empty, reload all data
+        if not search_term:
+            self.load_order_history()
+            return
+        
+        # Clear current display
+        for item in self.history_tree.get_children():
+            self.history_tree.delete(item)
+        
         try:
             if self.db_manager.is_connected():
                 cursor = self.db_manager.get_connection().cursor()
                 cursor.execute("""
-                    SELECT receipt_ref, order_date, order_time, customer_name, 
-                           total_cost, status
-                    FROM orders ORDER BY created_at DESC LIMIT 100
-                """)
+                    SELECT o.receipt_ref, o.order_date, o.order_time, o.customer_name,
+                           COUNT(oi.id) as item_count, o.total_cost, o.status
+                    FROM orders o
+                    LEFT JOIN order_items oi ON o.id = oi.order_id
+                    WHERE LOWER(o.receipt_ref) LIKE %s 
+                       OR LOWER(o.customer_name) LIKE %s
+                       OR LOWER(o.status) LIKE %s
+                    GROUP BY o.id
+                    ORDER BY o.created_at DESC LIMIT 100
+                """, (f'%{search_term}%', f'%{search_term}%', f'%{search_term}%'))
                 
-                for row in cursor.fetchall():
-                    tree.insert('', tk.END, values=row)
+                orders = cursor.fetchall()
+                for order in orders:
+                    receipt_ref, order_date, order_time, customer_name, item_count, total_cost, status = order
+                    
+                    formatted_date = order_date.strftime('%Y-%m-%d') if order_date else 'N/A'
+                    formatted_time = str(order_time) if order_time else 'N/A'
+                    formatted_total = f"${total_cost:.2f}" if total_cost else "$0.00"
+                    
+                    self.history_tree.insert('', tk.END, values=(
+                        receipt_ref or 'N/A',
+                        formatted_date,
+                        formatted_time,
+                        customer_name or 'Guest',
+                        f"{item_count} items",
+                        formatted_total,
+                        status or 'Unknown'
+                    ))
+                
+                self.history_count_label.config(text=f"Found: {len(orders)} orders")
+                
         except Exception as e:
-            messagebox.showerror("Database Error", f"Error loading order history: {e}")
+            messagebox.showerror("Search Error", f"Error searching orders: {e}")
+    
+    def sort_history_column(self, col):
+        """Sort the order history by column"""
+        data = [(self.history_tree.set(child, col), child) for child in self.history_tree.get_children('')]
+        
+        # Try to sort numerically for Total column, otherwise sort as string
+        if col == 'Total':
+            try:
+                data.sort(key=lambda x: float(x[0].replace('$', '').replace(',', '')))
+            except:
+                data.sort()
+        else:
+            data.sort()
+        
+        for index, (val, child) in enumerate(data):
+            self.history_tree.move(child, '', index)
+    
+    def show_history_context_menu(self, event):
+        """Show context menu for order history"""
+        item = self.history_tree.selection()[0] if self.history_tree.selection() else None
+        if item:
+            self.history_context_menu.post(event.x_root, event.y_root)
+    
+    def view_order_details(self):
+        """View detailed information for selected order"""
+        selection = self.history_tree.selection()
+        if not selection:
+            messagebox.showwarning("No Selection", "Please select an order to view details.")
+            return
+        
+        item = selection[0]
+        receipt_ref = self.history_tree.item(item, 'values')[0]
+        
+        if receipt_ref == 'N/A':
+            messagebox.showwarning("Invalid Order", "Cannot view details for this order.")
+            return
+        
+        # Create details window
+        details_window = tk.Toplevel(self.root)
+        details_window.title(f"Order Details - {receipt_ref}")
+        details_window.geometry("600x500")
+        details_window.configure(bg='#f0f0f0')
+        
+        # Load and display order details
+        self.show_order_detail_content(details_window, receipt_ref)
+    
+    def show_order_detail_content(self, parent, receipt_ref):
+        """Show detailed content for an order"""
+        try:
+            if self.db_manager.is_connected():
+                cursor = self.db_manager.get_connection().cursor()
+                
+                # Get order information
+                cursor.execute("""
+                    SELECT * FROM orders WHERE receipt_ref = %s
+                """, (receipt_ref,))
+                
+                order = cursor.fetchone()
+                if not order:
+                    tk.Label(parent, text="Order not found", font=('Segoe UI', 12)).pack(pady=20)
+                    return
+                
+                # Order header
+                header_frame = tk.Frame(parent, bg='#34495e', relief=tk.RIDGE, bd=2)
+                header_frame.pack(fill='x', padx=10, pady=10)
+                
+                tk.Label(header_frame, text=f"Order Details - {receipt_ref}",
+                        font=('Segoe UI', 14, 'bold'),
+                        bg='#34495e', fg='white').pack(pady=10)
+                
+                # Order info frame
+                info_frame = tk.Frame(parent, bg='#ecf0f1', relief=tk.RIDGE, bd=1)
+                info_frame.pack(fill='x', padx=10, pady=5)
+                
+                # Display order information (adjust column indices based on your table structure)
+                order_info = f"""
+                Customer: {order[3] if len(order) > 3 else 'Unknown'}
+                Date: {order[1] if len(order) > 1 else 'Unknown'}
+                Time: {order[2] if len(order) > 2 else 'Unknown'}
+                Status: {order[6] if len(order) > 6 else 'Unknown'}
+                Total: ${order[5] if len(order) > 5 else 0:.2f}
+                """
+                
+                tk.Label(info_frame, text=order_info,
+                        font=('Segoe UI', 10), bg='#ecf0f1',
+                        justify='left').pack(padx=10, pady=10, anchor='w')
+                
+                # Order items
+                items_frame = tk.LabelFrame(parent, text="Order Items",
+                                          font=('Segoe UI', 12, 'bold'),
+                                          bg='#f0f0f0')
+                items_frame.pack(fill='both', expand=True, padx=10, pady=5)
+                
+                # Get order items
+                cursor.execute("""
+                    SELECT item_name, quantity, price
+                    FROM order_items WHERE order_id = %s
+                """, (order[0],))  # Assuming first column is order ID
+                
+                items = cursor.fetchall()
+                
+                if items:
+                    # Create treeview for items
+                    columns = ('Item', 'Quantity', 'Price', 'Subtotal')
+                    items_tree = ttk.Treeview(items_frame, columns=columns, show='headings', height=10)
+                    
+                    for col in columns:
+                        items_tree.heading(col, text=col)
+                        items_tree.column(col, width=120, anchor='center')
+                    
+                    for item_name, quantity, price in items:
+                        subtotal = quantity * price
+                        items_tree.insert('', tk.END, values=(
+                            item_name, quantity, f"${price:.2f}", f"${subtotal:.2f}"
+                        ))
+                    
+                    items_tree.pack(fill='both', expand=True, padx=10, pady=10)
+                else:
+                    tk.Label(items_frame, text="No items found for this order",
+                            font=('Segoe UI', 10), bg='#f0f0f0').pack(pady=20)
+                
+        except Exception as e:
+            tk.Label(parent, text=f"Error loading order details: {e}",
+                    font=('Segoe UI', 10), fg='red').pack(pady=20)
+    
+    def print_receipt(self):
+        """Print receipt for selected order"""
+        selection = self.history_tree.selection()
+        if not selection:
+            messagebox.showwarning("No Selection", "Please select an order to print receipt.")
+            return
+        
+        item = selection[0]
+        receipt_ref = self.history_tree.item(item, 'values')[0]
+        
+        if receipt_ref == 'N/A':
+            messagebox.showwarning("Invalid Order", "Cannot print receipt for this order.")
+            return
+        
+        messagebox.showinfo("Print Receipt", f"Printing receipt for order {receipt_ref}...\n\nNote: This would integrate with your printer system.")
+    
+    def create_order_history_window(self):
+        """Legacy method - redirects to tab"""
+        self.show_order_history()
     
     def show_user_management(self):
         messagebox.showinfo("User Management", "User management feature coming soon!")
