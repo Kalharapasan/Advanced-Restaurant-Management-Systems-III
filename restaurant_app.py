@@ -3,6 +3,7 @@ from tkinter import ttk, messagebox, simpledialog
 import time
 import datetime
 import json
+import csv
 import random
 import os
 import sys
@@ -1009,6 +1010,234 @@ class RestaurantManagementSystem:
 
         # Load initial data
         self.refresh_analytics()
+    
+    def create_analytics_summary_cards(self):
+        # Summary cards frame
+        cards_frame = tk.Frame(self.analytics_frame, bg='#f0f0f0')
+        cards_frame.pack(fill='x', padx=20, pady=(0,20))
+
+        # Create summary cards
+        self.summary_cards = {}
+        card_data = [
+            ("Today's Sales", "$0.00", '#27ae60', "today_sales"),
+            ("Today's Orders", "0", '#3498db', "today_orders"),
+            ("This Week", "$0.00", '#e67e22', "week_sales"),
+            ("This Month", "$0.00", '#9b59b6', "month_sales"),
+            ("Total Revenue", "$0.00", '#1abc9c', "total_revenue"),
+            ("Avg Order Value", "$0.00", '#f39c12', "avg_order")
+        ]
+
+        for i, (title, value, color, key) in enumerate(card_data):
+            card = tk.Frame(cards_frame, bg=color, relief=tk.RAISED, bd=2)
+            card.grid(row=i//3, column=i%3, padx=5, pady=5, sticky='ew')
+            cards_frame.grid_columnconfigure(i%3, weight=1)
+
+            tk.Label(card, text=title, font=('Segoe UI', 10, 'bold'),
+                    bg=color, fg='white').pack(pady=(10,5))
+            value_label = tk.Label(card, text=value, font=('Segoe UI', 16, 'bold'),
+                                  bg=color, fg='white')
+            value_label.pack(pady=(0,10))
+            self.summary_cards[key] = value_label
+
+    def refresh_analytics(self):
+        try:
+            if self.db_manager.is_connected():
+                cursor = self.db_manager.get_connection().cursor()
+                days = int(self.analytics_period.get())
+
+                # Today's sales and orders
+                today = datetime.now().date()
+                cursor.execute("""
+                    SELECT COUNT(*), COALESCE(SUM(total_cost), 0)
+                    FROM orders
+                    WHERE DATE(order_date) = %s AND status = 'Completed'
+                """, (today,))
+                today_orders, today_sales = cursor.fetchone()
+
+                # Week sales (last 7 days)
+                week_start = today - timedelta(days=7)
+                cursor.execute("""
+                    SELECT COALESCE(SUM(total_cost), 0)
+                    FROM orders
+                    WHERE order_date >= %s AND status = 'Completed'
+                """, (week_start,))
+                week_sales = cursor.fetchone()[0]
+
+                # Month sales (last 30 days)
+                month_start = today - timedelta(days=30)
+                cursor.execute("""
+                    SELECT COALESCE(SUM(total_cost), 0)
+                    FROM orders
+                    WHERE order_date >= %s AND status = 'Completed'
+                """, (month_start,))
+                month_sales = cursor.fetchone()[0]
+
+                # Total revenue
+                cursor.execute("""
+                    SELECT COALESCE(SUM(total_cost), 0)
+                    FROM orders
+                    WHERE status = 'Completed'
+                """)
+                total_revenue = cursor.fetchone()[0]
+
+                # Average order value
+                cursor.execute("""
+                    SELECT AVG(total_cost)
+                    FROM orders
+                    WHERE status = 'Completed'
+                """)
+                avg_order = cursor.fetchone()[0] or 0
+
+                # Update summary cards
+                self.summary_cards['today_sales'].config(text=f"${today_sales:.2f}")
+                self.summary_cards['today_orders'].config(text=str(today_orders))
+                self.summary_cards['week_sales'].config(text=f"${week_sales:.2f}")
+                self.summary_cards['month_sales'].config(text=f"${month_sales:.2f}")
+                self.summary_cards['total_revenue'].config(text=f"${total_revenue:.2f}")
+                self.summary_cards['avg_order'].config(text=f"${avg_order:.2f}")
+
+                # Refresh the analytics display
+                if hasattr(self.analytics_manager, 'refresh_data'):
+                    self.analytics_manager.refresh_data()
+
+                self.update_status("Analytics refreshed successfully")
+
+        except Exception as e:
+            messagebox.showerror("Database Error", f"Error refreshing analytics: {e}")
+
+    def generate_analytics_report(self):
+        try:
+            if self.db_manager.is_connected():
+                cursor = self.db_manager.get_connection().cursor()
+                days = int(self.analytics_period.get())
+
+                # Generate comprehensive report
+                report = f"Analytics Report - Last {days} Days\n"
+                report += "="*50 + "\n\n"
+
+                # Sales by day
+                start_date = datetime.now().date() - timedelta(days=days)
+                cursor.execute("""
+                    SELECT DATE(order_date), COUNT(*), SUM(total_cost)
+                    FROM orders
+                    WHERE order_date >= %s AND status = 'Completed'
+                    GROUP BY DATE(order_date)
+                    ORDER BY DATE(order_date)
+                """, (start_date,))
+
+                report += "Daily Sales Summary:\n"
+                report += "Date\t\tOrders\tSales\n"
+                report += "-"*30 + "\n"
+
+                for date, orders, sales in cursor.fetchall():
+                    report += f"{date}\t{orders}\t${sales:.2f}\n"
+
+                # Top selling items
+                cursor.execute("""
+                    SELECT JSON_EXTRACT(items, '$[*].name') as item_names,
+                           JSON_EXTRACT(items, '$[*].quantity') as quantities
+                    FROM orders
+                    WHERE order_date >= %s AND status = 'Completed'
+                """, (start_date,))
+
+                item_sales = {}
+                for item_names, quantities in cursor.fetchall():
+                    if item_names and quantities:
+                        try:
+                            names = json.loads(item_names)
+                            qtys = json.loads(quantities)
+                            for name, qty in zip(names, qtys):
+                                item_sales[name] = item_sales.get(name, 0) + qty
+                        except:
+                            continue
+
+                report += "\nTop Selling Items:\n"
+                report += "Item\t\t\tQuantity Sold\n"
+                report += "-"*30 + "\n"
+
+                for item, qty in sorted(item_sales.items(), key=lambda x: x[1], reverse=True)[:10]:
+                    report += f"{item[:20]:<20}\t{qty}\n"
+
+                # Show report in a new window
+                report_window = tk.Toplevel(self.root)
+                report_window.title("Analytics Report")
+                report_window.geometry("700x600")
+                report_window.configure(bg='#f0f0f0')
+
+                tk.Label(report_window, text="📊 Analytics Report",
+                        font=('Segoe UI', 16, 'bold'), bg='#f0f0f0').pack(pady=10)
+
+                text_frame = tk.Frame(report_window)
+                text_frame.pack(fill='both', expand=True, padx=20, pady=10)
+
+                report_text = tk.Text(text_frame, font=('Courier New', 10), bg='#ffffff')
+                scrollbar = tk.Scrollbar(text_frame, command=report_text.yview)
+                report_text.configure(yscrollcommand=scrollbar.set)
+
+                report_text.pack(side='left', fill='both', expand=True)
+                scrollbar.pack(side='right', fill='y')
+
+                report_text.insert('1.0', report)
+                report_text.config(state='disabled')
+
+                # Export button
+                tk.Button(report_window, text="💾 Export to File",
+                         command=lambda: self.save_report_to_file(report),
+                         font=('Segoe UI', 10, 'bold'), bg='#27ae60', fg='white').pack(pady=10)
+
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to generate report: {e}")
+
+    def export_analytics_data(self):
+        try:
+            from tkinter import filedialog
+            file_path = filedialog.asksaveasfilename(
+                defaultextension=".csv",
+                filetypes=[("CSV files", "*.csv"), ("All files", "*.*")]
+            )
+
+            if file_path:
+                if self.db_manager.is_connected():
+                    cursor = self.db_manager.get_connection().cursor()
+                    days = int(self.analytics_period.get())
+                    start_date = datetime.now().date() - timedelta(days=days)
+
+                    cursor.execute("""
+                        SELECT receipt_ref, order_date, order_time, customer_name,
+                               total_cost, status, payment_method
+                        FROM orders
+                        WHERE order_date >= %s
+                        ORDER BY order_date DESC
+                    """, (start_date,))
+
+                    import csv
+                    with open(file_path, 'w', newline='', encoding='utf-8') as csvfile:
+                        writer = csv.writer(csvfile)
+                        writer.writerow(['Receipt', 'Date', 'Time', 'Customer', 'Total', 'Status', 'Payment'])
+
+                        for row in cursor.fetchall():
+                            writer.writerow(row)
+
+                    messagebox.showinfo("Export Complete", f"Data exported to {file_path}")
+
+        except Exception as e:
+            messagebox.showerror("Export Error", f"Failed to export data: {e}")
+
+    def save_report_to_file(self, report_content):
+        try:
+            from tkinter import filedialog
+            file_path = filedialog.asksaveasfilename(
+                defaultextension=".txt",
+                filetypes=[("Text files", "*.txt"), ("All files", "*.*")]
+            )
+
+            if file_path:
+                with open(file_path, 'w', encoding='utf-8') as f:
+                    f.write(report_content)
+                messagebox.showinfo("Saved", f"Report saved to {file_path}")
+
+        except Exception as e:
+            messagebox.showerror("Save Error", f"Failed to save report: {e}")
     
     def setup_status_bar(self):
         self.status_frame = tk.Frame(self.root, bg='#34495e', height=30)
