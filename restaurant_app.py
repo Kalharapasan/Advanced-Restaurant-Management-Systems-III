@@ -149,6 +149,7 @@ class RestaurantManagementSystem:
         self.setup_title_frame()
         self.setup_main_content()
         self.setup_status_bar()
+        self.refresh_analytics()
     
     def setup_title_frame(self):
         title_frame = tk.Frame(self.root, bg='#2c3e50', height=80)
@@ -1014,15 +1015,7 @@ class RestaurantManagementSystem:
             tk.Label(self.analytics_frame, text=f"Analytics charts unavailable: {e}",
                     font=('Segoe UI', 12), bg='#f0f0f0', fg='red').pack(pady=20)
 
-        # Load initial data
-        self.refresh_analytics()
-    
-    def create_analytics_summary_cards(self):
-        # Summary cards frame
-        cards_frame = tk.Frame(self.analytics_controls_frame, bg='#f0f0f0')
-        cards_frame.pack(fill='x', pady=(0,10))
-
-        # Create summary cards
+        # Load initial data - called after status bar is set up
         self.summary_cards = {}
         card_data = [
             ("Today's Sales", "$0.00", '#27ae60', "today_sales"),
