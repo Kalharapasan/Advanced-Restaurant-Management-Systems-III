@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk, messagebox, simpledialog
 import time
 import datetime
+from datetime import datetime
 import json
 import random
 import os
@@ -946,32 +947,19 @@ class RestaurantManagementSystem:
         # Enhanced Analytics Tabs
         sales_frame = ttk.Frame(content_notebook)
         content_notebook.add(sales_frame, text="💰 Sales Performance")
-        self.setup_enhanced_sales_performance_tab(sales_frame)
+        self.setup_sales_performance_tab(sales_frame)
         
         customer_frame = ttk.Frame(content_notebook)
         content_notebook.add(customer_frame, text="👥 Customer Analytics")
-        self.setup_enhanced_customer_analytics_tab(customer_frame)
+        self.setup_customer_analytics_tab(customer_frame)
         
         menu_frame = ttk.Frame(content_notebook)
         content_notebook.add(menu_frame, text="🍽️ Menu Analytics")
-        self.setup_enhanced_menu_analytics_tab(menu_frame)
+        self.setup_menu_analytics_tab(menu_frame)
         
         operations_frame = ttk.Frame(content_notebook)
         content_notebook.add(operations_frame, text="⚙️ Operations")
-        self.setup_enhanced_operations_analytics_tab(operations_frame)
-        
-        # New Advanced Tabs
-        trends_frame = ttk.Frame(content_notebook)
-        content_notebook.add(trends_frame, text="📈 Trends & Forecasts")
-        self.setup_trends_analytics_tab(trends_frame)
-        
-        alerts_frame = ttk.Frame(content_notebook)
-        content_notebook.add(alerts_frame, text="🚨 Alerts & Insights")
-        self.setup_alerts_analytics_tab(alerts_frame)
-        
-        reports_frame = ttk.Frame(content_notebook)
-        content_notebook.add(reports_frame, text="📊 Business Intelligence")
-        self.setup_business_intelligence_tab(reports_frame)
+        self.setup_operations_analytics_tab(operations_frame)
         
         # Load initial data
         self.load_analytics_data()
@@ -1142,43 +1130,62 @@ class RestaurantManagementSystem:
             data = self.analytics_manager.analytics_data
             
             # Update enhanced metric cards with trends
-            self.metric_cards['sales']['value'].config(text=f"${data.get('today_sales', 0):.2f}")
-            sales_trend = ((data.get('today_sales', 0) - data.get('yesterday_sales', 1)) / data.get('yesterday_sales', 1)) * 100
-            self.metric_cards['sales']['trend'].config(text=f"↗️ {sales_trend:+.1f}%")
+            if 'sales' in self.metric_cards and isinstance(self.metric_cards['sales'], dict):
+                self.metric_cards['sales']['value'].config(text=f"${data.get('today_sales', 0):.2f}")
+                sales_trend = ((data.get('today_sales', 0) - data.get('yesterday_sales', 1)) / data.get('yesterday_sales', 1)) * 100
+                self.metric_cards['sales']['trend'].config(text=f"↗️ {sales_trend:+.1f}%")
+            elif 'sales' in self.metric_cards:
+                self.metric_cards['sales'].config(text=f"${data.get('today_sales', 0):.2f}")
             
-            self.metric_cards['orders']['value'].config(text=str(data.get('today_orders', 0)))
-            order_trend = ((data.get('today_orders', 0) - data.get('yesterday_orders', 1)) / data.get('yesterday_orders', 1)) * 100
-            self.metric_cards['orders']['trend'].config(text=f"📈 {order_trend:+.1f}%")
+            if 'orders' in self.metric_cards and isinstance(self.metric_cards['orders'], dict):
+                self.metric_cards['orders']['value'].config(text=str(data.get('today_orders', 0)))
+                order_trend = ((data.get('today_orders', 0) - data.get('yesterday_orders', 1)) / data.get('yesterday_orders', 1)) * 100
+                self.metric_cards['orders']['trend'].config(text=f"📈 {order_trend:+.1f}%")
+            elif 'orders' in self.metric_cards:
+                self.metric_cards['orders'].config(text=str(data.get('today_orders', 0)))
             
-            self.metric_cards['customers']['value'].config(text=str(data.get('active_customers', 0)))
-            self.metric_cards['customers']['trend'].config(text=f"👥 +{data.get('new_customers', 0)}")
+            if 'customers' in self.metric_cards and isinstance(self.metric_cards['customers'], dict):
+                self.metric_cards['customers']['value'].config(text=str(data.get('active_customers', 0)))
+                self.metric_cards['customers']['trend'].config(text=f"👥 +{data.get('new_customers', 0)}")
+            elif 'customers' in self.metric_cards:
+                self.metric_cards['customers'].config(text=str(data.get('active_customers', 0)))
             
-            self.metric_cards['rating']['value'].config(text=str(data.get('avg_rating', 0)))
-            self.metric_cards['rating']['trend'].config(text=f"⭐ Excellent")
+            if 'rating' in self.metric_cards and isinstance(self.metric_cards['rating'], dict):
+                self.metric_cards['rating']['value'].config(text=str(data.get('avg_rating', 0)))
+                self.metric_cards['rating']['trend'].config(text=f"⭐ Excellent")
+            elif 'rating' in self.metric_cards:
+                self.metric_cards['rating'].config(text=str(data.get('avg_rating', 0)))
             
             profit_margin = ((data.get('today_sales', 0) - data.get('today_sales', 0) * 0.6) / data.get('today_sales', 1)) * 100
-            self.metric_cards['profit']['value'].config(text=f"{profit_margin:.1f}%")
-            self.metric_cards['profit']['trend'].config(text=f"💰 +2.1%")
             
-            self.metric_cards['efficiency']['value'].config(text=f"{data.get('staff_efficiency', 0)}%")
-            self.metric_cards['efficiency']['trend'].config(text=f"⚡ +1.5%")
+            if 'profit' in self.metric_cards and isinstance(self.metric_cards['profit'], dict):
+                self.metric_cards['profit']['value'].config(text=f"{profit_margin:.1f}%")
+                self.metric_cards['profit']['trend'].config(text=f"💰 +2.1%")
+            elif 'profit' in self.metric_cards:
+                self.metric_cards['profit'].config(text=f"{profit_margin:.1f}%")
             
-            satisfaction_rate = (data.get('positive_reviews', 0) / max(data.get('reviews_today', 1), 1)) * 100
-            self.metric_cards['satisfaction']['value'].config(text=f"{satisfaction_rate:.0f}%")
-            self.metric_cards['satisfaction']['trend'].config(text=f"😊 +3.2%")
+            if 'efficiency' in self.metric_cards and isinstance(self.metric_cards['efficiency'], dict):
+                self.metric_cards['efficiency']['value'].config(text=f"{data.get('staff_efficiency', 0)}%")
+                self.metric_cards['efficiency']['trend'].config(text=f"⚡ +1.5%")
+            elif 'efficiency' in self.metric_cards:
+                self.metric_cards['efficiency'].config(text=f"{data.get('staff_efficiency', 0)}%")
             
-            growth_rate = ((data.get('week_sales', 0) - data.get('last_week_sales', 1)) / data.get('last_week_sales', 1)) * 100
-            self.metric_cards['growth']['value'].config(text=f"{growth_rate:.1f}%")
-            self.metric_cards['growth']['trend'].config(text=f"📈 +{growth_rate:.1f}%")
+            # Handle new metric cards if they exist
+            if 'satisfaction' in self.metric_cards and isinstance(self.metric_cards['satisfaction'], dict):
+                satisfaction_rate = (data.get('positive_reviews', 0) / max(data.get('reviews_today', 1), 1)) * 100
+                self.metric_cards['satisfaction']['value'].config(text=f"{satisfaction_rate:.0f}%")
+                self.metric_cards['satisfaction']['trend'].config(text=f"😊 +3.2%")
+            
+            if 'growth' in self.metric_cards and isinstance(self.metric_cards['growth'], dict):
+                growth_rate = ((data.get('week_sales', 0) - data.get('last_week_sales', 1)) / data.get('last_week_sales', 1)) * 100
+                self.metric_cards['growth']['value'].config(text=f"{growth_rate:.1f}%")
+                self.metric_cards['growth']['trend'].config(text=f"📈 +{growth_rate:.1f}%")
             
             # Update enhanced analytics sections
             self.update_enhanced_sales_overview(data)
-            self.update_enhanced_customer_analytics(data)
-            self.update_enhanced_menu_analytics(data)
-            self.update_enhanced_operations_analytics(data)
-            self.update_trends_analytics(data)
-            self.update_alerts_analytics(data)
-            self.update_business_intelligence(data)
+            self.update_customer_analytics(data)
+            self.update_menu_analytics(data)
+            self.update_operations_analytics(data)
             
             # Update last updated time
             self.last_updated_label.config(text=f"Last updated: {data.get('last_updated', 'Unknown')}")
@@ -1603,117 +1610,39 @@ Waste Percentage:     {data.get('waste_percentage', 0):>6.1f}%
             self.sales_goals_text.delete(1.0, tk.END)
             self.sales_goals_text.insert(1.0, goals_text)
     
-    def update_enhanced_customer_analytics(self, data):
-        """Update enhanced customer analytics"""
-        demographics_text = f"""
-👥 CUSTOMER DEMOGRAPHICS & INSIGHTS
-{'=' * 50}
+    def update_enhanced_sales_overview(self, data):
+        """Update enhanced sales overview with comprehensive metrics"""
+        sales_growth = ((data.get('today_sales', 0) - data.get('yesterday_sales', 1)) / data.get('yesterday_sales', 1)) * 100
+        week_growth = ((data.get('week_sales', 0) - data.get('last_week_sales', 1)) / data.get('last_week_sales', 1)) * 100
+        
+        overview_text = f"""
+📊 COMPREHENSIVE SALES ANALYTICS
+{'=' * 60}
 
-📊 CUSTOMER BASE:
-   Total Active Customers:   {data.get('active_customers', 0):>8}
-   New Customers Today:      {data.get('new_customers', 0):>8}
-   Returning Customers:      {data.get('active_customers', 0) - data.get('new_customers', 0):>8}
-   VIP/Premium Customers:    {data.get('vip_customers', 0):>8}
+💰 REVENUE PERFORMANCE:
+   Today's Revenue:      ${data.get('today_sales', 0):>10.2f}
+   Yesterday:           ${data.get('yesterday_sales', 0):>10.2f} ({sales_growth:+.1f}%)
+   This Week:           ${data.get('week_sales', 0):>10.2f}
+   Last Week:           ${data.get('last_week_sales', 0):>10.2f} ({week_growth:+.1f}%)
+   This Month:          ${data.get('month_sales', 0):>10.2f}
+   Average Daily:       ${data.get('week_sales', 0)/7:>10.2f}
    
-📈 CUSTOMER METRICS:
-   Customer Retention:       {data.get('retention_rate', 0):>7}%
-   Average Visit Frequency:  {data.get('avg_visit_frequency', 0):>7.1f} visits/month
-   Customer Lifetime Value:  ${data.get('avg_order_value', 0) * data.get('avg_visit_frequency', 0) * 12:>7.2f}
+📈 ORDER ANALYTICS:
+   Total Orders Today:   {data.get('today_orders', 0):>10}
+   Average Order Value:  ${data.get('avg_order_value', 0):>10.2f}
+   Peak Hour:           {data.get('peak_hour', 'N/A'):>10}
+   Peak Orders:         {data.get('peak_orders', 0):>10}
    
-🎂 AGE DEMOGRAPHICS:
-   18-25 years:             {random.randint(15, 25):>7}%
-   26-35 years:             {random.randint(25, 35):>7}%
-   36-45 years:             {random.randint(20, 30):>7}%
-   46+ years:               {random.randint(15, 25):>7}%
+🎯 TARGET PERFORMANCE:
+   Daily Target:        ${data.get('daily_target', 0):>10.2f}
+   Achievement:         {(data.get('today_sales', 0)/data.get('daily_target', 1)*100):>9.1f}% {'✅' if data.get('today_sales', 0) >= data.get('daily_target', 0) else '⚠️'}
+   Weekly Target:       ${data.get('weekly_target', 0):>10.2f}
+   Progress:            {(data.get('week_sales', 0)/data.get('weekly_target', 1)*100):>9.1f}% {'✅' if data.get('week_sales', 0) >= data.get('weekly_target', 0) else '📈'}
 """
         
-        behavior_text = f"""
-🔄 CUSTOMER BEHAVIOR PATTERNS
-{'=' * 45}
-
-⏰ VISIT PATTERNS:
-   Peak Visit Times:        {data.get('peak_hour', 'N/A')}
-   Average Stay Duration:   {random.randint(25, 45)} minutes
-   Preferred Days:          Weekends (65%), Weekdays (35%)
-   
-💳 SPENDING BEHAVIOR:
-   Average Order Value:     ${data.get('avg_order_value', 0):.2f}
-   Most Popular Price Range: $15-25 (45% of orders)
-   Upselling Success Rate:  {random.randint(25, 40)}%
-   
-🍽️ MENU PREFERENCES:
-   Main Course Orders:      {random.randint(70, 85)}%
-   Appetizer Orders:        {random.randint(45, 60)}%
-   Dessert Orders:          {random.randint(30, 45)}%
-   Beverage Orders:         {random.randint(80, 95)}%
-   
-📱 ORDERING CHANNELS:
-   In-Person:               {data.get('payment_methods', {}).get('cash', 30) + data.get('payment_methods', {}).get('card', 65):>7}%
-   Mobile/Online:           {data.get('payment_methods', {}).get('mobile', 5):>7}%
-"""
-        
-        loyalty_text = f"""
-⭐ CUSTOMER LOYALTY & SATISFACTION
-{'=' * 50}
-
-😊 SATISFACTION METRICS:
-   Average Rating:          {data.get('avg_rating', 0)}/5.0 ⭐
-   Customer Satisfaction:   {(data.get('positive_reviews', 0)/max(data.get('reviews_today', 1), 1)*100):>7.1f}%
-   Net Promoter Score:      {data.get('recommendation_rate', 0):>7}%
-   
-📝 FEEDBACK ANALYSIS:
-   Total Reviews Today:     {data.get('reviews_today', 0):>8}
-   Positive Reviews:        {data.get('positive_reviews', 0):>8} ({data.get('positive_reviews', 0)/max(data.get('reviews_today', 1), 1)*100:.1f}%)
-   Neutral Reviews:         {data.get('neutral_reviews', 0):>8} ({data.get('neutral_reviews', 0)/max(data.get('reviews_today', 1), 1)*100:.1f}%)
-   Complaints:              {data.get('complaints', 0):>8}
-   
-🏆 LOYALTY PROGRAM:
-   Program Members:         {random.randint(40, 60)}% of customers
-   Average Points per Visit: {random.randint(15, 30)} points
-   Redemption Rate:         {random.randint(20, 35)}%
-   
-👑 VIP CUSTOMERS:
-   VIP Status Criteria:     $500+ monthly spend
-   Current VIP Count:       {data.get('vip_customers', 0)}
-   VIP Revenue Contribution: {random.randint(25, 40)}%
-"""
-        
-        if hasattr(self, 'customer_demographics_text'):
-            self.customer_demographics_text.delete(1.0, tk.END)
-            self.customer_demographics_text.insert(1.0, demographics_text)
-        
-        if hasattr(self, 'customer_behavior_text'):
-            self.customer_behavior_text.delete(1.0, tk.END)
-            self.customer_behavior_text.insert(1.0, behavior_text)
-        
-        if hasattr(self, 'customer_loyalty_text'):
-            self.customer_loyalty_text.delete(1.0, tk.END)
-            self.customer_loyalty_text.insert(1.0, loyalty_text)
-    
-    def update_enhanced_menu_analytics(self, data):
-        """Update enhanced menu analytics"""
-        # Implementation for enhanced menu analytics
-        pass
-    
-    def update_enhanced_operations_analytics(self, data):
-        """Update enhanced operations analytics"""
-        # Implementation for enhanced operations analytics
-        pass
-    
-    def update_trends_analytics(self, data):
-        """Update trends and forecasting analytics"""
-        # Implementation for trends analytics
-        pass
-    
-    def update_alerts_analytics(self, data):
-        """Update alerts and insights"""
-        # Implementation for alerts analytics
-        pass
-    
-    def update_business_intelligence(self, data):
-        """Update business intelligence dashboard"""
-        # Implementation for business intelligence
-        pass
+        if hasattr(self, 'sales_overview_text'):
+            self.sales_overview_text.delete(1.0, tk.END)
+            self.sales_overview_text.insert(1.0, overview_text)
     
     def setup_status_bar(self):
         self.status_frame = tk.Frame(self.root, bg='#34495e', height=30)
