@@ -1392,17 +1392,14 @@ class RestaurantManagementSystem:
             if self.db_manager.is_connected():
                 cursor = self.db_manager.get_connection().cursor()
                 cursor.execute("""
-                    SELECT o.receipt_ref, o.order_date, o.order_time, o.customer_name,
-                           COUNT(oi.id) as item_count, o.total_cost, o.status
-                    FROM orders o
-                    LEFT JOIN order_items oi ON o.id = oi.order_id
-                    GROUP BY o.id
-                    ORDER BY o.created_at DESC LIMIT 200
+                    SELECT receipt_ref, order_date, order_time, customer_name, 
+                           total_cost, status
+                    FROM orders ORDER BY created_at DESC LIMIT 200
                 """)
                 
                 orders = cursor.fetchall()
                 for order in orders:
-                    receipt_ref, order_date, order_time, customer_name, item_count, total_cost, status = order
+                    receipt_ref, order_date, order_time, customer_name, total_cost, status = order
                     
                     # Format the data
                     formatted_date = order_date.strftime('%Y-%m-%d') if order_date else 'N/A'
@@ -1414,7 +1411,7 @@ class RestaurantManagementSystem:
                         formatted_date,
                         formatted_time,
                         customer_name or 'Guest',
-                        f"{item_count} items",
+                        '-',  # Items placeholder since we don't have order_items table
                         formatted_total,
                         status or 'Unknown'
                     ))
@@ -1449,20 +1446,18 @@ class RestaurantManagementSystem:
             if self.db_manager.is_connected():
                 cursor = self.db_manager.get_connection().cursor()
                 cursor.execute("""
-                    SELECT o.receipt_ref, o.order_date, o.order_time, o.customer_name,
-                           COUNT(oi.id) as item_count, o.total_cost, o.status
-                    FROM orders o
-                    LEFT JOIN order_items oi ON o.id = oi.order_id
-                    WHERE LOWER(o.receipt_ref) LIKE %s 
-                       OR LOWER(o.customer_name) LIKE %s
-                       OR LOWER(o.status) LIKE %s
-                    GROUP BY o.id
-                    ORDER BY o.created_at DESC LIMIT 100
+                    SELECT receipt_ref, order_date, order_time, customer_name, 
+                           total_cost, status
+                    FROM orders
+                    WHERE LOWER(receipt_ref) LIKE %s 
+                       OR LOWER(customer_name) LIKE %s
+                       OR LOWER(status) LIKE %s
+                    ORDER BY created_at DESC LIMIT 100
                 """, (f'%{search_term}%', f'%{search_term}%', f'%{search_term}%'))
                 
                 orders = cursor.fetchall()
                 for order in orders:
-                    receipt_ref, order_date, order_time, customer_name, item_count, total_cost, status = order
+                    receipt_ref, order_date, order_time, customer_name, total_cost, status = order
                     
                     formatted_date = order_date.strftime('%Y-%m-%d') if order_date else 'N/A'
                     formatted_time = str(order_time) if order_time else 'N/A'
@@ -1473,7 +1468,7 @@ class RestaurantManagementSystem:
                         formatted_date,
                         formatted_time,
                         customer_name or 'Guest',
-                        f"{item_count} items",
+                        '-',  # Items placeholder
                         formatted_total,
                         status or 'Unknown'
                     ))
@@ -1554,54 +1549,23 @@ class RestaurantManagementSystem:
                 
                 # Order info frame
                 info_frame = tk.Frame(parent, bg='#ecf0f1', relief=tk.RIDGE, bd=1)
-                info_frame.pack(fill='x', padx=10, pady=5)
+                info_frame.pack(fill='both', expand=True, padx=10, pady=5)
                 
                 # Display order information (adjust column indices based on your table structure)
                 order_info = f"""
+                Receipt Reference: {receipt_ref}
                 Customer: {order[3] if len(order) > 3 else 'Unknown'}
                 Date: {order[1] if len(order) > 1 else 'Unknown'}
                 Time: {order[2] if len(order) > 2 else 'Unknown'}
                 Status: {order[6] if len(order) > 6 else 'Unknown'}
-                Total: ${order[5] if len(order) > 5 else 0:.2f}
+                Total Amount: ${order[5] if len(order) > 5 else 0:.2f}
+                
+                Note: Detailed item information requires order_items table setup.
                 """
                 
                 tk.Label(info_frame, text=order_info,
-                        font=('Segoe UI', 10), bg='#ecf0f1',
-                        justify='left').pack(padx=10, pady=10, anchor='w')
-                
-                # Order items
-                items_frame = tk.LabelFrame(parent, text="Order Items",
-                                          font=('Segoe UI', 12, 'bold'),
-                                          bg='#f0f0f0')
-                items_frame.pack(fill='both', expand=True, padx=10, pady=5)
-                
-                # Get order items
-                cursor.execute("""
-                    SELECT item_name, quantity, price
-                    FROM order_items WHERE order_id = %s
-                """, (order[0],))  # Assuming first column is order ID
-                
-                items = cursor.fetchall()
-                
-                if items:
-                    # Create treeview for items
-                    columns = ('Item', 'Quantity', 'Price', 'Subtotal')
-                    items_tree = ttk.Treeview(items_frame, columns=columns, show='headings', height=10)
-                    
-                    for col in columns:
-                        items_tree.heading(col, text=col)
-                        items_tree.column(col, width=120, anchor='center')
-                    
-                    for item_name, quantity, price in items:
-                        subtotal = quantity * price
-                        items_tree.insert('', tk.END, values=(
-                            item_name, quantity, f"${price:.2f}", f"${subtotal:.2f}"
-                        ))
-                    
-                    items_tree.pack(fill='both', expand=True, padx=10, pady=10)
-                else:
-                    tk.Label(items_frame, text="No items found for this order",
-                            font=('Segoe UI', 10), bg='#f0f0f0').pack(pady=20)
+                        font=('Segoe UI', 11), bg='#ecf0f1',
+                        justify='left').pack(padx=20, pady=20, anchor='w')
                 
         except Exception as e:
             tk.Label(parent, text=f"Error loading order details: {e}",
